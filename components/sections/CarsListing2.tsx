@@ -98,9 +98,9 @@ export default function CarsListing2() {
 							cars.map((car, index) => (
 								<div key={car._id} className="col-lg-3 col-md-6 wow fadeIn" data-wow-delay={`${0.1 * (index + 1)}s`}>
 									<div className="card-journey-small background-card hover-up">
-										<div className="card-image">
+										<div className="card-image" style={{ height: '200px', overflow: 'hidden' }}>
 											<Link href={`/cars/${car._id}`}>
-												<img src={getCarImage(car)} alt={`${car.brand} ${car.model}`} />
+												<img src={getCarImage(car)} alt={`${car.brand} ${car.model}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
 											</Link>
 										</div>
 										<div className="card-info p-4 pt-30">

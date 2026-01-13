@@ -114,9 +114,9 @@ export default function CarsListing1() {
 											<SwiperSlide key={pairIndex}>
 												{pair.map((car) => (
 													<div key={car._id} className="card-journey-small background-card hover-up">
-														<div className="card-image">
+														<div className="card-image" style={{ height: '200px', overflow: 'hidden' }}>
 															<Link href={`/cars/${car._id}`}>
-																<img src={getCarImage(car)} alt={`${car.brand} ${car.model}`} />
+																<img src={getCarImage(car)} alt={`${car.brand} ${car.model}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
 															</Link>
 														</div>
 														<div className="card-info">
