@@ -44,10 +44,12 @@ export async function POST(request: NextRequest) {
 		)
 
 		// Send email
+		console.log('[forgot-password] Enviando email para:', email)
 		try {
 			await sendPasswordResetEmail(email, resetToken)
+			console.log('[forgot-password] Email enviado com sucesso')
 		} catch (emailError) {
-			console.error('Error sending password reset email:', emailError)
+			console.log('[forgot-password] ERRO ao enviar email:', emailError)
 			// Don't expose email sending errors to the user
 		}
 
