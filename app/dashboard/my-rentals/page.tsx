@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl'
 import Layout from "@/components/layout/Layout"
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar"
 import Link from 'next/link'
+import BookingTimeline from '@/components/dashboard/BookingTimeline'
 
 interface Booking {
 	_id: string
@@ -131,6 +132,12 @@ export default function MyRentals() {
 		return primary?.url || car.images[0]?.url || '/assets/imgs/template/placeholder-car.jpg'
 	}
 
+	// Map booking status to timeline status
+	const mapToTimelineStatus = (status: Booking['status']) => {
+		if (status === 'active') return 'in_progress'
+		return status as 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled'
+	}
+
 	if (status === 'loading') {
 		return (
 			<Layout footerStyle={1}>
@@ -215,7 +222,7 @@ export default function MyRentals() {
 										{bookings.map((booking) => (
 											<div key={booking._id} className="card mb-3">
 												<div className="card-body">
-													<div className="d-flex gap-3">
+													<div className="d-flex gap-3 mb-3">
 														<img
 															src={getCarImage(booking.car)}
 															alt={booking.car ? `${booking.car.brand} ${booking.car.model}` : 'Vehicle'}
@@ -229,7 +236,16 @@ export default function MyRentals() {
 															<small className="text-muted">#{booking.bookingNumber}</small>
 														</div>
 													</div>
-													<hr />
+													{/* Timeline */}
+													<div className="mb-3 pb-3 border-bottom">
+														<BookingTimeline
+															currentStatus={mapToTimelineStatus(booking.status)}
+															bookingDate={booking.createdAt}
+															pickupDate={booking.pickupDate}
+															returnDate={booking.dropoffDate}
+															variant="horizontal"
+														/>
+													</div>
 													<div className="row small">
 														<div className="col-6 mb-2">
 															<span className="text-muted">Retirada:</span><br />
@@ -240,18 +256,17 @@ export default function MyRentals() {
 															{formatDate(booking.dropoffDate)}
 														</div>
 														<div className="col-6 mb-2">
-															<span className="text-muted">Status:</span><br />
-															{getStatusBadge(booking.status)}
-														</div>
-														<div className="col-6 mb-2">
 															<span className="text-muted">Pagamento:</span><br />
 															{getPaymentBadge(booking.paymentStatus)}
 														</div>
+														<div className="col-6 mb-2">
+															<span className="text-muted">Valor:</span><br />
+															<strong className="text-primary">
+																${booking.pricing?.total?.toFixed(2) || '0.00'}
+															</strong>
+														</div>
 													</div>
-													<div className="d-flex justify-content-between align-items-center mt-2">
-														<strong className="text-primary">
-															${booking.pricing?.total?.toFixed(2) || '0.00'}
-														</strong>
+													<div className="d-flex justify-content-end mt-2">
 														<Link
 															href={`/booking/confirmation?id=${booking._id}`}
 															className="btn btn-sm btn-outline-primary"

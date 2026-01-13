@@ -151,6 +151,14 @@
       "inProgress": "In Progress",
       "completed": "Completed",
       "cancelled": "Cancelled"
+    },
+    "timeline": {
+      "booked": "Booked",
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "in_progress": "In Use",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
     }
   },
   "payment": {
