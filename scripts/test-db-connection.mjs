@@ -1,6 +1,10 @@
 import { MongoClient } from 'mongodb';
+import { config } from 'dotenv';
 
-const uri = "mongodb+srv://root:gatopreto@mongo-master.ewcakzz.mongodb.net/?appName=mongo-master";
+// Carregar variáveis de ambiente
+config();
+
+const uri = process.env.MONGODB_URI;
 
 async function testConnection() {
   const client = new MongoClient(uri);
