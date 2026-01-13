@@ -85,6 +85,7 @@
   },
   "vehicles": {
     "findPerfectCar": "Encontre o Carro Perfeito",
+    "searchPlaceholder": "Buscar por marca, modelo...",
     "lookingForVehicle": "Procurando um veículo?",
     "perfectSpot": "Você está no lugar certo.",
     "highQuality": "Alta qualidade a baixo custo.",

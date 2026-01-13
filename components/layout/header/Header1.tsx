@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { Locale, locales } from '@/i18n/config'
 import NotificationBell from '@/components/ui/NotificationBell'
+import SearchAutocomplete from '@/components/ui/SearchAutocomplete'
 
 const localeNames: Record<Locale, string> = {
 	en: 'EN',
@@ -121,6 +122,9 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, handle
 								</nav>
 							</div>
 							<div className="header-right">
+								<div className="d-none d-lg-inline-block align-middle mr-15" style={{ width: '280px' }}>
+									<SearchAutocomplete variant="dark" />
+								</div>
 								<div className="d-none d-xl-inline-block align-middle mr-15">
 									<NotificationBell variant="dark" />
 								</div>

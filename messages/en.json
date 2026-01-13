@@ -85,6 +85,7 @@
   },
   "vehicles": {
     "findPerfectCar": "Find Your Perfect Car",
+    "searchPlaceholder": "Search by brand, model...",
     "lookingForVehicle": "Looking for a vehicle?",
     "perfectSpot": "You're in the perfect spot.",
     "highQuality": "High quality at a low cost.",
