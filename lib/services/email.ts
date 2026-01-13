@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer'
 import Mail from 'nodemailer/lib/mailer'
+import { randomUUID } from 'crypto'
 
 // Lazy initialization do transporter
 let _transporter: nodemailer.Transporter | null = null
@@ -42,21 +43,22 @@ export async function sendEmail({ to, subject, text, html }: SendEmailOptions) {
 	const transporter = getTransporter()
 	const fromEmail = process.env.SMTP_FROM || process.env.SMTP_USER
 	const fromName = process.env.SMTP_FROM_NAME || 'Carento'
+	const domain = fromEmail?.split('@')[1] || 'navegarsistemas.com.br'
 
 	const mailOptions: Mail.Options = {
 		from: {
 			name: fromName,
 			address: fromEmail!
 		},
-		to: to,
+		to,
 		replyTo: fromEmail,
-		subject: subject,
-		text: text,
-		html: html,
+		subject,
+		text,
+		html,
+		messageId: `<${randomUUID()}@${domain}>`,
 		headers: {
-			'X-Priority': '1',
-			'X-Mailer': 'Carento Mailer',
-			'Precedence': 'bulk'
+			'X-Auto-Response-Suppress': 'OOF, AutoReply',
+			'List-Unsubscribe': `<mailto:${fromEmail}?subject=unsubscribe>`,
 		}
 	}
 
