@@ -250,7 +250,9 @@
     "paymentPending": "Payment Pending",
     "viewMyRentals": "View My Rentals",
     "browseMoreCars": "Browse More Cars",
-    "completePayment": "Complete Payment"
+    "completePayment": "Complete Payment",
+    "securePayment": "Your payment is secure and encrypted",
+    "preparingPayment": "Preparing payment..."
   },
   "payment": {
     "title": "Payment",

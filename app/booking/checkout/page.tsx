@@ -42,7 +42,7 @@ interface Booking {
 	}
 }
 
-function CheckoutForm({ booking, onSuccess }: { booking: Booking; onSuccess: () => void }) {
+function CheckoutForm({ booking, onSuccess, tBooking }: { booking: Booking; onSuccess: () => void; tBooking: (key: string) => string }) {
 	const t = useTranslations('payment')
 	const tCommon = useTranslations('common')
 	const stripe = useStripe()
@@ -103,13 +103,13 @@ function CheckoutForm({ booking, onSuccess }: { booking: Booking; onSuccess: () 
 					</>
 				) : (
 					<>
-						{t('pay')} ${booking.pricing.total.toFixed(2)}
+						{t('pay')} $ {booking.pricing.total.toFixed(2)}
 					</>
 				)}
 			</button>
 
 			<p className="text-muted text-center small mt-3">
-				Your payment is secure and encrypted
+				{tBooking('securePayment')}
 			</p>
 		</form>
 	)
@@ -201,7 +201,7 @@ export default function CheckoutPage() {
 			<Layout footerStyle={1}>
 				<div className="container pt-140 pb-170">
 					<div className="text-center">
-						<h4>{error || 'Booking not found'}</h4>
+						<h4>{error || t('bookingNotFound')}</h4>
 						<a href="/dashboard/my-rentals" className="btn btn-primary mt-3">
 							{tCommon('back')}
 						</a>
@@ -238,20 +238,20 @@ export default function CheckoutPage() {
 
 									<div className="small">
 										<div className="d-flex justify-content-between mb-2">
-											<span className="text-muted">Booking #:</span>
+											<span className="text-muted">{t('bookingNumber')}:</span>
 											<span>{booking.bookingNumber}</span>
 										</div>
 										<div className="d-flex justify-content-between mb-2">
-											<span className="text-muted">Pickup:</span>
-											<span>{new Date(booking.pickupDate).toLocaleDateString()}</span>
+											<span className="text-muted">{t('pickup')}:</span>
+											<span>{new Date(booking.pickupDate).toLocaleDateString('pt-BR')}</span>
 										</div>
 										<div className="d-flex justify-content-between mb-2">
-											<span className="text-muted">Return:</span>
-											<span>{new Date(booking.dropoffDate).toLocaleDateString()}</span>
+											<span className="text-muted">{t('return')}:</span>
+											<span>{new Date(booking.dropoffDate).toLocaleDateString('pt-BR')}</span>
 										</div>
 										<div className="d-flex justify-content-between mb-2">
-											<span className="text-muted">Duration:</span>
-											<span>{booking.totalDays} days</span>
+											<span className="text-muted">{t('duration')}:</span>
+											<span>{booking.totalDays} {t('days')}</span>
 										</div>
 									</div>
 
@@ -260,23 +260,23 @@ export default function CheckoutPage() {
 									<div className="small">
 										<div className="d-flex justify-content-between mb-2">
 											<span>{t('subtotal')}:</span>
-											<span>${booking.pricing.subtotal.toFixed(2)}</span>
+											<span>$ {booking.pricing.subtotal.toFixed(2)}</span>
 										</div>
 										{booking.pricing.extrasTotal > 0 && (
 											<div className="d-flex justify-content-between mb-2">
-												<span>Extras:</span>
-												<span>${booking.pricing.extrasTotal.toFixed(2)}</span>
+												<span>{t('extras')}:</span>
+												<span>$ {booking.pricing.extrasTotal.toFixed(2)}</span>
 											</div>
 										)}
 										{booking.pricing.discount > 0 && (
 											<div className="d-flex justify-content-between mb-2 text-success">
-												<span>Discount:</span>
-												<span>-${booking.pricing.discount.toFixed(2)}</span>
+												<span>{t('discount')}:</span>
+												<span>-$ {booking.pricing.discount.toFixed(2)}</span>
 											</div>
 										)}
 										<div className="d-flex justify-content-between mb-2">
-											<span>Tax:</span>
-											<span>${booking.pricing.tax.toFixed(2)}</span>
+											<span>{t('tax')}:</span>
+											<span>$ {booking.pricing.tax.toFixed(2)}</span>
 										</div>
 									</div>
 
@@ -285,7 +285,7 @@ export default function CheckoutPage() {
 									<div className="d-flex justify-content-between">
 										<strong>{t('total')}:</strong>
 										<strong className="text-primary h5 mb-0">
-											${booking.pricing.total.toFixed(2)}
+											$ {booking.pricing.total.toFixed(2)}
 										</strong>
 									</div>
 								</div>
@@ -312,6 +312,7 @@ export default function CheckoutPage() {
 											<CheckoutForm
 												booking={booking}
 												onSuccess={handlePaymentSuccess}
+												tBooking={t}
 											/>
 										</Elements>
 									) : (
@@ -319,7 +320,7 @@ export default function CheckoutPage() {
 											<div className="spinner-border text-primary" role="status">
 												<span className="visually-hidden">{tCommon('loading')}</span>
 											</div>
-											<p className="mt-3">Preparing payment...</p>
+											<p className="mt-3">{t('preparingPayment')}</p>
 										</div>
 									)}
 
