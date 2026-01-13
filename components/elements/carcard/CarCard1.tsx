@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { MongoDBCar } from '@/util/useCarFilter'
+import FavoriteButton from '@/components/elements/FavoriteButton'
 
 interface CarCard1Props {
 	car: MongoDBCar | any
@@ -43,10 +44,15 @@ export default function CarCard1({ car }: CarCard1Props) {
 	return (
 		<>
 			<div className="card-journey-small background-card hover-up">
-				<div className="card-image">
+				<div className="card-image" style={{ position: 'relative' }}>
 					<Link href={detailsLink}>
 						<img src={primaryImage} alt={carName} style={{ height: '200px', objectFit: 'cover', width: '100%' }} />
 					</Link>
+					{carId && (
+						<div style={{ position: 'absolute', top: '10px', right: '10px' }}>
+							<FavoriteButton carId={carId} size="sm" />
+						</div>
+					)}
 				</div>
 				<div className="card-info p-4 pt-30">
 					<div className="card-rating">

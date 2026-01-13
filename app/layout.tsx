@@ -5,6 +5,7 @@ import { getLocale, getMessages } from 'next-intl/server'
 import "@/node_modules/react-modal-video/css/modal-video.css"
 import "/public/assets/css/main.css"
 import AuthProvider from "@/context/AuthProvider"
+import { FavoritesProvider } from "@/context/FavoritesContext"
 
 const urbanist = Urbanist({
 	weight: ['300', '400', '500', '600', '700', '800', '900'],
@@ -31,7 +32,9 @@ export default async function RootLayout({
 			<body className={`${urbanist.variable}`}>
 				<NextIntlClientProvider messages={messages}>
 					<AuthProvider>
-						{children}
+						<FavoritesProvider>
+							{children}
+						</FavoritesProvider>
 					</AuthProvider>
 				</NextIntlClientProvider>
 			</body>

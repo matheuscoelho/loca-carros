@@ -1,17 +1,96 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import Layout from "@/components/layout/Layout"
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar"
 import Link from 'next/link'
+import Image from 'next/image'
+
+interface Car {
+	_id: string
+	name: string
+	brand: string
+	model: string
+	year: number
+	images: Array<{ url: string; isPrimary: boolean }>
+	pricing: {
+		dailyRate: number
+		currency: string
+	}
+	specifications: {
+		transmission: string
+		fuelType: string
+		seats: number
+	}
+	ratings?: {
+		overall: number
+	}
+}
 
 export default function Favorites() {
 	const t = useTranslations('dashboard')
 	const tCommon = useTranslations('common')
 	const { data: session, status } = useSession()
 	const router = useRouter()
+
+	const [cars, setCars] = useState<Car[]>([])
+	const [loading, setLoading] = useState(true)
+	const [error, setError] = useState<string | null>(null)
+	const [removing, setRemoving] = useState<string | null>(null)
+
+	useEffect(() => {
+		if (session?.user) {
+			fetchFavorites()
+		}
+	}, [session])
+
+	const fetchFavorites = async () => {
+		try {
+			setLoading(true)
+			const response = await fetch('/api/favorites')
+
+			if (!response.ok) {
+				throw new Error('Failed to fetch favorites')
+			}
+
+			const data = await response.json()
+			setCars(data.cars || [])
+		} catch (err) {
+			console.error('Error fetching favorites:', err)
+			setError('Erro ao carregar favoritos')
+		} finally {
+			setLoading(false)
+		}
+	}
+
+	const removeFavorite = async (carId: string) => {
+		try {
+			setRemoving(carId)
+			const response = await fetch(`/api/favorites?carId=${carId}`, {
+				method: 'DELETE',
+			})
+
+			if (!response.ok) {
+				throw new Error('Failed to remove favorite')
+			}
+
+			// Update local state
+			setCars(prev => prev.filter(car => car._id !== carId))
+		} catch (err) {
+			console.error('Error removing favorite:', err)
+			alert('Erro ao remover favorito')
+		} finally {
+			setRemoving(null)
+		}
+	}
+
+	const getCarImage = (car: Car) => {
+		const primaryImage = car.images?.find(img => img.isPrimary)
+		return primaryImage?.url || car.images?.[0]?.url || '/assets/imgs/page/homepage1/car-1.png'
+	}
 
 	if (status === 'loading') {
 		return (
@@ -45,43 +124,111 @@ export default function Favorites() {
 						<div className="border rounded-3 p-4">
 							<div className="d-flex justify-content-between align-items-center mb-4">
 								<h4 className="mb-0">{t('favorites')}</h4>
+								{cars.length > 0 && (
+									<span className="badge bg-primary">{cars.length} veículo(s)</span>
+								)}
 							</div>
 
-							<div className="text-center py-5">
-								<div className="mb-3" style={{ fontSize: '64px' }}>❤️</div>
-								<h5 className="text-muted">Seus favoritos aparecerão aqui</h5>
-								<p className="text-muted mb-4">
-									Encontre veículos que você gosta e adicione aos favoritos para acessar rapidamente depois.
-								</p>
-								<Link href="/cars-list-1" className="btn btn-primary">
-									🚗 {t('findVehicle')}
-								</Link>
-							</div>
-
-							{/* Feature Preview */}
-							<div className="border-top pt-4 mt-4">
-								<h6 className="text-muted mb-3">Em breve:</h6>
-								<div className="row g-3">
-									<div className="col-md-4">
-										<div className="bg-light rounded-3 p-3 text-center">
-											<span style={{ fontSize: '24px' }}>⭐</span>
-											<p className="mb-0 small mt-2">Salvar veículos favoritos</p>
-										</div>
+							{loading ? (
+								<div className="text-center py-5">
+									<div className="spinner-border text-primary" role="status">
+										<span className="visually-hidden">{tCommon('loading')}</span>
 									</div>
-									<div className="col-md-4">
-										<div className="bg-light rounded-3 p-3 text-center">
-											<span style={{ fontSize: '24px' }}>🔔</span>
-											<p className="mb-0 small mt-2">Alertas de disponibilidade</p>
-										</div>
-									</div>
-									<div className="col-md-4">
-										<div className="bg-light rounded-3 p-3 text-center">
-											<span style={{ fontSize: '24px' }}>💰</span>
-											<p className="mb-0 small mt-2">Alertas de promoções</p>
-										</div>
-									</div>
+									<p className="mt-3">Carregando favoritos...</p>
 								</div>
-							</div>
+							) : error ? (
+								<div className="alert alert-danger text-center">
+									{error}
+									<button className="btn btn-sm btn-primary ms-3" onClick={fetchFavorites}>
+										Tentar novamente
+									</button>
+								</div>
+							) : cars.length === 0 ? (
+								<div className="text-center py-5">
+									<div className="mb-3" style={{ fontSize: '64px' }}>❤️</div>
+									<h5 className="text-muted">Seus favoritos aparecerão aqui</h5>
+									<p className="text-muted mb-4">
+										Encontre veículos que você gosta e adicione aos favoritos para acessar rapidamente depois.
+									</p>
+									<Link href="/cars-list-1" className="btn btn-primary">
+										{t('findVehicle')}
+									</Link>
+								</div>
+							) : (
+								<div className="row g-4">
+									{cars.map((car) => (
+										<div key={car._id} className="col-md-6 col-lg-4">
+											<div className="card h-100 border shadow-sm">
+												<div className="position-relative">
+													<Link href={`/cars/${car._id}`}>
+														<Image
+															src={getCarImage(car)}
+															alt={car.name || `${car.brand} ${car.model}`}
+															width={300}
+															height={200}
+															className="card-img-top"
+															style={{ objectFit: 'cover', height: '180px' }}
+														/>
+													</Link>
+													<button
+														className="btn btn-sm btn-danger position-absolute"
+														style={{ top: '10px', right: '10px' }}
+														onClick={() => removeFavorite(car._id)}
+														disabled={removing === car._id}
+													>
+														{removing === car._id ? (
+															<span className="spinner-border spinner-border-sm" />
+														) : (
+															'❤️'
+														)}
+													</button>
+												</div>
+												<div className="card-body">
+													<h6 className="card-title mb-1">
+														<Link href={`/cars/${car._id}`} className="text-decoration-none text-dark">
+															{car.brand} {car.model} {car.year}
+														</Link>
+													</h6>
+													<div className="d-flex gap-2 mb-2">
+														<small className="text-muted">
+															<i className="bi bi-gear me-1"></i>
+															{car.specifications?.transmission || 'Auto'}
+														</small>
+														<small className="text-muted">
+															<i className="bi bi-fuel-pump me-1"></i>
+															{car.specifications?.fuelType || 'Gasoline'}
+														</small>
+														<small className="text-muted">
+															<i className="bi bi-people me-1"></i>
+															{car.specifications?.seats || 5}
+														</small>
+													</div>
+													{car.ratings?.overall && (
+														<div className="mb-2">
+															<span className="text-warning">★</span>
+															<small className="ms-1">{car.ratings.overall.toFixed(1)}</small>
+														</div>
+													)}
+													<div className="d-flex justify-content-between align-items-center mt-3">
+														<div>
+															<strong className="text-primary fs-5">
+																${car.pricing?.dailyRate || 0}
+															</strong>
+															<small className="text-muted">/dia</small>
+														</div>
+														<Link
+															href={`/booking/${car._id}`}
+															className="btn btn-sm btn-primary"
+														>
+															Reservar
+														</Link>
+													</div>
+												</div>
+											</div>
+										</div>
+									))}
+								</div>
+							)}
 						</div>
 					</div>
 				</div>

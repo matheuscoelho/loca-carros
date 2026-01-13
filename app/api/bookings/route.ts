@@ -172,6 +172,7 @@ export async function POST(request: NextRequest) {
 			pricing: {
 				dailyRate,
 				...pricing,
+				discount: 0,
 				currency: car.pricing.currency || 'USD',
 			},
 			status: 'pending',

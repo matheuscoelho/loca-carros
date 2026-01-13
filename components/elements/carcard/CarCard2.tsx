@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { MongoDBCar } from '@/util/useCarFilter'
+import FavoriteButton from '@/components/elements/FavoriteButton'
 
 interface CarCard2Props {
 	car: MongoDBCar | any
@@ -44,10 +45,15 @@ export default function CarCard2({ car }: CarCard2Props) {
 	return (
 		<>
 			<div className="card-flight card-hotel card-property background-card border">
-				<div className="card-image">
+				<div className="card-image" style={{ position: 'relative' }}>
 					<Link href={detailsLink}>
 						<img src={primaryImage} alt={carName} style={{ height: '250px', objectFit: 'cover', width: '100%' }} />
 					</Link>
+					{carId && (
+						<div style={{ position: 'absolute', top: '10px', right: '10px' }}>
+							<FavoriteButton carId={carId} size="sm" />
+						</div>
+					)}
 				</div>
 				<div className="card-info p-md-40 p-3">
 					<div className="tour-rate">
