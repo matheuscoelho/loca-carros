@@ -1,7 +1,18 @@
 'use client'
 
+import { useEffect } from 'react'
+
 export default function DemoBanner() {
 	const showBanner = process.env.NEXT_PUBLIC_SHOW_DEMO_BANNER === 'true'
+
+	useEffect(() => {
+		if (showBanner) {
+			document.body.classList.add('has-demo-banner')
+		}
+		return () => {
+			document.body.classList.remove('has-demo-banner')
+		}
+	}, [showBanner])
 
 	if (!showBanner) return null
 
