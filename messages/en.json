@@ -257,7 +257,10 @@
       "todayStats": "Today's Stats",
       "newBookings": "New Bookings",
       "pendingPayments": "Pending Payments",
-      "activeRentals": "Active Rentals"
+      "activeRentals": "Active Rentals",
+      "bookingStatus": "Booking Status",
+      "monthlyRevenue": "Monthly Revenue",
+      "bookingsPerMonth": "Bookings per Month"
     },
     "vehicles": {
       "title": "Vehicles Management",

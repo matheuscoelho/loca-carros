@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
+import { DonutChart, LineChart, BarChart } from '@/components/admin/charts'
 
 interface DashboardStats {
 	users: {
@@ -209,7 +210,57 @@ export default function AdminDashboard() {
 				</div>
 			</div>
 
-			{/* Today's Stats & Booking Status */}
+			{/* Charts Row */}
+			<div className="row g-4 mb-4">
+				<div className="col-lg-4">
+					<div className="card border-0 shadow-sm h-100">
+						<div className="card-header bg-white border-0">
+							<h5 className="mb-0">{t('dashboard.bookingStatus')}</h5>
+						</div>
+						<div className="card-body d-flex justify-content-center">
+							<DonutChart
+								data={[
+									{ label: 'Pending', value: stats.bookings.pending, color: '#ffc107' },
+									{ label: 'Confirmed', value: stats.bookings.confirmed, color: '#0dcaf0' },
+									{ label: 'In Progress', value: stats.bookings.inProgress, color: '#0d6efd' },
+									{ label: 'Completed', value: stats.bookings.completed, color: '#198754' },
+									{ label: 'Cancelled', value: stats.bookings.cancelled, color: '#dc3545' },
+								]}
+								size={180}
+								strokeWidth={25}
+							/>
+						</div>
+					</div>
+				</div>
+
+				<div className="col-lg-8">
+					<div className="card border-0 shadow-sm h-100">
+						<div className="card-header bg-white border-0">
+							<h5 className="mb-0">{t('dashboard.monthlyRevenue')}</h5>
+						</div>
+						<div className="card-body" style={{ paddingLeft: '45px' }}>
+							{stats.revenue.monthly && stats.revenue.monthly.length > 0 ? (
+								<LineChart
+									data={stats.revenue.monthly.slice(-6).map(item => ({
+										label: new Date(item.year, item.month - 1).toLocaleDateString('en', { month: 'short' }),
+										value: item.revenue
+									}))}
+									height={200}
+									lineColor="#198754"
+									fillColor="#19875415"
+									valuePrefix="$"
+								/>
+							) : (
+								<div className="text-center text-muted py-5">
+									No revenue data available
+								</div>
+							)}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* Today's Stats & Booking Bar Chart */}
 			<div className="row g-4 mb-4">
 				<div className="col-lg-4">
 					<div className="card border-0 shadow-sm h-100">
@@ -236,41 +287,23 @@ export default function AdminDashboard() {
 				<div className="col-lg-8">
 					<div className="card border-0 shadow-sm h-100">
 						<div className="card-header bg-white border-0">
-							<h5 className="mb-0">Booking Status Overview</h5>
+							<h5 className="mb-0">{t('dashboard.bookingsPerMonth')}</h5>
 						</div>
-						<div className="card-body">
-							<div className="row text-center">
-								<div className="col">
-									<div className="py-3">
-										<span className="badge bg-warning mb-2" style={{ fontSize: '1.5rem' }}>{stats.bookings.pending}</span>
-										<p className="mb-0 small text-muted">Pending</p>
-									</div>
+						<div className="card-body" style={{ paddingLeft: '45px' }}>
+							{stats.revenue.monthly && stats.revenue.monthly.length > 0 ? (
+								<BarChart
+									data={stats.revenue.monthly.slice(-6).map(item => ({
+										label: new Date(item.year, item.month - 1).toLocaleDateString('en', { month: 'short' }),
+										value: item.bookings
+									}))}
+									height={180}
+									barColor="#0d6efd"
+								/>
+							) : (
+								<div className="text-center text-muted py-5">
+									No booking data available
 								</div>
-								<div className="col">
-									<div className="py-3">
-										<span className="badge bg-info mb-2" style={{ fontSize: '1.5rem' }}>{stats.bookings.confirmed}</span>
-										<p className="mb-0 small text-muted">Confirmed</p>
-									</div>
-								</div>
-								<div className="col">
-									<div className="py-3">
-										<span className="badge bg-primary mb-2" style={{ fontSize: '1.5rem' }}>{stats.bookings.inProgress}</span>
-										<p className="mb-0 small text-muted">In Progress</p>
-									</div>
-								</div>
-								<div className="col">
-									<div className="py-3">
-										<span className="badge bg-success mb-2" style={{ fontSize: '1.5rem' }}>{stats.bookings.completed}</span>
-										<p className="mb-0 small text-muted">Completed</p>
-									</div>
-								</div>
-								<div className="col">
-									<div className="py-3">
-										<span className="badge bg-danger mb-2" style={{ fontSize: '1.5rem' }}>{stats.bookings.cancelled}</span>
-										<p className="mb-0 small text-muted">Cancelled</p>
-									</div>
-								</div>
-							</div>
+							)}
 						</div>
 					</div>
 				</div>
