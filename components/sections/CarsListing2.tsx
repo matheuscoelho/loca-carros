@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from "next/link"
+import { useTranslations } from 'next-intl'
 
 interface Car {
 	_id: string
@@ -32,6 +33,8 @@ interface Car {
 }
 
 export default function CarsListing2() {
+	const t = useTranslations('vehicles')
+	const tc = useTranslations('common')
 	const [cars, setCars] = useState<Car[]>([])
 	const [loading, setLoading] = useState(true)
 
@@ -69,13 +72,13 @@ export default function CarsListing2() {
 				<div className="container">
 					<div className="row align-items-end mb-10">
 						<div className="col-md-8">
-							<h3 className="neutral-1000 wow fadeInUp">Featured Listings</h3>
-							<p className="text-lg-medium neutral-500 wow fadeInUp">Find the perfect ride for any occasion</p>
+							<h3 className="neutral-1000 wow fadeInUp">{t('featuredListings')}</h3>
+							<p className="text-lg-medium neutral-500 wow fadeInUp">{t('findPerfectRide')}</p>
 						</div>
 						<div className="col-md-4 mt-md-0 mt-4">
 							<div className="d-flex justify-content-end">
 								<Link className="btn btn-primary wow fadeInUp" href="/cars-list-1">
-									View More
+									{t('viewMore')}
 									<svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M8 15L15 8L8 1M15 8L1 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 									</svg>
@@ -87,12 +90,12 @@ export default function CarsListing2() {
 						{loading ? (
 							<div className="col-12 text-center py-5">
 								<div className="spinner-border text-primary" role="status">
-									<span className="visually-hidden">Loading...</span>
+									<span className="visually-hidden">{tc('loading')}</span>
 								</div>
 							</div>
 						) : cars.length === 0 ? (
 							<div className="col-12 text-center py-5">
-								<p className="text-muted">No vehicles available</p>
+								<p className="text-muted">{t('noVehiclesAvailable')}</p>
 							</div>
 						) : (
 							cars.map((car, index) => (
@@ -108,7 +111,7 @@ export default function CarsListing2() {
 												<div className="card-left" />
 												<div className="card-right">
 													<span className="rating text-xs-medium py-1 rounded-pill">
-														{car.rating?.toFixed(2) || '4.50'} <span className="text-xs-medium neutral-500">({car.reviewCount || 0} reviews)</span>
+														{car.rating?.toFixed(2) || '4.50'} <span className="text-xs-medium neutral-500">({car.reviewCount || 0} {t('reviews')})</span>
 													</span>
 												</div>
 											</div>
@@ -122,10 +125,10 @@ export default function CarsListing2() {
 													<p className="text-location text-sm-medium neutral-500">{getLocation(car)}</p>
 												</div>
 												<div className="card-facitlities">
-													<p className="card-miles text-md-medium">{car.specs?.mileage?.toLocaleString() || 0} miles</p>
+													<p className="card-miles text-md-medium">{car.specs?.mileage?.toLocaleString() || 0} {t('miles')}</p>
 													<p className="card-gear text-md-medium">{car.transmission || 'Automatic'}</p>
 													<p className="card-fuel text-md-medium">{car.fuelType || 'Gasoline'}</p>
-													<p className="card-seat text-md-medium">{car.specs?.seats || 5} seats</p>
+													<p className="card-seat text-md-medium">{car.specs?.seats || 5} {t('seats')}</p>
 												</div>
 												<div className="endtime">
 													<div className="card-price">
@@ -133,7 +136,7 @@ export default function CarsListing2() {
 														<p className="text-md-medium neutral-500" />
 													</div>
 													<div className="card-button">
-														<Link className="btn btn-gray" href={`/cars/${car._id}`}>Book Now</Link>
+														<Link className="btn btn-gray" href={`/cars/${car._id}`}>{t('bookNow')}</Link>
 													</div>
 												</div>
 											</div>

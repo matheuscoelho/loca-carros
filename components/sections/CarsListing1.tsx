@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { Swiper, SwiperSlide } from "swiper/react"
 import Link from "next/link"
 import { swiperGroup3 } from '@/util/swiperOptions'
+import { useTranslations } from 'next-intl'
 
 interface Car {
 	_id: string
@@ -34,6 +35,8 @@ interface Car {
 }
 
 export default function CarsListing1() {
+	const t = useTranslations('vehicles')
+	const tc = useTranslations('common')
 	const [cars, setCars] = useState<Car[]>([])
 	const [loading, setLoading] = useState(true)
 
@@ -77,8 +80,8 @@ export default function CarsListing1() {
 				<div className="container">
 					<div className="row align-items-end">
 						<div className="col-md-9 wow fadeInUp">
-							<h3 className="title-svg neutral-1000 mb-5">Most Searched Vehicles</h3>
-							<p className="text-lg-medium text-bold neutral-500">The world's leading car brands</p>
+							<h3 className="title-svg neutral-1000 mb-5">{t('mostSearched')}</h3>
+							<p className="text-lg-medium text-bold neutral-500">{t('worldLeadingBrands')}</p>
 						</div>
 						<div className="col-md-3 position-relative mb-30 wow fadeInUp">
 							<div className="box-button-slider box-button-slider-team justify-content-end">
@@ -100,12 +103,12 @@ export default function CarsListing1() {
 							{loading ? (
 								<div className="text-center py-5">
 									<div className="spinner-border text-primary" role="status">
-										<span className="visually-hidden">Loading...</span>
+										<span className="visually-hidden">{tc('loading')}</span>
 									</div>
 								</div>
 							) : cars.length === 0 ? (
 								<div className="text-center py-5">
-									<p className="text-muted">No vehicles available</p>
+									<p className="text-muted">{t('noVehiclesAvailable')}</p>
 								</div>
 							) : (
 								<Swiper {...swiperGroup3} className="swiper-container swiper-group-3 swiper-group-journey">
@@ -123,7 +126,7 @@ export default function CarsListing1() {
 															<div className="card-rating">
 																<div className="card-left" />
 																<div className="card-right">
-																	<span className="rating">{car.rating?.toFixed(2) || '4.50'} <span className="text-sm-medium neutral-500">({car.reviewCount || 0} reviews)</span></span>
+																	<span className="rating">{car.rating?.toFixed(2) || '4.50'} <span className="text-sm-medium neutral-500">({car.reviewCount || 0} {t('reviews')})</span></span>
 																</div>
 															</div>
 															<div className="card-title">
@@ -136,18 +139,18 @@ export default function CarsListing1() {
 																	<p className="text-location text-md-medium neutral-500">{getLocation(car)}</p>
 																</div>
 																<div className="card-facitlities">
-																	<p className="card-miles text-md-medium">{car.specs?.mileage?.toLocaleString() || 0} miles</p>
+																	<p className="card-miles text-md-medium">{car.specs?.mileage?.toLocaleString() || 0} {t('miles')}</p>
 																	<p className="card-gear text-md-medium">{car.transmission || 'Automatic'}</p>
 																	<p className="card-fuel text-md-medium">{car.fuelType || 'Gasoline'}</p>
-																	<p className="card-seat text-md-medium">{car.specs?.seats || 5} seats</p>
+																	<p className="card-seat text-md-medium">{car.specs?.seats || 5} {t('seats')}</p>
 																</div>
 																<div className="endtime">
 																	<div className="card-price">
-																		<p className="text-md-medium neutral-500 me-2">From</p>
+																		<p className="text-md-medium neutral-500 me-2">{t('from')}</p>
 																		<h6 className="heading-6 neutral-1000">${car.pricing?.dailyRate?.toFixed(2) || '0.00'}</h6>
 																	</div>
 																	<div className="card-button">
-																		<Link className="btn btn-gray" href={`/cars/${car._id}`}>Book Now</Link>
+																		<Link className="btn btn-gray" href={`/cars/${car._id}`}>{t('bookNow')}</Link>
 																	</div>
 																</div>
 															</div>
@@ -174,7 +177,7 @@ export default function CarsListing1() {
 									</clipPath>
 								</defs>
 							</svg>
-							Load More Cars
+							{t('loadMoreCars')}
 						</Link>
 					</div>
 				</div>

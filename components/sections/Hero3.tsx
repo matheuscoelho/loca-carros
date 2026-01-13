@@ -2,8 +2,11 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import Link from 'next/link'
 import { swiperGroup1 } from '@/util/swiperOptions'
+import { useTranslations } from 'next-intl'
 
 export default function Hero3() {
+	const t = useTranslations('vehicles')
+
 	return (
 		<>
 			<section className="box-section block-banner-home3 position-relative">
@@ -14,14 +17,13 @@ export default function Hero3() {
 								<SwiperSlide>
 									<div className="item-banner-slide banner-1">
 										<div className="container text-center position-relative z-1">
-											<span className="btn background-brand-2 px-3 py-3 rounded-12 text-sm-bold text-dark">+3600 cars for you</span>
-											<h1 className="mt-20 mb-20 color-white">Discover your next car today.</h1>
+											<span className="btn background-brand-2 px-3 py-3 rounded-12 text-sm-bold text-dark">{t('carsForYou')}</span>
+											<h1 className="mt-20 mb-20 color-white">{t('discoverNextCar')}</h1>
 											<h6 className="color-white heading-6-medium">
-												Explore our wide selection and experience a smooth buying process <br className="d-none d-md-block" />
-												with personalized support at every stage.
+												{t('exploreWideSelection')}
 											</h6>
 											<div className="d-flex align-items-center justify-content-center pt-60 flex-wrap">
-												<span className="text-sm-bold text-white"> Popular Searches: </span>
+												<span className="text-sm-bold text-white"> {t('popularSearches')} </span>
 												&nbsp;
 												<Link href="#" className="text-white text-decoration-underline"> Economy, </Link>
 												&nbsp;
@@ -39,14 +41,13 @@ export default function Hero3() {
 								<SwiperSlide>
 									<div className="item-banner-slide banner-2">
 										<div className="container text-center position-relative z-1">
-											<span className="btn background-brand-2 px-3 py-3 rounded-12 text-sm-bold text-dark">+3600 cars for you</span>
-											<h1 className="mt-20 mb-20 color-white">Discover your next car today.</h1>
+											<span className="btn background-brand-2 px-3 py-3 rounded-12 text-sm-bold text-dark">{t('carsForYou')}</span>
+											<h1 className="mt-20 mb-20 color-white">{t('discoverNextCar')}</h1>
 											<h6 className="color-white heading-6-medium">
-												Explore our wide selection and experience a smooth buying process <br className="d-none d-md-block" />
-												with personalized support at every stage.
+												{t('exploreWideSelection')}
 											</h6>
 											<div className="d-flex align-items-center justify-content-center pt-60  flex-wrap">
-												<span className="text-sm-bold text-white"> Popular Searches: </span>
+												<span className="text-sm-bold text-white"> {t('popularSearches')} </span>
 												&nbsp;
 												<Link href="#" className="text-white text-decoration-underline"> Economy, </Link>
 												&nbsp;

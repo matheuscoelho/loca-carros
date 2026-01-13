@@ -1,6 +1,10 @@
+'use client'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 export default function Footer1() {
+	const t = useTranslations('footer')
+
 	return (
 		<>
 			<footer className="footer">
@@ -8,14 +12,13 @@ export default function Footer1() {
 					<div className="footer-top">
 						<div className="row align-items-center">
 							<div className="col-lg-5 col-md-6 text-center text-md-start">
-								<h5 className="color-white wow fadeInDown">Subscribe to see secret deals prices drop the moment you
-									sign up!</h5>
+								<h5 className="color-white wow fadeInDown">{t('subscribe')}</h5>
 							</div>
 							<div className="col-lg-7 col-md-6 text-center text-md-end mt-md-0 mt-4">
 								<div className="d-flex align-items-center justify-content-center justify-content-md-end">
 									<form className="form-newsletter wow fadeInUp" action="#">
-										<input className="form-control" type="text" placeholder="Enter your email" />
-										<input className="btn btn-brand-2" type="submit" defaultValue="Subscribe" />
+										<input className="form-control" type="text" placeholder={t('enterEmail')} />
+										<input className="btn btn-brand-2" type="submit" defaultValue={t('subscribeButton')} />
 									</form>
 								</div>
 							</div>
@@ -31,71 +34,71 @@ export default function Footer1() {
 								<div className="box-info-contact mt-0">
 									<p className="text-md neutral-400 icon-address">2356 Oakwood Drive, Suite 18, San Francisco,
 										California 94111, US</p>
-									<p className="text-md neutral-400 icon-worktime">Hours: 8:00 - 17:00, Mon - Sat</p>
+									<p className="text-md neutral-400 icon-worktime">{t('hours')}</p>
 									<p className="text-md neutral-400 icon-email">support@carento.com</p>
 								</div>
 								<div className="box-need-help">
-									<p className="need-help text-md-medium mb-5">Need help? Call us</p>
+									<p className="need-help text-md-medium mb-5">{t('needHelp')}</p>
 									<br /><Link className="heading-6 phone-support" href="/tel:+1 222-555-33-99">+1 222-555-33-99</Link>
 								</div>
 							</div>
 						</div>
 						<div className="col-md-2 col-xs-6 footer-3">
-							<h6 className="text-linear-3">Company</h6>
+							<h6 className="text-linear-3">{t('company')}</h6>
 							<ul className="menu-footer">
-								<li><Link href="#">About Us</Link></li>
-								<li><Link href="#">Our Awards</Link></li>
-								<li><Link href="#">Agencies</Link></li>
-								<li><Link href="#">Copyright Notices</Link></li>
-								<li><Link href="#">Terms of Use</Link></li>
-								<li><Link href="#">Privacy Notice</Link></li>
-								<li><Link href="#">Lost &amp; Found</Link></li>
+								<li><Link href="#">{t('aboutUs')}</Link></li>
+								<li><Link href="#">{t('ourAwards')}</Link></li>
+								<li><Link href="#">{t('agencies')}</Link></li>
+								<li><Link href="#">{t('copyrightNotices')}</Link></li>
+								<li><Link href="#">{t('termsOfUse')}</Link></li>
+								<li><Link href="#">{t('privacyNotice')}</Link></li>
+								<li><Link href="#">{t('lostFound')}</Link></li>
 							</ul>
 						</div>
 						<div className="col-md-2 col-xs-6 footer-2">
-							<h6 className="text-linear-3">Our Services</h6>
+							<h6 className="text-linear-3">{t('ourServices')}</h6>
 							<ul className="menu-footer">
-								<li><Link href="#">Car Rental Services</Link></li>
-								<li><Link href="#">Vehicle Leasing Options</Link></li>
-								<li><Link href="#">Long-Term Car Rentals</Link></li>
-								<li><Link href="#">Car Sales and Trade-Ins</Link></li>
-								<li><Link href="#">Luxury Car Rentals</Link></li>
-								<li><Link href="#">Rent-to-Own Programs</Link></li>
-								<li><Link href="#">Fleet Management Solutions</Link></li>
+								<li><Link href="#">{t('carRental')}</Link></li>
+								<li><Link href="#">{t('vehicleLeasing')}</Link></li>
+								<li><Link href="#">{t('longTermRentals')}</Link></li>
+								<li><Link href="#">{t('carSales')}</Link></li>
+								<li><Link href="#">{t('luxuryRentals')}</Link></li>
+								<li><Link href="#">{t('rentToOwn')}</Link></li>
+								<li><Link href="#">{t('fleetManagement')}</Link></li>
 							</ul>
 						</div>
 						<div className="col-md-2 col-xs-6 footer-4">
-							<h6 className="text-linear-3">Our Partners</h6>
+							<h6 className="text-linear-3">{t('ourPartners')}</h6>
 							<ul className="menu-footer">
-								<li><Link href="#">Affiliates</Link></li>
-								<li><Link href="#">Travel Agents</Link></li>
-								<li><Link href="#">AARP Members</Link></li>
-								<li><Link href="#">Points Programs</Link></li>
-								<li><Link href="#">Military &amp; Veterans</Link></li>
-								<li><Link href="#">Work with us</Link></li>
-								<li><Link href="#">Advertise with us</Link></li>
+								<li><Link href="#">{t('affiliates')}</Link></li>
+								<li><Link href="#">{t('travelAgents')}</Link></li>
+								<li><Link href="#">{t('aarpMembers')}</Link></li>
+								<li><Link href="#">{t('pointsPrograms')}</Link></li>
+								<li><Link href="#">{t('militaryVeterans')}</Link></li>
+								<li><Link href="#">{t('workWithUs')}</Link></li>
+								<li><Link href="#">{t('advertiseWithUs')}</Link></li>
 							</ul>
 						</div>
 						<div className="col-md-3 col-xs-6 footer-5">
-							<h6 className="text-linear-3">Support</h6>
+							<h6 className="text-linear-3">{t('support')}</h6>
 							<ul className="menu-footer">
-								<li><Link href="#">Forum support</Link></li>
-								<li><Link href="#">Help Center</Link></li>
-								<li><Link href="#">Live chat</Link></li>
-								<li><Link href="#">How it works</Link></li>
-								<li><Link href="#">Security</Link></li>
-								<li><Link href="#">Refund Policy</Link></li>
+								<li><Link href="#">{t('forumSupport')}</Link></li>
+								<li><Link href="#">{t('helpCenter')}</Link></li>
+								<li><Link href="#">{t('liveChat')}</Link></li>
+								<li><Link href="#">{t('howItWorks')}</Link></li>
+								<li><Link href="#">{t('security')}</Link></li>
+								<li><Link href="#">{t('refundPolicy')}</Link></li>
 							</ul>
 						</div>
 					</div>
 					<div className="footer-bottom mt-50">
 						<div className="row align-items-center justify-content-center">
 							<div className="col-md-6 text-md-start text-center mb-20">
-								<p className="text-sm color-white">© {new Date().getFullYear()} Iuri Inc. All rights reserved.</p>
+								<p className="text-sm color-white">© {new Date().getFullYear()} Iuri Inc. {t('allRightsReserved')}</p>
 							</div>
 							<div className="col-md-6 text-md-end text-center mb-20">
 								<div className="d-flex align-items-center justify-content-center justify-content-md-end">
-									<p className="text-lg-bold neutral-0 d-inline-block mr-10">Follow us</p>
+									<p className="text-lg-bold neutral-0 d-inline-block mr-10">{t('followUs')}</p>
 									<div className="box-socials-footer d-inline-block">
 										<Link className="icon-socials icon-instagram" href="#">
 											<svg xmlns="http://www.w3.org/2000/svg" width={21} height={20} viewBox="0 0 21 20" fill="none">
