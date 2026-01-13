@@ -79,6 +79,19 @@ function CheckoutForm({ booking, onSuccess, tBooking }: { booking: Booking; onSu
 			setError(confirmError.message || 'Payment failed')
 			setProcessing(false)
 		} else if (paymentIntent && paymentIntent.status === 'succeeded') {
+			// Atualiza o status do pagamento IMEDIATAMENTE após confirmação
+			try {
+				await fetch('/api/payments/confirm', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						bookingId: booking._id,
+						paymentIntentId: paymentIntent.id
+					}),
+				})
+			} catch (err) {
+				console.error('Erro ao confirmar pagamento:', err)
+			}
 			onSuccess()
 		}
 	}
