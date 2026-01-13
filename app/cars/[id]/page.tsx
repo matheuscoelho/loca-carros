@@ -8,6 +8,7 @@ import Marquee from 'react-fast-marquee'
 import ModalVideo from 'react-modal-video'
 import Slider from "react-slick"
 import FavoriteButton from '@/components/elements/FavoriteButton'
+import { useTranslations } from 'next-intl'
 
 const SlickArrowLeft = ({ currentSlide, slideCount, ...props }: any) => (
 	<button
@@ -82,6 +83,7 @@ interface Car {
 
 export default function CarDetails({ params }: { params: { id: string } }) {
 	const router = useRouter()
+	const t = useTranslations('carDetails')
 	const [isOpen, setOpen] = useState(false)
 	const [nav1, setNav1] = useState(null)
 	const [nav2, setNav2] = useState(null)
@@ -149,9 +151,9 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 				<div className="container pt-140 pb-170">
 					<div className="text-center">
 						<div className="spinner-border text-primary" role="status">
-							<span className="visually-hidden">Carregando...</span>
+							<span className="visually-hidden">{t('loading')}</span>
 						</div>
-						<p className="mt-3">Carregando detalhes do veículo...</p>
+						<p className="mt-3">{t('loading')}</p>
 					</div>
 				</div>
 			</Layout>
@@ -163,8 +165,8 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 			<Layout footerStyle={1}>
 				<div className="container pt-140 pb-170">
 					<div className="text-center">
-						<h4>{error || 'Veículo não encontrado'}</h4>
-						<Link href="/cars-list-1" className="btn btn-primary mt-3">Voltar</Link>
+						<h4>{error || t('vehicleNotFound')}</h4>
+						<Link href="/cars-list-1" className="btn btn-primary mt-3">{t('back')}</Link>
 					</div>
 				</div>
 			</Layout>
@@ -181,7 +183,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 						<div className="container">
 							<ul className="breadcrumbs">
 								<li>
-									<Link href="/">Home</Link>
+									<Link href="/">{t('breadcrumb.home')}</Link>
 									<span className="arrow-right">
 										<svg width={7} height={12} viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
 											<path d="M1 11L6 6L1 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -189,7 +191,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 									</span>
 								</li>
 								<li>
-									<Link href="/cars-list-1">Cars Rental</Link>
+									<Link href="/cars-list-1">{t('breadcrumb.carsRental')}</Link>
 									<span className="arrow-right">
 										<svg width={7} height={12} viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
 											<path d="M1 11L6 6L1 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -224,9 +226,9 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 												<path d="M8 8.75C8.4125 8.75 8.75 8.4125 8.75 8V2.75C8.75 2.3375 8.4125 2 8 2H2.75C2.3375 2 2 2.3375 2 2.75V8C2 8.4125 2.3375 8.75 2.75 8.75H8ZM8 0.5C9.245 0.5 10.25 1.505 10.25 2.75V8C10.25 9.245 9.245 10.25 8 10.25H2.75C1.505 10.25 0.5 9.245 0.5 8V2.75C0.5 1.505 1.505 0.5 2.75 0.5H8Z" fill="currentColor" />
 												<path d="M8 20C8.4125 20 8.75 19.6625 8.75 19.25V14C8.75 13.5875 8.4125 13.25 8 13.25H2.75C2.3375 13.25 2 13.5875 2 14V19.25C2 19.6625 2.3375 20 2.75 20H8ZM8 11.75C9.245 11.75 10.25 12.755 10.25 14V19.25C10.25 20.495 9.245 21.5 8 21.5H2.75C1.505 21.5 0.5 20.495 0.5 19.25V14C0.5 12.755 1.505 11.75 2.75 11.75H8Z" fill="currentColor" />
 											</svg>
-											See All Photos
+											{t('seeAllPhotos')}
 										</Link>
-										<a className="btn btn-white-md popup-youtube" onClick={() => setOpen(true)}> <img src="/assets/imgs/page/activities/video.svg" alt="Navegar Sistemas" />Video Clips</a>
+										<a className="btn btn-white-md popup-youtube" onClick={() => setOpen(true)}> <img src="/assets/imgs/page/activities/video.svg" alt="Navegar Sistemas" />{t('videoClips')}</a>
 									</div>
 								</div>
 								<div className="slider-thumnail-activities">
@@ -269,12 +271,12 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 											</svg>
 											{locationText}
 										</p>
-										<Link className="text-md-medium neutral-1000 mr-30" href="#">Show on map</Link>
+										<Link className="text-md-medium neutral-1000 mr-30" href="#">{t('showOnMap')}</Link>
 										<p className="text-md-medium neutral-1000 tour-code mr-15">
 											<svg className="invert" xmlns="http://www.w3.org/2000/svg" width={20} height={18} viewBox="0 0 20 18" fill="none">
 												<path fillRule="evenodd" clipRule="evenodd" d="M13.2729 0.273646C13.4097 0.238432 13.5538 0.24262 13.6884 0.28573L18.5284 1.83572L18.5474 1.84209C18.8967 1.96436 19.1936 2.19167 19.4024 2.4875C19.5891 2.75202 19.7309 3.08694 19.7489 3.46434C19.7494 3.47622 19.7497 3.4881 19.7497 3.49998V15.5999C19.7625 15.8723 19.7102 16.1395 19.609 16.3754C19.6059 16.3827 19.6026 16.39 19.5993 16.3972C19.476 16.6613 19.3017 16.8663 19.1098 17.0262C19.1023 17.0324 19.0947 17.0385 19.087 17.0445C18.8513 17.2258 18.5774 17.3363 18.2988 17.3734L18.2927 17.3743C18.0363 17.4063 17.7882 17.3792 17.5622 17.3133C17.5379 17.3081 17.5138 17.3016 17.4901 17.294L13.4665 16.0004L6.75651 17.7263C6.62007 17.7614 6.47649 17.7574 6.34221 17.7147L1.47223 16.1647C1.46543 16.1625 1.45866 16.1603 1.45193 16.1579C1.0871 16.0302 0.813939 15.7971 0.613929 15.5356C0.608133 15.528 0.602481 15.5203 0.596973 15.5125C0.395967 15.2278 0.277432 14.8905 0.260536 14.5357C0.259972 14.5238 0.259689 14.5119 0.259689 14.5V2.39007C0.246699 2.11286 0.301239 1.83735 0.420015 1.58283C0.544641 1.31578 0.724533 1.10313 0.942417 0.93553C1.17424 0.757204 1.45649 0.6376 1.7691 0.61312C2.03626 0.583264 2.30621 0.616234 2.56047 0.712834L6.56277 1.99963L13.2729 0.273646Z" fill="#101010" />
 											</svg>
-											Fleet Code:
+											{t('fleetCode')}
 										</p>
 										<Link className="text-md-medium neutral-1000" href="#">{car.fleetCode || car.licensePlate}</Link>
 									</div>
@@ -283,7 +285,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 											<svg width={16} height={18} viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<path d="M13 11.5332C12.012 11.5332 11.1413 12.0193 10.5944 12.7584L5.86633 10.3374C5.94483 10.0698 6 9.79249 6 9.49989C6 9.10302 5.91863 8.72572 5.77807 8.37869L10.7262 5.40109C11.2769 6.04735 12.0863 6.46655 13 6.46655C14.6543 6.46655 16 5.12085 16 3.46655C16 1.81225 14.6543 0.466553 13 0.466553C11.3457 0.466553 10 1.81225 10 3.46655C10 3.84779 10.0785 4.20942 10.2087 4.54515L5.24583 7.53149C4.69563 6.90442 3.8979 6.49989 3 6.49989C1.3457 6.49989 0 7.84559 0 9.49989C0 11.1542 1.3457 12.4999 3 12.4999C4.00433 12.4999 4.8897 11.9996 5.4345 11.2397L10.147 13.6529C10.0602 13.9331 10 14.2249 10 14.5332C10 16.1875 11.3457 17.5332 13 17.5332C14.6543 17.5332 16 16.1875 16 14.5332C16 12.8789 14.6543 11.5332 13 11.5332Z" fill="currentColor" />
 											</svg>
-											Share
+											{t('share')}
 										</Link>
 										<FavoriteButton carId={car._id} size="md" className="btn-wishlish" />
 									</div>
@@ -322,7 +324,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 												<div className="item-feature-car-inner">
 													<div className="feature-image"><img src="/assets/imgs/page/car/seat.svg" alt="Navegar Sistemas" /></div>
 													<div className="feature-info">
-														<p className="text-md-medium neutral-1000">{car.specs?.seats || 5} seats</p>
+														<p className="text-md-medium neutral-1000">{car.specs?.seats || 5} {t('seats')}</p>
 													</div>
 												</div>
 											</div>
@@ -330,7 +332,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 												<div className="item-feature-car-inner">
 													<div className="feature-image"><img src="/assets/imgs/page/car/bag.svg" alt="Navegar Sistemas" /></div>
 													<div className="feature-info">
-														<p className="text-md-medium neutral-1000">{car.specs?.bags || 2} bags</p>
+														<p className="text-md-medium neutral-1000">{car.specs?.bags || 2} {t('bags')}</p>
 													</div>
 												</div>
 											</div>
@@ -346,7 +348,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 												<div className="item-feature-car-inner">
 													<div className="feature-image"><img src="/assets/imgs/page/car/door.svg" alt="Navegar Sistemas" /></div>
 													<div className="feature-info">
-														<p className="text-md-medium neutral-1000">{car.specs?.doors || 4} Doors</p>
+														<p className="text-md-medium neutral-1000">{car.specs?.doors || 4} {t('doors')}</p>
 													</div>
 												</div>
 											</div>
@@ -365,7 +367,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 										{/* Overview */}
 										<div className="group-collapse-expand">
 											<button className={isAccordion == 1 ? "btn btn-collapse collapsed" : "btn btn-collapse"} type="button" onClick={() => handleAccordion(1)}>
-												<h6>Overview</h6>
+												<h6>{t('overview')}</h6>
 												<svg width={12} height={7} viewBox="0 0 12 7" xmlns="http://www.w3.org/2000/svg">
 													<path d="M1 1L6 6L11 1" stroke="" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
 												</svg>
@@ -384,7 +386,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 										{/* Included in the price */}
 										<div className="group-collapse-expand">
 											<button className={isAccordion == 2 ? "btn btn-collapse collapsed" : "btn btn-collapse"} type="button" onClick={() => handleAccordion(2)}>
-												<h6>Included in the price</h6>
+												<h6>{t('includedInPrice')}</h6>
 												<svg width={12} height={7} viewBox="0 0 12 7" xmlns="http://www.w3.org/2000/svg">
 													<path d="M1 1L6 6L11 1" stroke="" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
 												</svg>
@@ -410,7 +412,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 										{/* Question & Answers */}
 										<div className="group-collapse-expand">
 											<button className={isAccordion == 3 ? "btn btn-collapse collapsed" : "btn btn-collapse"} type="button" onClick={() => handleAccordion(3)}>
-												<h6>Question & Answers</h6>
+												<h6>{t('questionAnswers')}</h6>
 												<svg width={12} height={7} viewBox="0 0 12 7" xmlns="http://www.w3.org/2000/svg">
 													<path d="M1 1L6 6L11 1" stroke="" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
 												</svg>
@@ -455,7 +457,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 										{/* Rate & Reviews */}
 										<div className="group-collapse-expand">
 											<button className={isAccordion == 4 ? "btn btn-collapse collapsed" : "btn btn-collapse"} type="button" onClick={() => handleAccordion(4)}>
-												<h6>Rate & Reviews</h6>
+												<h6>{t('rateReviews')}</h6>
 												<svg width={12} height={7} viewBox="0 0 12 7" xmlns="http://www.w3.org/2000/svg">
 													<path d="M1 1L6 6L11 1" stroke="" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
 												</svg>
@@ -574,7 +576,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 										{/* Add a review */}
 										<div className="group-collapse-expand">
 											<button className={isAccordion == 5 ? "btn btn-collapse collapsed" : "btn btn-collapse"} type="button" onClick={() => handleAccordion(5)}>
-												<h6>Add a review</h6>
+												<h6>{t('addReview')}</h6>
 												<svg width={12} height={7} viewBox="0 0 12 7" xmlns="http://www.w3.org/2000/svg">
 													<path d="M1 1L6 6L11 1" stroke="" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
 												</svg>
@@ -618,15 +620,15 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 								<div className="col-lg-4">
 									<div className="sidebar-banner">
 										<div className="p-4 background-body border rounded-3">
-											<p className="text-xl-bold neutral-1000 mb-4">Get Started</p>
+											<p className="text-xl-bold neutral-1000 mb-4">{t('getStarted')}</p>
 											<Link href="#" className="btn btn-primary w-100 rounded-3 py-3 mb-3">
-												Schedule Test Drive
+												{t('scheduleTestDrive')}
 												<svg width={17} height={16} viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 													<path d="M8.5 15L15.5 8L8.5 1M15.5 8L1.5 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 												</svg>
 											</Link>
 											<Link href="#" className="btn btn-book bg-2">
-												Make An Offer Price
+												{t('makeOffer')}
 												<svg width={17} height={16} viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 													<path d="M8.5 15L15.5 8L8.5 1M15.5 8L1.5 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 												</svg>
@@ -636,24 +638,24 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 
 									<div className="booking-form">
 										<div className="head-booking-form">
-											<p className="text-xl-bold neutral-1000">Rent This Vehicle</p>
+											<p className="text-xl-bold neutral-1000">{t('rentThisVehicle')}</p>
 										</div>
 										<div className="content-booking-form">
 											<div className="item-line-booking border-bottom-0 pb-0">
-												<strong className="text-md-bold neutral-1000">Pick-Up</strong>
+												<strong className="text-md-bold neutral-1000">{t('pickUp')}</strong>
 												<div className="input-calendar">
 													<MyDatePicker form />
 												</div>
 											</div>
 											<div className="item-line-booking">
-												<strong className="text-md-bold neutral-1000">Drop-Off</strong>
+												<strong className="text-md-bold neutral-1000">{t('dropOff')}</strong>
 												<div className="input-calendar">
 													<MyDatePicker form />
 												</div>
 											</div>
 											<div className="item-line-booking">
 												<div className="box-tickets">
-													<strong className="text-md-bold neutral-1000">Add Extra:</strong>
+													<strong className="text-md-bold neutral-1000">{t('addExtra')}</strong>
 													{car.extras?.map((extra, idx) => (
 														<div key={idx} className="line-booking-tickets">
 															<div className="item-ticket">
@@ -675,28 +677,28 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 												</div>
 											</div>
 											<div className="item-line-booking last-item pb-0">
-												<strong className="text-md-medium neutral-1000">Daily Rate</strong>
+												<strong className="text-md-medium neutral-1000">{t('dailyRate')}</strong>
 												<div className="line-booking-right">
-													<p className="text-xl-bold neutral-1000">${car.pricing?.dailyRate?.toFixed(2)}/day</p>
+													<p className="text-xl-bold neutral-1000">R${car.pricing?.dailyRate?.toFixed(2)}/dia</p>
 												</div>
 											</div>
 											{car.pricing?.weeklyRate && (
 												<div className="item-line-booking last-item pb-0">
-													<strong className="text-md-medium neutral-1000">Weekly Rate</strong>
+													<strong className="text-md-medium neutral-1000">{t('weeklyRate')}</strong>
 													<div className="line-booking-right">
-														<p className="text-xl-bold neutral-1000">${car.pricing.weeklyRate.toFixed(2)}/week</p>
+														<p className="text-xl-bold neutral-1000">R${car.pricing.weeklyRate.toFixed(2)}/sem</p>
 													</div>
 												</div>
 											)}
 											<div className="item-line-booking last-item">
-												<strong className="text-md-bold neutral-1000">Security Deposit</strong>
+												<strong className="text-md-bold neutral-1000">{t('securityDeposit')}</strong>
 												<div className="line-booking-right">
-													<p className="text-xl-bold neutral-1000">${car.pricing?.deposit?.toFixed(2)}</p>
+													<p className="text-xl-bold neutral-1000">R${car.pricing?.deposit?.toFixed(2)}</p>
 												</div>
 											</div>
 											<div className="box-button-book">
 												<Link className="btn btn-book" href={`/booking/${car._id}`}>
-													Book Now
+													{t('bookNow')}
 													<svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 														<path d="M8 15L15 8L8 1M15 8L1 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 													</svg>
@@ -707,14 +709,14 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 													<svg width={12} height={14} viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 														<path d="M2.83366 3.66667C2.83366 1.92067 4.25433 0.5 6.00033 0.5C7.74633 0.5 9.16699 1.92067 9.16699 3.66667C9.16699 5.41267 7.74633 6.83333 6.00033 6.83333C4.25433 6.83333 2.83366 5.41267 2.83366 3.66667ZM8.00033 7.83333H4.00033C1.88699 7.83333 0.166992 9.55333 0.166992 11.6667C0.166992 12.678 0.988992 13.5 2.00033 13.5H10.0003C11.0117 13.5 11.8337 12.678 11.8337 11.6667C11.8337 9.55333 10.1137 7.83333 8.00033 7.83333Z" fill="currentColor" />
 													</svg>
-													Need some help?
+													{t('needHelp')}
 												</Link>
 											</div>
 										</div>
 									</div>
 
 									<div className="sidebar-left border-1 background-card">
-										<h6 className="text-xl-bold neutral-1000">Listed by</h6>
+										<h6 className="text-xl-bold neutral-1000">{t('listedBy')}</h6>
 										<div className="box-sidebar-content">
 											<div className="box-agent-support border-bottom pb-3 mb-3">
 												<div className="card-author">
@@ -726,13 +728,13 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 												</div>
 											</div>
 											<div className="box-info-contact">
-												<p className="text-md-medium mobile-phone neutral-1000"><span className="text-md-bold">Mobile:</span> {car.dealer?.phone || '0800-NAVEGAR'}</p>
-												<p className="text-md-medium email neutral-1000"><span className="text-md-bold">Email:</span> {car.dealer?.email || 'contato@navegarsistemas.com.br'}</p>
-												<p className="text-md-medium whatsapp neutral-1000"><span className="text-md-bold">WhatsApp:</span> {car.dealer?.whatsapp || car.dealer?.phone || '0800-NAVEGAR'}</p>
+												<p className="text-md-medium mobile-phone neutral-1000"><span className="text-md-bold">{t('mobile')}</span> {car.dealer?.phone || '0800-NAVEGAR'}</p>
+												<p className="text-md-medium email neutral-1000"><span className="text-md-bold">{t('email')}</span> {car.dealer?.email || 'contato@navegarsistemas.com.br'}</p>
+												<p className="text-md-medium whatsapp neutral-1000"><span className="text-md-bold">{t('whatsapp')}</span> {car.dealer?.whatsapp || car.dealer?.phone || '0800-NAVEGAR'}</p>
 											</div>
 											<div className="box-link-bottom">
 												<Link className="btn btn-primary py-3 w-100 rounded-3" href="/cars-list-1">
-													All items by this dealer
+													{t('allItemsByDealer')}
 													<svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 														<path d="M8 15L15 8L8 1M15 8L1 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 													</svg>

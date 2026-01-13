@@ -358,5 +358,72 @@
       "review_reminder": "Review Reminder",
       "system": "System Notification"
     }
+  },
+  "carDetails": {
+    "breadcrumb": {
+      "home": "Home",
+      "carsRental": "Cars Rental"
+    },
+    "seeAllPhotos": "See All Photos",
+    "videoClips": "Video Clips",
+    "reviews": "reviews",
+    "showOnMap": "Show on map",
+    "fleetCode": "Fleet Code:",
+    "share": "Share",
+    "km": "km",
+    "seats": "seats",
+    "bags": "bags",
+    "doors": "Doors",
+    "overview": "Overview",
+    "includedInPrice": "Included in the price",
+    "questionAnswers": "Question & Answers",
+    "rateReviews": "Rate & Reviews",
+    "addReview": "Add a review",
+    "price": "Price",
+    "service": "Service",
+    "safety": "Safety",
+    "comfort": "Comfort",
+    "cleanliness": "Cleanliness",
+    "leaveReview": "Leave feedback",
+    "yourName": "Your name",
+    "emailAddress": "Email address",
+    "yourComment": "Your comment",
+    "submitReview": "Submit review",
+    "getStarted": "Get Started",
+    "scheduleTestDrive": "Schedule Test Drive",
+    "makeOffer": "Make An Offer Price",
+    "rentThisVehicle": "Rent This Vehicle",
+    "pickUp": "Pick-Up",
+    "dropOff": "Drop-Off",
+    "addExtra": "Add Extra:",
+    "dailyRate": "Daily Rate",
+    "weeklyRate": "Weekly Rate",
+    "securityDeposit": "Security Deposit",
+    "bookNow": "Book Now",
+    "needHelp": "Need some help?",
+    "listedBy": "Listed by",
+    "mobile": "Mobile:",
+    "email": "Email:",
+    "whatsapp": "WhatsApp:",
+    "allItemsByDealer": "All items by this dealer",
+    "loading": "Loading vehicle details...",
+    "vehicleNotFound": "Vehicle not found",
+    "back": "Back",
+    "defaultIncluded": {
+      "freeCancellation": "Free cancellation up to 48 hours before pick-up",
+      "collisionDamage": "Collision Damage Waiver with $700 deductible",
+      "theftProtection": "Theft Protection included",
+      "unlimitedMileage": "Unlimited mileage"
+    },
+    "defaultFaq": {
+      "documentsQuestion": "What documents do I need to rent this vehicle?",
+      "documentsAnswer": "You will need a valid driver's license, a credit card in your name, and proof of insurance.",
+      "ageQuestion": "Is there an age requirement?",
+      "ageAnswer": "Renters must be at least 21 years old. Drivers under 25 may have an additional surcharge."
+    },
+    "defaultReview": {
+      "author": "Happy Customer",
+      "comment": "Excellent vehicle! Very clean and well-maintained. The rental process was smooth and the staff was helpful. Would definitely recommend!"
+    }
   }
 }

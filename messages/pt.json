@@ -358,5 +358,72 @@
       "review_reminder": "Lembrete de Avaliação",
       "system": "Notificação do Sistema"
     }
+  },
+  "carDetails": {
+    "breadcrumb": {
+      "home": "Início",
+      "carsRental": "Aluguel de Carros"
+    },
+    "seeAllPhotos": "Ver Todas as Fotos",
+    "videoClips": "Vídeos",
+    "reviews": "avaliações",
+    "showOnMap": "Ver no mapa",
+    "fleetCode": "Código da Frota:",
+    "share": "Compartilhar",
+    "km": "km",
+    "seats": "assentos",
+    "bags": "malas",
+    "doors": "Portas",
+    "overview": "Visão Geral",
+    "includedInPrice": "Incluído no preço",
+    "questionAnswers": "Perguntas e Respostas",
+    "rateReviews": "Avaliações",
+    "addReview": "Adicionar avaliação",
+    "price": "Preço",
+    "service": "Serviço",
+    "safety": "Segurança",
+    "comfort": "Conforto",
+    "cleanliness": "Limpeza",
+    "leaveReview": "Deixe seu feedback",
+    "yourName": "Seu nome",
+    "emailAddress": "Endereço de email",
+    "yourComment": "Seu comentário",
+    "submitReview": "Enviar avaliação",
+    "getStarted": "Começar",
+    "scheduleTestDrive": "Agendar Test Drive",
+    "makeOffer": "Fazer uma Oferta",
+    "rentThisVehicle": "Alugar Este Veículo",
+    "pickUp": "Retirada",
+    "dropOff": "Devolução",
+    "addExtra": "Adicionar Extra:",
+    "dailyRate": "Diária",
+    "weeklyRate": "Semanal",
+    "securityDeposit": "Depósito de Segurança",
+    "bookNow": "Reservar Agora",
+    "needHelp": "Precisa de ajuda?",
+    "listedBy": "Anunciado por",
+    "mobile": "Celular:",
+    "email": "Email:",
+    "whatsapp": "WhatsApp:",
+    "allItemsByDealer": "Todos os itens deste vendedor",
+    "loading": "Carregando detalhes do veículo...",
+    "vehicleNotFound": "Veículo não encontrado",
+    "back": "Voltar",
+    "defaultIncluded": {
+      "freeCancellation": "Cancelamento gratuito até 48 horas antes da retirada",
+      "collisionDamage": "Proteção contra Colisão com franquia de R$700",
+      "theftProtection": "Proteção contra Roubo incluída",
+      "unlimitedMileage": "Quilometragem ilimitada"
+    },
+    "defaultFaq": {
+      "documentsQuestion": "Quais documentos preciso para alugar este veículo?",
+      "documentsAnswer": "Você precisará de uma CNH válida, um cartão de crédito em seu nome e comprovante de seguro.",
+      "ageQuestion": "Existe requisito de idade?",
+      "ageAnswer": "Locatários devem ter pelo menos 21 anos. Condutores menores de 25 anos podem ter uma taxa adicional."
+    },
+    "defaultReview": {
+      "author": "Cliente Satisfeito",
+      "comment": "Excelente veículo! Muito limpo e bem conservado. O processo de aluguel foi tranquilo e a equipe foi prestativa. Definitivamente recomendo!"
+    }
   }
 }
