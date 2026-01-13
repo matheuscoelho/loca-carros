@@ -726,9 +726,9 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 												</div>
 											</div>
 											<div className="box-info-contact">
-												<p className="text-md-medium mobile-phone neutral-1000"><span className="text-md-bold">Mobile:</span> {car.dealer?.phone || '1-800-CARENTO'}</p>
+												<p className="text-md-medium mobile-phone neutral-1000"><span className="text-md-bold">Mobile:</span> {car.dealer?.phone || '0800-NAVEGAR'}</p>
 												<p className="text-md-medium email neutral-1000"><span className="text-md-bold">Email:</span> {car.dealer?.email || 'contato@navegarsistemas.com.br'}</p>
-												<p className="text-md-medium whatsapp neutral-1000"><span className="text-md-bold">WhatsApp:</span> {car.dealer?.whatsapp || car.dealer?.phone || '1-800-CARENTO'}</p>
+												<p className="text-md-medium whatsapp neutral-1000"><span className="text-md-bold">WhatsApp:</span> {car.dealer?.whatsapp || car.dealer?.phone || '0800-NAVEGAR'}</p>
 											</div>
 											<div className="box-link-bottom">
 												<Link className="btn btn-primary py-3 w-100 rounded-3" href="/cars-list-1">

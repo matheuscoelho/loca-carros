@@ -27,17 +27,17 @@ async function testConnection() {
       console.log(`   - ${db.name} (${(db.sizeOnDisk / 1024).toFixed(2)} KB)`);
     });
 
-    // Criar/acessar database carento
-    const db = client.db("carento");
-    console.log("\n✅ Database 'carento' acessado!");
+    // Criar/acessar database navegar-sistemas
+    const db = client.db("navegar-sistemas");
+    console.log("\n✅ Database 'navegar-sistemas' acessado!");
 
     // Listar collections
     const collections = await db.listCollections().toArray();
     if (collections.length > 0) {
-      console.log("\n📁 Collections em 'carento':");
+      console.log("\n📁 Collections em 'navegar-sistemas':");
       collections.forEach(col => console.log(`   - ${col.name}`));
     } else {
-      console.log("\n📁 Nenhuma collection ainda em 'carento' (será criada ao inserir dados)");
+      console.log("\n📁 Nenhuma collection ainda em 'navegar-sistemas' (será criada ao inserir dados)");
     }
 
     console.log("\n🎉 Teste de conexão concluído com sucesso!");

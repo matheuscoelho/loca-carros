@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # ===========================================
-# Script de Deploy - Carento
+# Script de Deploy - Navegar Sistemas
 # ===========================================
 
 set -e
 
-echo "🚀 Iniciando deploy do Carento..."
+echo "🚀 Iniciando deploy do Navegar Sistemas..."
 
 # Cores para output
 RED='\033[0;31m'
