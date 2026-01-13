@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import Layout from "@/components/layout/Layout"
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar"
+import EmptyState from "@/components/ui/EmptyState"
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -144,16 +145,13 @@ export default function Favorites() {
 									</button>
 								</div>
 							) : cars.length === 0 ? (
-								<div className="text-center py-5">
-									<div className="mb-3" style={{ fontSize: '64px' }}>❤️</div>
-									<h5 className="text-muted">Seus favoritos aparecerão aqui</h5>
-									<p className="text-muted mb-4">
-										Encontre veículos que você gosta e adicione aos favoritos para acessar rapidamente depois.
-									</p>
-									<Link href="/cars-list-1" className="btn btn-primary">
-										{t('findVehicle')}
-									</Link>
-								</div>
+								<EmptyState
+									variant="no-favorites"
+									title="Seus favoritos aparecerão aqui"
+									description="Encontre veículos que você gosta e adicione aos favoritos para acessar rapidamente depois."
+									actionLabel={t('findVehicle')}
+									actionHref="/cars-list-1"
+								/>
 							) : (
 								<div className="row g-4">
 									{cars.map((car) => (

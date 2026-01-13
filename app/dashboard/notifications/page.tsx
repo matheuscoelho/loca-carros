@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import Layout from "@/components/layout/Layout"
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar"
+import EmptyState from "@/components/ui/EmptyState"
 import Link from 'next/link'
 
 interface Notification {
@@ -181,11 +182,11 @@ export default function Notifications() {
 									</button>
 								</div>
 							) : notifications.length === 0 ? (
-								<div className="text-center py-5">
-									<div className="mb-3" style={{ fontSize: '64px' }}>🔔</div>
-									<h5 className="text-muted">{t('noRecentActivity')}</h5>
-									<p className="text-muted">{t('activityWillAppear')}</p>
-								</div>
+								<EmptyState
+									variant="no-notifications"
+									title={t('noRecentActivity')}
+									description={t('activityWillAppear')}
+								/>
 							) : (
 								<div className="list-group list-group-flush">
 									{notifications.map((notification) => (
