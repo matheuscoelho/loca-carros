@@ -60,9 +60,6 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, handle
 								<span className="d-none d-lg-inline-block">contato@carento.com</span>
 							</Link>
 						</div>
-						<div className="text-header">
-							<div className="text-unlock text-sm-medium text-white"></div>
-						</div>
 						<div className="top-right-header">
 							<Dropdown className="d-none d-xl-inline-block box-dropdown-cart align-middle mr-15 head-lang">
 								<Dropdown.Toggle as="span" className="text-14-medium icon-list icon-account icon-lang" style={{ cursor: 'pointer' }}>
