@@ -1,0 +1,35 @@
+'use client'
+
+export default function DemoBanner() {
+	const showBanner = process.env.NEXT_PUBLIC_SHOW_DEMO_BANNER === 'true'
+
+	if (!showBanner) return null
+
+	return (
+		<>
+		{/* Spacer para compensar o banner fixo */}
+		<div style={{ height: '40px' }} />
+		<div style={{
+			background: 'linear-gradient(90deg, #dc2626 0%, #b91c1c 100%)',
+			color: '#fff',
+			padding: '10px 20px',
+			textAlign: 'center',
+			fontSize: '13px',
+			fontWeight: 500,
+			position: 'fixed',
+			top: 0,
+			left: 0,
+			right: 0,
+			height: '40px',
+			zIndex: 9999,
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center',
+		}}>
+			<span style={{ marginRight: '8px' }}>⚠️</span>
+			<strong>PROJETO DEMONSTRATIVO</strong> - Este site é apenas para testes.
+			<strong> NÃO realize pagamentos.</strong> Não há suporte para reembolsos.
+		</div>
+		</>
+	)
+}

@@ -10,6 +10,7 @@ import Footer2 from './footer/Footer2'
 import Header1 from "./header/Header1"
 import Header2 from './header/Header2'
 import Header3 from './header/Header3'
+import DemoBanner from './DemoBanner'
 
 interface LayoutProps {
 	headerStyle?: Number
@@ -60,6 +61,7 @@ export default function Layout({ headerStyle, footerStyle, breadcrumbTitle, chil
 	return (
 		<>
 			<div id="top" />
+			<DemoBanner />
 			{!headerStyle && <Header2 scroll={scroll} isMobileMenu={isMobileMenu} handleMobileMenu={handleMobileMenu} isOffcanvas={isOffcanvas} handleOffcanvas={handleOffcanvas} />}
 			{headerStyle == 1 ? <Header1 scroll={scroll} isMobileMenu={isMobileMenu} handleMobileMenu={handleMobileMenu} isOffcanvas={isOffcanvas} handleOffcanvas={handleOffcanvas} /> : null}
 			{headerStyle == 2 ? <Header2 scroll={scroll} isMobileMenu={isMobileMenu} handleMobileMenu={handleMobileMenu} isOffcanvas={isOffcanvas} handleOffcanvas={handleOffcanvas} /> : null}

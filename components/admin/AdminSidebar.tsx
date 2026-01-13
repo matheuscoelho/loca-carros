@@ -101,6 +101,8 @@ export default function AdminSidebar({ isOpen = true, onClose }: AdminSidebarPro
 	const pathname = usePathname()
 	const t = useTranslations('admin')
 	const [isMobile, setIsMobile] = useState(false)
+	const showBanner = process.env.NEXT_PUBLIC_SHOW_DEMO_BANNER === 'true'
+	const bannerHeight = showBanner ? '40px' : '0px'
 
 	useEffect(() => {
 		const checkMobile = () => {
@@ -156,10 +158,10 @@ export default function AdminSidebar({ isOpen = true, onClose }: AdminSidebarPro
 				className={`admin-sidebar bg-dark text-white ${isOpen ? 'open' : ''}`}
 				style={{
 					width: '260px',
-					minHeight: '100vh',
+					minHeight: `calc(100vh - ${bannerHeight})`,
 					position: 'fixed',
 					left: isMobile ? (isOpen ? 0 : '-260px') : 0,
-					top: 0,
+					top: bannerHeight,
 					zIndex: 1050,
 					transition: 'left 0.3s ease',
 					display: 'flex',

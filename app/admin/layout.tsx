@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import AdminSidebar from '@/components/admin/AdminSidebar'
+import DemoBanner from '@/components/layout/DemoBanner'
 
 export default function AdminLayout({
 	children,
@@ -47,6 +48,8 @@ export default function AdminLayout({
 	}
 
 	return (
+		<>
+		<DemoBanner />
 		<div className="d-flex">
 			<AdminSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 			<main
@@ -88,5 +91,6 @@ export default function AdminLayout({
 				</div>
 			</main>
 		</div>
+		</>
 	)
 }
