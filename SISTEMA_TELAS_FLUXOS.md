@@ -355,6 +355,10 @@
   - Veículos
   - Reservas
   - Usuários
+  - Pagamentos
+  - Avaliações
+  - Relatórios
+  - Configurações
   - Voltar ao Site
 - **Integração:** API `/api/admin/dashboard`
 
@@ -401,6 +405,93 @@
   - Busca e filtros
   - Tabela com edição inline de role e status
 - **Integração:** API `/api/admin/users`
+
+### 5.6. Gestão de Pagamentos
+- **Rota:** `/admin/payments`
+- **Status:** ✅ Implementada
+- **Descrição:** Visualizar e gerenciar todos os pagamentos do sistema
+- **Elementos:**
+  - Cards de estatísticas:
+    - Total recebido (succeeded)
+    - Pendentes (pending)
+    - Reembolsados (refunded)
+    - Falhos (failed)
+  - Busca por transaction ID, nome ou email
+  - Filtro por status
+  - Tabela com:
+    - Transaction ID e Stripe Payment Intent ID
+    - Cliente (nome e email)
+    - Booking number
+    - Valor e moeda
+    - Método de pagamento
+    - Status com badge
+    - Data
+    - Botão de reembolso (para succeeded)
+- **Ações:**
+  - Filtrar por status
+  - Processar reembolso
+- **Integração:** API `/api/admin/payments`
+
+### 5.7. Gestão de Avaliações
+- **Rota:** `/admin/reviews`
+- **Status:** ✅ Implementada
+- **Descrição:** Moderar avaliações de clientes sobre veículos
+- **Elementos:**
+  - Cards de estatísticas:
+    - Total de reviews
+    - Pendentes de aprovação
+    - Aprovadas
+    - Rating médio (estrelas)
+  - Busca por cliente, veículo ou comentário
+  - Filtro por status (pending, approved, rejected)
+  - Lista de reviews com:
+    - Rating (estrelas)
+    - Status com badge
+    - Título e comentário
+    - Cliente e veículo
+    - Ratings detalhados (preço, serviço, segurança, conforto, limpeza)
+    - Resposta do admin (se houver)
+    - Botões: Aprovar, Rejeitar, Responder
+  - Modal para responder reviews
+- **Ações:**
+  - Aprovar review (atualiza rating médio do veículo)
+  - Rejeitar review
+  - Responder review
+- **Integração:** API `/api/admin/reviews`
+
+### 5.8. Relatórios e Analytics
+- **Rota:** `/admin/reports`
+- **Status:** ✅ Implementada
+- **Descrição:** Relatórios e estatísticas do sistema
+- **Elementos:**
+  - Seletor de período (semana, mês, ano)
+  - Cards de receita:
+    - Receita total
+    - Receita deste mês
+    - Receita do mês anterior
+    - Crescimento (%)
+  - Gráfico de bookings por status (barras de progresso)
+  - Tabela de veículos mais alugados:
+    - Posição
+    - Veículo (marca e modelo)
+    - Quantidade de aluguéis
+    - Receita gerada
+  - Lista de atividade recente
+- **Integração:** APIs `/api/admin/dashboard`, `/api/bookings`
+
+### 5.9. Configurações
+- **Rota:** `/admin/settings`
+- **Status:** ✅ Implementada
+- **Descrição:** Configurações gerais do sistema
+- **Elementos:**
+  - Abas de configuração:
+    - **General:** Nome do site, descrição, email, telefone, moeda, timezone
+    - **Pricing:** Taxa de imposto, taxa de serviço, taxa de cancelamento, porcentagem de depósito
+    - **Notifications:** Ativar/desativar emails de confirmação, pagamento, lembretes
+    - **Business Rules:** Dias mín/máx de aluguel, antecedência máxima, horários de pickup
+  - Botão "Save Settings"
+  - Indicador de sucesso ao salvar
+- **Armazenamento:** localStorage (pode ser migrado para MongoDB)
 
 ---
 
@@ -539,6 +630,10 @@
 | PUT | `/api/admin/bookings/[id]` | Atualizar reserva |
 | GET | `/api/admin/users` | Listar usuários |
 | PUT | `/api/admin/users/[id]` | Atualizar usuário |
+| GET | `/api/admin/payments` | Listar todos os pagamentos |
+| POST | `/api/admin/payments` | Processar reembolso |
+| GET | `/api/admin/reviews` | Listar todas as reviews |
+| PUT | `/api/admin/reviews` | Aprovar/rejeitar/responder review |
 
 ---
 
@@ -569,6 +664,7 @@
 | `bookings` | Reservas realizadas |
 | `payments` | Transações de pagamento |
 | `notifications` | Notificações dos usuários |
+| `reviews` | Avaliações dos clientes sobre veículos |
 
 ### Dados Atuais
 - **Veículos:** 6 carros cadastrados com imagens, descrições, FAQ e reviews
@@ -577,4 +673,4 @@
 ---
 
 *Documento atualizado em: Janeiro 2026*
-*Versão: 2.0*
+*Versão: 2.1 - Adicionadas páginas admin: Payments, Reviews, Reports, Settings*

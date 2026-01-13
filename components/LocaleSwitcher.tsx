@@ -30,10 +30,9 @@ export default function LocaleSwitcher() {
       body: JSON.stringify({ locale: newLocale })
     })
 
-    // Recarregar a página para aplicar o novo idioma
-    startTransition(() => {
-      router.refresh()
-    })
+    // Recarregar a página completamente para aplicar o novo idioma
+    // router.refresh() não funciona porque o next-intl precisa de um full reload
+    window.location.reload()
   }
 
   return (

@@ -34,9 +34,8 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu, handle
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ locale: newLocale })
 		})
-		startTransition(() => {
-			router.refresh()
-		})
+		// Reload completo para aplicar novo idioma
+		window.location.reload()
 	}
 
 	return (
