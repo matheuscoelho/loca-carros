@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_SHOW_DEMO_BANNER=${NEXT_PUBLIC_SHOW_DEMO_BANNER}
     container_name: navegar-sistemas-app
     restart: unless-stopped
     ports:

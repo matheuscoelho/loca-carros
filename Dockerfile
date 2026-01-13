@@ -19,6 +19,10 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
+# Variáveis públicas do Next.js (recebidas via build args)
+ARG NEXT_PUBLIC_SHOW_DEMO_BANNER
+ENV NEXT_PUBLIC_SHOW_DEMO_BANNER=${NEXT_PUBLIC_SHOW_DEMO_BANNER}
+
 # Build da aplicação
 RUN npm run build
 
