@@ -66,7 +66,7 @@ export default function MyPayments() {
 			setPayments(bookings)
 		} catch (err) {
 			console.error('Error fetching payments:', err)
-			setError('Erro ao carregar pagamentos')
+			setError(t('errorLoadingPayments'))
 		} finally {
 			setLoading(false)
 		}
@@ -81,14 +81,15 @@ export default function MyPayments() {
 	}
 
 	const getPaymentStatusBadge = (status: string) => {
-		const statusMap: Record<string, { color: string; label: string }> = {
-			pending: { color: 'warning', label: 'Aguardando' },
-			paid: { color: 'success', label: 'Pago' },
-			refunded: { color: 'info', label: 'Reembolsado' },
-			failed: { color: 'danger', label: 'Falhou' },
+		const colorMap: Record<string, string> = {
+			pending: 'warning',
+			paid: 'success',
+			refunded: 'info',
+			failed: 'danger',
 		}
-		const config = statusMap[status] || { color: 'secondary', label: status }
-		return <span className={`badge bg-${config.color}`}>{config.label}</span>
+		const color = colorMap[status] || 'secondary'
+		const label = t(`paymentStatus.${status}`) || status
+		return <span className={`badge bg-${color}`}>{label}</span>
 	}
 
 	// Calculate total paid
@@ -136,8 +137,8 @@ export default function MyPayments() {
 									<div className="border rounded-3 p-3 bg-light">
 										<div className="d-flex justify-content-between align-items-center">
 											<div>
-												<small className="text-muted">Total Pago</small>
-												<h4 className="mb-0 text-success">${totalPaid.toFixed(2)}</h4>
+												<small className="text-muted">{t('totalPaid')}</small>
+												<h4 className="mb-0 text-success">R$ {totalPaid.toFixed(2)}</h4>
 											</div>
 											<span style={{ fontSize: '32px' }}>✅</span>
 										</div>
@@ -147,8 +148,8 @@ export default function MyPayments() {
 									<div className="border rounded-3 p-3 bg-light">
 										<div className="d-flex justify-content-between align-items-center">
 											<div>
-												<small className="text-muted">Pendente</small>
-												<h4 className="mb-0 text-warning">${totalPending.toFixed(2)}</h4>
+												<small className="text-muted">{t('pending')}</small>
+												<h4 className="mb-0 text-warning">R$ {totalPending.toFixed(2)}</h4>
 											</div>
 											<span style={{ fontSize: '32px' }}>⏳</span>
 										</div>
@@ -158,7 +159,7 @@ export default function MyPayments() {
 									<div className="border rounded-3 p-3 bg-light">
 										<div className="d-flex justify-content-between align-items-center">
 											<div>
-												<small className="text-muted">Transações</small>
+												<small className="text-muted">{t('transactions')}</small>
 												<h4 className="mb-0 text-primary">{payments.length}</h4>
 											</div>
 											<span style={{ fontSize: '32px' }}>💳</span>
@@ -172,18 +173,18 @@ export default function MyPayments() {
 							<div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
 								<h4 className="mb-0">{t('myPayments')}</h4>
 								<div className="d-flex gap-2 align-items-center">
-									<label className="text-muted small me-2">Filtrar:</label>
+									<label className="text-muted small me-2">{tCommon('filter')}:</label>
 									<select
 										className="form-select form-select-sm"
 										style={{ width: 'auto' }}
 										value={filter}
 										onChange={(e) => setFilter(e.target.value)}
 									>
-										<option value="">Todos</option>
-										<option value="paid">Pagos</option>
-										<option value="pending">Pendentes</option>
-										<option value="refunded">Reembolsados</option>
-										<option value="failed">Falhos</option>
+										<option value="">{t('allPayments')}</option>
+										<option value="paid">{t('paidFilter')}</option>
+										<option value="pending">{t('pendingPaymentsFilter')}</option>
+										<option value="refunded">{t('refundedFilter')}</option>
+										<option value="failed">{t('failedFilter')}</option>
 									</select>
 								</div>
 							</div>
@@ -193,13 +194,13 @@ export default function MyPayments() {
 									<div className="spinner-border text-primary" role="status">
 										<span className="visually-hidden">{tCommon('loading')}</span>
 									</div>
-									<p className="mt-3">Carregando pagamentos...</p>
+									<p className="mt-3">{t('loadingPayments')}</p>
 								</div>
 							) : error ? (
 								<div className="alert alert-danger text-center">
 									{error}
 									<button className="btn btn-sm btn-primary ms-3" onClick={fetchPayments}>
-										Tentar novamente
+										{t('tryAgain')}
 									</button>
 								</div>
 							) : payments.length === 0 ? (
@@ -222,7 +223,7 @@ export default function MyPayments() {
 														<div>
 															<h6 className="mb-0">#{payment.bookingNumber}</h6>
 															<small className="text-muted">
-																{payment.car ? `${payment.car.brand} ${payment.car.model}` : 'Veículo'}
+																{payment.car ? `${payment.car.brand} ${payment.car.model}` : t('vehicle')}
 															</small>
 														</div>
 														{getPaymentStatusBadge(payment.paymentStatus)}
@@ -230,7 +231,7 @@ export default function MyPayments() {
 													<hr />
 													<div className="d-flex justify-content-between align-items-center">
 														<small className="text-muted">{formatDate(payment.createdAt)}</small>
-														<strong className="text-primary">${payment.pricing?.total?.toFixed(2) || '0.00'}</strong>
+														<strong className="text-primary">R$ {payment.pricing?.total?.toFixed(2) || '0,00'}</strong>
 													</div>
 												</div>
 											</div>
@@ -242,12 +243,12 @@ export default function MyPayments() {
 										<table className="table table-hover align-middle">
 											<thead className="table-light">
 												<tr>
-													<th>Reserva</th>
-													<th>Veículo</th>
-													<th>Período</th>
-													<th>Valor</th>
+													<th>{t('reservation')}</th>
+													<th>{t('vehicle')}</th>
+													<th>{t('period')}</th>
+													<th>{t('amount')}</th>
 													<th>Status</th>
-													<th>Data</th>
+													<th>{t('date')}</th>
 													<th>{tCommon('view')}</th>
 												</tr>
 											</thead>
@@ -259,7 +260,7 @@ export default function MyPayments() {
 														</td>
 														<td>
 															<small>
-																{payment.car ? `${payment.car.brand} ${payment.car.model}` : 'Veículo'}
+																{payment.car ? `${payment.car.brand} ${payment.car.model}` : t('vehicle')}
 															</small>
 														</td>
 														<td>
@@ -269,7 +270,7 @@ export default function MyPayments() {
 														</td>
 														<td>
 															<strong className="text-primary">
-																${payment.pricing?.total?.toFixed(2) || '0.00'}
+																R$ {payment.pricing?.total?.toFixed(2) || '0,00'}
 															</strong>
 														</td>
 														<td>{getPaymentStatusBadge(payment.paymentStatus)}</td>

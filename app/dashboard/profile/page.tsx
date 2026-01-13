@@ -124,7 +124,7 @@ export default function Profile() {
 											value={session?.user?.email || ''}
 											disabled
 										/>
-										<small className="text-muted">Email cannot be changed</small>
+										<small className="text-muted">{t('emailCannotChange')}</small>
 									</div>
 									<div className="col-md-6">
 										<label className="form-label">{tAuth('phone')}</label>
@@ -135,11 +135,11 @@ export default function Profile() {
 											value={formData.phone}
 											onChange={handleInputChange}
 											disabled={!isEditing}
-											placeholder="(optional)"
+											placeholder={tAuth('phone')}
 										/>
 									</div>
 									<div className="col-md-6">
-										<label className="form-label">Role</label>
+										<label className="form-label">{t('role')}</label>
 										<input
 											type="text"
 											className="form-control"
@@ -185,12 +185,12 @@ export default function Profile() {
 
 							<hr className="my-4" />
 
-							<h5 className="mb-3">Account Security</h5>
+							<h5 className="mb-3">{t('accountSecurity')}</h5>
 							<button className="btn btn-outline-warning" disabled>
-								Change Password
+								{t('changePassword')}
 							</button>
 							<p className="text-muted small mt-2">
-								Password change functionality coming soon.
+								{t('passwordChangeSoon')}
 							</p>
 						</div>
 					</div>

@@ -61,7 +61,7 @@ export default function Favorites() {
 			setCars(data.cars || [])
 		} catch (err) {
 			console.error('Error fetching favorites:', err)
-			setError('Erro ao carregar favoritos')
+			setError(t('errorLoadingFavorites'))
 		} finally {
 			setLoading(false)
 		}
@@ -82,7 +82,7 @@ export default function Favorites() {
 			setCars(prev => prev.filter(car => car._id !== carId))
 		} catch (err) {
 			console.error('Error removing favorite:', err)
-			alert('Erro ao remover favorito')
+			alert(t('errorRemovingFavorite'))
 		} finally {
 			setRemoving(null)
 		}
@@ -126,7 +126,7 @@ export default function Favorites() {
 							<div className="d-flex justify-content-between align-items-center mb-4">
 								<h4 className="mb-0">{t('favorites')}</h4>
 								{cars.length > 0 && (
-									<span className="badge bg-primary">{cars.length} veículo(s)</span>
+									<span className="badge bg-primary">{cars.length} {t('vehicles')}</span>
 								)}
 							</div>
 
@@ -135,20 +135,20 @@ export default function Favorites() {
 									<div className="spinner-border text-primary" role="status">
 										<span className="visually-hidden">{tCommon('loading')}</span>
 									</div>
-									<p className="mt-3">Carregando favoritos...</p>
+									<p className="mt-3">{t('loadingFavorites')}</p>
 								</div>
 							) : error ? (
 								<div className="alert alert-danger text-center">
 									{error}
 									<button className="btn btn-sm btn-primary ms-3" onClick={fetchFavorites}>
-										Tentar novamente
+										{t('tryAgain')}
 									</button>
 								</div>
 							) : cars.length === 0 ? (
 								<EmptyState
 									variant="no-favorites"
-									title="Seus favoritos aparecerão aqui"
-									description="Encontre veículos que você gosta e adicione aos favoritos para acessar rapidamente depois."
+									title={t('favoritesWillAppear')}
+									description={t('favoritesDescription')}
 									actionLabel={t('findVehicle')}
 									actionHref="/cars-list-1"
 								/>
@@ -210,15 +210,15 @@ export default function Favorites() {
 													<div className="d-flex justify-content-between align-items-center mt-3">
 														<div>
 															<strong className="text-primary fs-5">
-																${car.pricing?.dailyRate || 0}
+																R$ {car.pricing?.dailyRate || 0}
 															</strong>
-															<small className="text-muted">/dia</small>
+															<small className="text-muted">{t('perDay')}</small>
 														</div>
 														<Link
 															href={`/booking/${car._id}`}
 															className="btn btn-sm btn-primary"
 														>
-															Reservar
+															{t('book')}
 														</Link>
 													</div>
 												</div>

@@ -100,15 +100,16 @@ export default function Dashboard() {
 	}
 
 	const getStatusBadge = (status: string) => {
-		const statusMap: Record<string, { color: string; label: string }> = {
-			pending: { color: 'warning', label: 'Pendente' },
-			confirmed: { color: 'info', label: 'Confirmada' },
-			active: { color: 'primary', label: 'Em Andamento' },
-			completed: { color: 'success', label: 'Concluída' },
-			cancelled: { color: 'danger', label: 'Cancelada' },
+		const colorMap: Record<string, string> = {
+			pending: 'warning',
+			confirmed: 'info',
+			active: 'primary',
+			completed: 'success',
+			cancelled: 'danger',
 		}
-		const config = statusMap[status] || { color: 'secondary', label: status }
-		return <span className={`badge bg-${config.color}`}>{config.label}</span>
+		const color = colorMap[status] || 'secondary'
+		const label = t(`status.${status}`) || status
+		return <span className={`badge bg-${color}`}>{label}</span>
 	}
 
 	const getCarImage = (car?: Booking['car']) => {
@@ -157,14 +158,14 @@ export default function Dashboard() {
 									<div className="spinner-border spinner-border-sm text-primary" role="status">
 										<span className="visually-hidden">{tCommon('loading')}</span>
 									</div>
-									<p className="small text-muted mt-2">Carregando estatísticas...</p>
+									<p className="small text-muted mt-2">{t('loadingStats')}</p>
 								</div>
 							) : (
 								<div className="row g-3 mb-4">
 									<div className="col-6 col-md-3">
 										<div className="border rounded-3 p-3 text-center bg-light">
 											<h3 className="text-primary mb-1">{stats.totalBookings}</h3>
-											<p className="mb-0 text-muted small">Total de Reservas</p>
+											<p className="mb-0 text-muted small">{t('totalBookings')}</p>
 										</div>
 									</div>
 									<div className="col-6 col-md-3">
@@ -176,7 +177,7 @@ export default function Dashboard() {
 									<div className="col-6 col-md-3">
 										<div className="border rounded-3 p-3 text-center bg-light">
 											<h3 className="text-warning mb-1">{stats.pendingBookings}</h3>
-											<p className="mb-0 text-muted small">Pendentes</p>
+											<p className="mb-0 text-muted small">{t('pendingBookings')}</p>
 										</div>
 									</div>
 									<div className="col-6 col-md-3">
@@ -192,8 +193,8 @@ export default function Dashboard() {
 							{!loading && stats.totalSpent > 0 && (
 								<div className="alert alert-light border mb-4">
 									<div className="d-flex justify-content-between align-items-center">
-										<span className="text-muted">Total gasto em aluguéis:</span>
-										<strong className="text-primary fs-5">${stats.totalSpent.toFixed(2)}</strong>
+										<span className="text-muted">{t('totalSpent')}</span>
+										<strong className="text-primary fs-5">R$ {stats.totalSpent.toFixed(2)}</strong>
 									</div>
 								</div>
 							)}
@@ -220,7 +221,7 @@ export default function Dashboard() {
 								<h5 className="mb-0">{t('recentActivity')}</h5>
 								{recentBookings.length > 0 && (
 									<Link href="/dashboard/my-rentals" className="btn btn-sm btn-link">
-										Ver todas →
+										{t('viewAll')} →
 									</Link>
 								)}
 							</div>
@@ -244,7 +245,7 @@ export default function Dashboard() {
 											<div className="d-flex gap-3 align-items-center">
 												<img
 													src={getCarImage(booking.car)}
-													alt={booking.car ? `${booking.car.brand} ${booking.car.model}` : 'Vehicle'}
+													alt={booking.car ? `${booking.car.brand} ${booking.car.model}` : t('vehicle')}
 													className="rounded"
 													style={{ width: '70px', height: '50px', objectFit: 'cover' }}
 												/>
@@ -252,7 +253,7 @@ export default function Dashboard() {
 													<div className="d-flex justify-content-between align-items-start">
 														<div>
 															<h6 className="mb-1">
-																{booking.car ? `${booking.car.brand} ${booking.car.model}` : 'Veículo'}
+																{booking.car ? `${booking.car.brand} ${booking.car.model}` : t('vehicle')}
 															</h6>
 															<small className="text-muted">
 																#{booking.bookingNumber} • {formatDate(booking.pickupDate)} - {formatDate(booking.dropoffDate)}
@@ -261,7 +262,7 @@ export default function Dashboard() {
 														<div className="text-end">
 															{getStatusBadge(booking.status)}
 															<div className="mt-1">
-																<strong className="text-primary">${booking.pricing?.total?.toFixed(2) || '0.00'}</strong>
+																<strong className="text-primary">R$ {booking.pricing?.total?.toFixed(2) || '0,00'}</strong>
 															</div>
 														</div>
 													</div>

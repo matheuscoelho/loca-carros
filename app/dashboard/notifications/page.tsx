@@ -49,7 +49,7 @@ export default function Notifications() {
 			}
 		} catch (err) {
 			console.error('Error fetching notifications:', err)
-			setError('Erro ao carregar notificações')
+			setError(t('errorLoadingNotifications'))
 		} finally {
 			setLoading(false)
 		}
@@ -96,11 +96,11 @@ export default function Notifications() {
 		const diffDays = Math.floor(diffMs / 86400000)
 
 		if (diffMins < 60) {
-			return `${diffMins} min atrás`
+			return t('minAgo', { min: diffMins })
 		} else if (diffHours < 24) {
-			return `${diffHours}h atrás`
+			return t('hoursAgo', { hours: diffHours })
 		} else if (diffDays < 7) {
-			return `${diffDays} dias atrás`
+			return t('daysAgo', { days: diffDays })
 		} else {
 			return date.toLocaleDateString('pt-BR')
 		}
@@ -162,7 +162,7 @@ export default function Notifications() {
 										className="btn btn-sm btn-outline-secondary"
 										onClick={markAllAsRead}
 									>
-										Marcar todas como lidas
+										{t('markAllAsRead')}
 									</button>
 								)}
 							</div>
@@ -172,13 +172,13 @@ export default function Notifications() {
 									<div className="spinner-border text-primary" role="status">
 										<span className="visually-hidden">{tCommon('loading')}</span>
 									</div>
-									<p className="mt-3">Carregando notificações...</p>
+									<p className="mt-3">{t('loadingNotifications')}</p>
 								</div>
 							) : error ? (
 								<div className="alert alert-danger text-center">
 									{error}
 									<button className="btn btn-sm btn-primary ms-3" onClick={fetchNotifications}>
-										Tentar novamente
+										{t('tryAgain')}
 									</button>
 								</div>
 							) : notifications.length === 0 ? (
@@ -216,13 +216,13 @@ export default function Notifications() {
 															className="btn btn-sm btn-link p-0"
 															onClick={(e) => e.stopPropagation()}
 														>
-															Ver detalhes →
+															{t('seeDetails')} →
 														</Link>
 													)}
 												</div>
 												{!notification.read && (
 													<div className="flex-shrink-0">
-														<span className="badge bg-primary rounded-pill">Novo</span>
+														<span className="badge bg-primary rounded-pill">{t('new')}</span>
 													</div>
 												)}
 											</div>

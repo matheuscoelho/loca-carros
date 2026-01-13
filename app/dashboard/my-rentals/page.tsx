@@ -89,33 +89,35 @@ export default function MyRentals() {
 			}))
 		} catch (err) {
 			console.error('Error fetching bookings:', err)
-			setError('Erro ao carregar reservas')
+			setError(t('errorLoadingBookings'))
 		} finally {
 			setLoading(false)
 		}
 	}
 
 	const getStatusBadge = (status: string) => {
-		const statusMap: Record<string, { color: string; label: string }> = {
-			pending: { color: 'warning', label: 'Pendente' },
-			confirmed: { color: 'info', label: 'Confirmada' },
-			active: { color: 'primary', label: 'Em Andamento' },
-			completed: { color: 'success', label: 'Concluída' },
-			cancelled: { color: 'danger', label: 'Cancelada' },
+		const colorMap: Record<string, string> = {
+			pending: 'warning',
+			confirmed: 'info',
+			active: 'primary',
+			completed: 'success',
+			cancelled: 'danger',
 		}
-		const config = statusMap[status] || { color: 'secondary', label: status }
-		return <span className={`badge bg-${config.color}`}>{config.label}</span>
+		const color = colorMap[status] || 'secondary'
+		const label = t(`status.${status}`) || status
+		return <span className={`badge bg-${color}`}>{label}</span>
 	}
 
 	const getPaymentBadge = (status: string) => {
-		const statusMap: Record<string, { color: string; label: string }> = {
-			pending: { color: 'warning', label: 'Aguardando' },
-			paid: { color: 'success', label: 'Pago' },
-			refunded: { color: 'info', label: 'Reembolsado' },
-			failed: { color: 'danger', label: 'Falhou' },
+		const colorMap: Record<string, string> = {
+			pending: 'warning',
+			paid: 'success',
+			refunded: 'info',
+			failed: 'danger',
 		}
-		const config = statusMap[status] || { color: 'secondary', label: status }
-		return <span className={`badge bg-${config.color}`}>{config.label}</span>
+		const color = colorMap[status] || 'secondary'
+		const label = t(`paymentStatus.${status}`) || status
+		return <span className={`badge bg-${color}`}>{label}</span>
 	}
 
 	const formatDate = (dateString: string) => {
@@ -172,7 +174,7 @@ export default function MyRentals() {
 								<h4 className="mb-0">{t('myRentals')}</h4>
 
 								<div className="d-flex gap-2 align-items-center">
-									<label className="text-muted small me-2">Filtrar:</label>
+									<label className="text-muted small me-2">{tCommon('filter')}:</label>
 									<select
 										className="form-select form-select-sm"
 										style={{ width: 'auto' }}
@@ -182,12 +184,12 @@ export default function MyRentals() {
 											setPagination(prev => ({ ...prev, page: 1 }))
 										}}
 									>
-										<option value="">Todas</option>
-										<option value="pending">Pendentes</option>
-										<option value="confirmed">Confirmadas</option>
-										<option value="active">Em Andamento</option>
-										<option value="completed">Concluídas</option>
-										<option value="cancelled">Canceladas</option>
+										<option value="">{t('allBookings')}</option>
+										<option value="pending">{t('pendingFilter')}</option>
+										<option value="confirmed">{t('confirmedFilter')}</option>
+										<option value="active">{t('inProgressFilter')}</option>
+										<option value="completed">{t('completedFilter')}</option>
+										<option value="cancelled">{t('cancelledFilter')}</option>
 									</select>
 								</div>
 							</div>
@@ -197,13 +199,13 @@ export default function MyRentals() {
 									<div className="spinner-border text-primary" role="status">
 										<span className="visually-hidden">{tCommon('loading')}</span>
 									</div>
-									<p className="mt-3">Carregando reservas...</p>
+									<p className="mt-3">{t('loadingBookings')}</p>
 								</div>
 							) : error ? (
 								<div className="alert alert-danger text-center">
 									{error}
 									<button className="btn btn-sm btn-primary ms-3" onClick={fetchBookings}>
-										Tentar novamente
+										{t('tryAgain')}
 									</button>
 								</div>
 							) : bookings.length === 0 ? (
@@ -225,13 +227,13 @@ export default function MyRentals() {
 													<div className="d-flex gap-3 mb-3">
 														<img
 															src={getCarImage(booking.car)}
-															alt={booking.car ? `${booking.car.brand} ${booking.car.model}` : 'Vehicle'}
+															alt={booking.car ? `${booking.car.brand} ${booking.car.model}` : t('vehicle')}
 															className="rounded"
 															style={{ width: '80px', height: '60px', objectFit: 'cover' }}
 														/>
 														<div className="flex-grow-1">
 															<h6 className="mb-1">
-																{booking.car ? `${booking.car.brand} ${booking.car.model}` : 'Veículo'}
+																{booking.car ? `${booking.car.brand} ${booking.car.model}` : t('vehicle')}
 															</h6>
 															<small className="text-muted">#{booking.bookingNumber}</small>
 														</div>
@@ -248,21 +250,21 @@ export default function MyRentals() {
 													</div>
 													<div className="row small">
 														<div className="col-6 mb-2">
-															<span className="text-muted">Retirada:</span><br />
+															<span className="text-muted">{t('pickup')}:</span><br />
 															{formatDate(booking.pickupDate)}
 														</div>
 														<div className="col-6 mb-2">
-															<span className="text-muted">Devolução:</span><br />
+															<span className="text-muted">{t('dropoff')}:</span><br />
 															{formatDate(booking.dropoffDate)}
 														</div>
 														<div className="col-6 mb-2">
-															<span className="text-muted">Pagamento:</span><br />
+															<span className="text-muted">{t('payment')}:</span><br />
 															{getPaymentBadge(booking.paymentStatus)}
 														</div>
 														<div className="col-6 mb-2">
-															<span className="text-muted">Valor:</span><br />
+															<span className="text-muted">{t('amount')}:</span><br />
 															<strong className="text-primary">
-																${booking.pricing?.total?.toFixed(2) || '0.00'}
+																R$ {booking.pricing?.total?.toFixed(2) || '0,00'}
 															</strong>
 														</div>
 													</div>
@@ -271,7 +273,7 @@ export default function MyRentals() {
 															href={`/booking/confirmation?id=${booking._id}`}
 															className="btn btn-sm btn-outline-primary"
 														>
-															Ver Detalhes
+															{t('viewDetails')}
 														</Link>
 													</div>
 												</div>
@@ -284,13 +286,13 @@ export default function MyRentals() {
 										<table className="table table-hover align-middle">
 											<thead className="table-light">
 												<tr>
-													<th>Veículo</th>
+													<th>{t('vehicle')}</th>
 													<th>{tBooking('bookingNumber')}</th>
-													<th>Retirada</th>
-													<th>Devolução</th>
-													<th>Valor</th>
+													<th>{t('pickup')}</th>
+													<th>{t('dropoff')}</th>
+													<th>{t('amount')}</th>
 													<th>Status</th>
-													<th>Pagamento</th>
+													<th>{t('payment')}</th>
 													<th>{tCommon('view')}</th>
 												</tr>
 											</thead>
@@ -301,13 +303,13 @@ export default function MyRentals() {
 															<div className="d-flex align-items-center gap-2">
 																<img
 																	src={getCarImage(booking.car)}
-																	alt={booking.car ? `${booking.car.brand} ${booking.car.model}` : 'Vehicle'}
+																	alt={booking.car ? `${booking.car.brand} ${booking.car.model}` : t('vehicle')}
 																	className="rounded"
 																	style={{ width: '60px', height: '45px', objectFit: 'cover' }}
 																/>
 																<div>
 																	<small className="fw-bold">
-																		{booking.car ? `${booking.car.brand} ${booking.car.model}` : 'Veículo'}
+																		{booking.car ? `${booking.car.brand} ${booking.car.model}` : t('vehicle')}
 																	</small>
 																	{booking.car?.year && (
 																		<small className="d-block text-muted">{booking.car.year}</small>
@@ -326,7 +328,7 @@ export default function MyRentals() {
 														</td>
 														<td>
 															<strong className="text-primary">
-																${booking.pricing?.total?.toFixed(2) || '0.00'}
+																R$ {booking.pricing?.total?.toFixed(2) || '0,00'}
 															</strong>
 														</td>
 														<td>{getStatusBadge(booking.status)}</td>
@@ -355,7 +357,7 @@ export default function MyRentals() {
 														onClick={() => setPagination(prev => ({ ...prev, page: prev.page - 1 }))}
 														disabled={pagination.page === 1}
 													>
-														Anterior
+														{tCommon('previous')}
 													</button>
 												</li>
 												{[...Array(pagination.totalPages)].map((_, i) => (
@@ -377,7 +379,7 @@ export default function MyRentals() {
 														onClick={() => setPagination(prev => ({ ...prev, page: prev.page + 1 }))}
 														disabled={pagination.page === pagination.totalPages}
 													>
-														Próximo
+														{tCommon('next')}
 													</button>
 												</li>
 											</ul>
@@ -385,7 +387,7 @@ export default function MyRentals() {
 									)}
 
 									<div className="text-center mt-3 text-muted small">
-										Mostrando {bookings.length} de {pagination.total} reserva{pagination.total !== 1 ? 's' : ''}
+										{t('showingResults', { count: bookings.length, total: pagination.total })}
 									</div>
 								</>
 							)}

@@ -102,7 +102,7 @@ export default function ConfirmationPage() {
 			<Layout footerStyle={1}>
 				<div className="container pt-140 pb-170">
 					<div className="text-center">
-						<h4>{error || 'Booking not found'}</h4>
+						<h4>{error || t('bookingNotFound')}</h4>
 						<Link href="/dashboard/my-rentals" className="btn btn-primary mt-3">
 							{tCommon('back')}
 						</Link>
@@ -140,9 +140,9 @@ export default function ConfirmationPage() {
 											</svg>
 										</div>
 									</div>
-									<h2 className="text-success animate-fade-in-up animate-delay-200">{t('confirmation')}</h2>
+									<h2 className="text-success animate-fade-in-up animate-delay-200">{t('bookingConfirmed')}</h2>
 									<p className="text-muted lead animate-fade-in-up animate-delay-300">
-										Your booking has been confirmed. Check your email for details.
+										{t('bookingConfirmedDesc')}
 									</p>
 								</>
 							) : (
@@ -156,9 +156,9 @@ export default function ConfirmationPage() {
 											</svg>
 										</div>
 									</div>
-									<h2 className="text-warning">Booking Pending</h2>
+									<h2 className="text-warning">{t('bookingPending')}</h2>
 									<p className="text-muted lead">
-										Your booking is pending payment confirmation.
+										{t('bookingPendingDesc')}
 									</p>
 								</>
 							)}
@@ -197,9 +197,9 @@ export default function ConfirmationPage() {
 							{/* Trip Details */}
 							<div className="row mb-4">
 								<div className="col-md-6 mb-3">
-									<h6 className="text-muted">Pickup</h6>
+									<h6 className="text-muted">{t('pickup')}</h6>
 									<p className="mb-1">
-										<strong>{new Date(booking.pickupDate).toLocaleDateString('en-US', {
+										<strong>{new Date(booking.pickupDate).toLocaleDateString('pt-BR', {
 											weekday: 'long',
 											year: 'numeric',
 											month: 'long',
@@ -209,9 +209,9 @@ export default function ConfirmationPage() {
 									<p className="mb-0">{booking.pickupLocation}</p>
 								</div>
 								<div className="col-md-6 mb-3">
-									<h6 className="text-muted">Return</h6>
+									<h6 className="text-muted">{t('return')}</h6>
 									<p className="mb-1">
-										<strong>{new Date(booking.dropoffDate).toLocaleDateString('en-US', {
+										<strong>{new Date(booking.dropoffDate).toLocaleDateString('pt-BR', {
 											weekday: 'long',
 											year: 'numeric',
 											month: 'long',
@@ -225,18 +225,18 @@ export default function ConfirmationPage() {
 							<hr />
 
 							{/* Driver Info */}
-							<h6 className="mb-3">Driver Information</h6>
+							<h6 className="mb-3">{t('driverInfo')}</h6>
 							<div className="row mb-4">
 								<div className="col-md-4">
-									<p className="text-muted mb-1">Name</p>
+									<p className="text-muted mb-1">{t('name')}</p>
 									<p className="mb-0">{booking.driverInfo?.name}</p>
 								</div>
 								<div className="col-md-4">
-									<p className="text-muted mb-1">Email</p>
+									<p className="text-muted mb-1">{t('email')}</p>
 									<p className="mb-0">{booking.driverInfo?.email}</p>
 								</div>
 								<div className="col-md-4">
-									<p className="text-muted mb-1">Phone</p>
+									<p className="text-muted mb-1">{t('phone')}</p>
 									<p className="mb-0">{booking.driverInfo?.phone || '-'}</p>
 								</div>
 							</div>
@@ -244,42 +244,42 @@ export default function ConfirmationPage() {
 							<hr />
 
 							{/* Pricing */}
-							<h6 className="mb-3">Payment Summary</h6>
+							<h6 className="mb-3">{t('paymentSummary')}</h6>
 							<div className="bg-light rounded-3 p-3">
 								<div className="d-flex justify-content-between mb-2">
-									<span>Duration:</span>
-									<span>{booking.totalDays} days</span>
+									<span>{t('duration')}:</span>
+									<span>{booking.totalDays} {t('days')}</span>
 								</div>
 								<div className="d-flex justify-content-between mb-2">
-									<span>${booking.pricing.dailyRate}/day x {booking.totalDays}:</span>
-									<span>${booking.pricing.subtotal.toFixed(2)}</span>
+									<span>R$ {booking.pricing.dailyRate}{t('perDay')} x {booking.totalDays}:</span>
+									<span>R$ {booking.pricing.subtotal.toFixed(2)}</span>
 								</div>
 								{booking.pricing.extrasTotal > 0 && (
 									<div className="d-flex justify-content-between mb-2">
-										<span>Extras:</span>
-										<span>${booking.pricing.extrasTotal.toFixed(2)}</span>
+										<span>{t('extras')}:</span>
+										<span>R$ {booking.pricing.extrasTotal.toFixed(2)}</span>
 									</div>
 								)}
 								{booking.pricing.discount > 0 && (
 									<div className="d-flex justify-content-between mb-2 text-success">
-										<span>Discount:</span>
-										<span>-${booking.pricing.discount.toFixed(2)}</span>
+										<span>{t('discount')}:</span>
+										<span>-R$ {booking.pricing.discount.toFixed(2)}</span>
 									</div>
 								)}
 								<div className="d-flex justify-content-between mb-2">
-									<span>Tax:</span>
-									<span>${booking.pricing.tax.toFixed(2)}</span>
+									<span>{t('tax')}:</span>
+									<span>R$ {booking.pricing.tax.toFixed(2)}</span>
 								</div>
 								<hr />
 								<div className="d-flex justify-content-between">
 									<strong>{t('total')}:</strong>
 									<strong className="text-primary h5 mb-0">
-										${booking.pricing.total.toFixed(2)}
+										R$ {booking.pricing.total.toFixed(2)}
 									</strong>
 								</div>
 								<div className="text-end mt-2">
 									<span className={`badge bg-${booking.paymentStatus === 'paid' ? 'success' : 'warning'}`}>
-										{booking.paymentStatus === 'paid' ? 'Paid' : 'Payment Pending'}
+										{booking.paymentStatus === 'paid' ? t('paid') : t('paymentPending')}
 									</span>
 								</div>
 							</div>
@@ -288,10 +288,10 @@ export default function ConfirmationPage() {
 						{/* Actions */}
 						<div className="d-flex gap-3 justify-content-center animate-fade-in-up animate-delay-400">
 							<Link href="/dashboard/my-rentals" className="btn btn-primary btn-press hover-lift">
-								View My Rentals
+								{t('viewMyRentals')}
 							</Link>
 							<Link href="/cars-list-1" className="btn btn-outline-primary btn-press hover-lift">
-								Browse More Cars
+								{t('browseMoreCars')}
 							</Link>
 						</div>
 
@@ -301,7 +301,7 @@ export default function ConfirmationPage() {
 									href={`/booking/checkout?bookingId=${booking._id}`}
 									className="btn btn-warning"
 								>
-									Complete Payment
+									{t('completePayment')}
 								</Link>
 							</div>
 						)}
