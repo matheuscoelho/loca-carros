@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'carento',
+      name: 'navegar-sistemas',
       script: 'npm',
       args: 'run dev',
       cwd: '/Users/matheus._.coelho/Documents/iuri/1.carento_nextjs_template',

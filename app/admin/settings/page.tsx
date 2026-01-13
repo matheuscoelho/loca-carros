@@ -36,12 +36,12 @@ interface Settings {
 
 const defaultSettings: Settings = {
 	general: {
-		siteName: 'Carento',
-		siteDescription: 'Premium car rental service',
-		contactEmail: 'contact@carento.com',
-		contactPhone: '+1 (555) 123-4567',
-		currency: 'USD',
-		timezone: 'America/New_York'
+		siteName: 'Navegar Sistemas',
+		siteDescription: 'Serviço premium de aluguel de carros',
+		contactEmail: 'contato@navegarsistemas.com.br',
+		contactPhone: '+55 (11) 99999-9999',
+		currency: 'BRL',
+		timezone: 'America/Sao_Paulo'
 	},
 	pricing: {
 		taxRate: 10,
@@ -76,7 +76,7 @@ export default function AdminSettingsPage() {
 
 	useEffect(() => {
 		// Load settings from localStorage
-		const savedSettings = localStorage.getItem('carento_admin_settings')
+		const savedSettings = localStorage.getItem('navegar_sistemas_admin_settings')
 		if (savedSettings) {
 			try {
 				setSettings(JSON.parse(savedSettings))
@@ -91,7 +91,7 @@ export default function AdminSettingsPage() {
 		setSaving(true)
 		try {
 			// Save to localStorage
-			localStorage.setItem('carento_admin_settings', JSON.stringify(settings))
+			localStorage.setItem('navegar_sistemas_admin_settings', JSON.stringify(settings))
 			setSaved(true)
 			setTimeout(() => setSaved(false), 3000)
 		} catch (err) {

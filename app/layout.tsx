@@ -18,8 +18,8 @@ const urbanist = Urbanist({
 })
 
 export const metadata: Metadata = {
-	title: "Carento - Car Rental",
-	description: "Car rental platform - Carento",
+	title: "Navegar Sistemas - Aluguel de Carros",
+	description: "Plataforma de aluguel de carros - Navegar Sistemas",
 }
 
 export default async function RootLayout({

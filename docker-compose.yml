@@ -1,9 +1,9 @@
 services:
-  carento:
+  navegar-sistemas:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: carento-app
+    container_name: navegar-sistemas-app
     restart: unless-stopped
     ports:
       - "3050:3050"
@@ -26,14 +26,14 @@ services:
       - SMTP_FROM=${SMTP_FROM}
       - SMTP_HOSTNAME=${SMTP_HOSTNAME}
     networks:
-      - carento-network
+      - navegar-sistemas-network
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3050/api/health"]
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3050/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
 
 networks:
-  carento-network:
+  navegar-sistemas-network:
     driver: bridge

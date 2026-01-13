@@ -34,7 +34,7 @@ export default function BlogGrid() {
 												</h3>
 												<div className="card-meta-user">
 													<div className="box-author-small">
-														<img src="/assets/imgs/blog/blog-grid/avatar.png" alt="carento" />
+														<img src="/assets/imgs/blog/blog-grid/avatar.png" alt="Navegar Sistemas" />
 														<p className="text-sm-bold">By Jimmy Dave</p>
 													</div>
 													<div className="date-post">
@@ -58,7 +58,7 @@ export default function BlogGrid() {
 												</h3>
 												<div className="card-meta-user">
 													<div className="box-author-small">
-														<img src="/assets/imgs/blog/blog-grid/avatar.png" alt="carento" />
+														<img src="/assets/imgs/blog/blog-grid/avatar.png" alt="Navegar Sistemas" />
 														<p className="text-sm-bold">By Jimmy Dave</p>
 													</div>
 													<div className="date-post">

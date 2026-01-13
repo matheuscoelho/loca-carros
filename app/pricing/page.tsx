@@ -67,27 +67,27 @@ export default function Pricing() {
 										<p className="text-sm-medium neutral-1000">For most businesses that want to optimize web queries</p>
 										<ul className="list-unstyled mb-0 py-4 border-top mt-4">
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">Access to standard vehicles</p>
 											</li>
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">24/7 customer support</p>
 											</li>
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">Basic insurance coverage</p>
 											</li>
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2 text-400">Online booking</p>
 											</li>
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2 text-400">Standard roadside assistance</p>
 											</li>
 											<li className="d-flex align-items-center">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2 text-400">One free vehicle per month</p>
 											</li>
 										</ul>
@@ -110,27 +110,27 @@ export default function Pricing() {
 										<p className="text-sm-medium neutral-1000">For most businesses that want to optimize web queries</p>
 										<ul className="list-unstyled mb-0 py-4 border-top mt-4">
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">All Basic Plan features</p>
 											</li>
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">Access to premium vehicles</p>
 											</li>
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">Flexible rental terms</p>
 											</li>
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">GPS included</p>
 											</li>
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">Free additional driver</p>
 											</li>
 											<li className="d-flex align-items-center">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">Unlimited vehicle swaps</p>
 											</li>
 										</ul>
@@ -153,27 +153,27 @@ export default function Pricing() {
 										<p className="text-sm-medium neutral-1000">For most businesses that want to optimize web queries</p>
 										<ul className="list-unstyled mb-0 py-4 border-top mt-4">
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">All Standard Plan features</p>
 											</li>
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">Luxury vehicle options</p>
 											</li>
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">Complimentary upgrades</p>
 											</li>
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">Enhanced insurance coverage</p>
 											</li>
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">Free airport pickup, drop-off</p>
 											</li>
 											<li className="d-flex align-items-center">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">Exclusive deals and offers</p>
 											</li>
 										</ul>
@@ -196,27 +196,27 @@ export default function Pricing() {
 										<p className="text-sm-medium neutral-1000">For most businesses that want to optimize web queries</p>
 										<ul className="list-unstyled mb-0 py-4 border-top mt-4">
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">All Premium Plan features</p>
 											</li>
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">VIP transfer service</p>
 											</li>
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">Personal concierge</p>
 											</li>
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">Unlimited mileage</p>
 											</li>
 											<li className="d-flex align-items-center mb-3">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">Luxury vehicle upgrades</p>
 											</li>
 											<li className="d-flex align-items-center">
-												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="carento" />
+												<img src="/assets/imgs/pricing-1/check-primary.svg" alt="Navegar Sistemas" />
 												<p className="text-sm-medium neutral-1000 m-0 ms-2">24/7 account manager</p>
 											</li>
 										</ul>

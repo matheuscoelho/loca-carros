@@ -25,7 +25,7 @@ interface SearchAutocompleteProps {
 	variant?: 'light' | 'dark'
 }
 
-const RECENT_SEARCHES_KEY = 'carento_recent_searches'
+const RECENT_SEARCHES_KEY = 'navegar_sistemas_recent_searches'
 const MAX_RECENT_SEARCHES = 5
 
 export default function SearchAutocomplete({

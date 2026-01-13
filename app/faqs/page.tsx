@@ -144,7 +144,7 @@ export default function Faqs() {
 								<div className="col-lg-3 col-sm-6">
 									<div className="card-contact">
 										<div className="card-image">
-											<div className="card-icon background-card border rounded-2 border-dark"><img className="invert" src="/assets/imgs/page/pages/cancel.png" alt="carento" /></div>
+											<div className="card-icon background-card border rounded-2 border-dark"><img className="invert" src="/assets/imgs/page/pages/cancel.png" alt="Navegar Sistemas" /></div>
 										</div>
 										<div className="card-info">
 											<div className="card-title">
@@ -165,7 +165,7 @@ export default function Faqs() {
 								<div className="col-lg-3 col-sm-6">
 									<div className="card-contact">
 										<div className="card-image">
-											<div className="card-icon background-card border rounded-2 border-dark"><img className="invert" src="/assets/imgs/page/pages/tech.png" alt="carento" /></div>
+											<div className="card-icon background-card border rounded-2 border-dark"><img className="invert" src="/assets/imgs/page/pages/tech.png" alt="Navegar Sistemas" /></div>
 										</div>
 										<div className="card-info">
 											<div className="card-title">

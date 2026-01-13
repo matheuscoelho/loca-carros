@@ -59,7 +59,7 @@ export default function CarsList2() {
 					<div className="page-header-2 pt-30 background-body">
 						<div className="custom-container position-relative mx-auto">
 							<div className="bg-overlay rounded-12 overflow-hidden">
-								<img className="w-100 h-100 img-fluid img-banner" src="/assets/imgs/page-header/banner6.png" alt="Carento" />
+								<img className="w-100 h-100 img-fluid img-banner" src="/assets/imgs/page-header/banner6.png" alt="Navegar Sistemas" />
 							</div>
 							<div className="container position-absolute z-1 top-50 start-50 pb-70 translate-middle text-center">
 								<span className="text-sm-bold bg-2 px-4 py-3 rounded-12">Find cars for sale and for rent near you</span>
@@ -69,7 +69,7 @@ export default function CarsList2() {
 							<div className="background-body position-absolute z-1 top-100 start-50 translate-middle px-3 py-2 rounded-12 border d-flex gap-3 d-none d-none d-md-flex">
 								<Link href="/" className="neutral-700 text-md-medium">Home</Link>
 								<span>
-									<img src="/assets/imgs/template/icons/arrow-right.svg" alt="Carento" />
+									<img src="/assets/imgs/template/icons/arrow-right.svg" alt="Navegar Sistemas" />
 								</span>
 								<Link href="#" className="neutral-1000 text-md-bold">Car Listing</Link>
 							</div>
@@ -171,56 +171,56 @@ export default function CarsList2() {
 									<ul className="carouselTicker__list">
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/lexus.png" alt="Carento" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/lexus-w.png" alt="Carento" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/lexus.png" alt="Navegar Sistemas" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/lexus-w.png" alt="Navegar Sistemas" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/mer.png" alt="Carento" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/mer-w.png" alt="Carento" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/mer.png" alt="Navegar Sistemas" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/mer-w.png" alt="Navegar Sistemas" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/bugatti.png" alt="Carento" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/bugatti-w.png" alt="Carento" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/bugatti.png" alt="Navegar Sistemas" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/bugatti-w.png" alt="Navegar Sistemas" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/jaguar.png" alt="Carento" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/jaguar-w.png" alt="Carento" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/jaguar.png" alt="Navegar Sistemas" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/jaguar-w.png" alt="Navegar Sistemas" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/honda.png" alt="Carento" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/honda-w.png" alt="Carento" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/honda.png" alt="Navegar Sistemas" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/honda-w.png" alt="Navegar Sistemas" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/chevrolet.png" alt="Carento" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/chevrolet-w.png" alt="Carento" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/chevrolet.png" alt="Navegar Sistemas" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/chevrolet-w.png" alt="Navegar Sistemas" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/acura.png" alt="Carento" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/acura-w.png" alt="Carento" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/acura.png" alt="Navegar Sistemas" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/acura-w.png" alt="Navegar Sistemas" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/bmw.png" alt="Carento" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/bmw-w.png" alt="Carento" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/bmw.png" alt="Navegar Sistemas" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/bmw-w.png" alt="Navegar Sistemas" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/toyota.png" alt="Carento" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/toyota-w.png" alt="Carento" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/toyota.png" alt="Navegar Sistemas" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/toyota-w.png" alt="Navegar Sistemas" />
 											</div>
 										</li>
 									</ul>

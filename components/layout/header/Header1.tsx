@@ -53,11 +53,11 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, handle
 								</svg>
 								<span className="d-none d-lg-inline-block">+1 222-555-33-99</span>
 							</Link>
-							<Link className="email-head text-white" href="mailto:contato@carento.com">
+							<Link className="email-head text-white" href="mailto:contato@navegarsistemas.com.br">
 								<svg width={16} height={12} viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<path fillRule="evenodd" clipRule="evenodd" d="M1.96372 1.07378L6.28622 5.39816C7.22897 6.33909 8.77003 6.33991 9.71356 5.39816L14.0361 1.07378C14.0796 1.03025 14.0732 0.958563 14.0227 0.923344C13.5819 0.615875 13.0455 0.433594 12.4677 0.433594H3.53216C2.95431 0.433594 2.41791 0.615906 1.97703 0.923344C1.92653 0.958563 1.92019 1.03025 1.96372 1.07378ZM0.808594 3.15713C0.808594 2.70275 0.92125 2.27344 1.11969 1.89609C1.15072 1.83706 1.22938 1.82513 1.27653 1.87228L5.54431 6.14006C6.89578 7.4935 9.10322 7.49428 10.4555 6.14006L14.7233 1.87228C14.7704 1.82513 14.8491 1.83706 14.8801 1.89609C15.0785 2.27344 15.1912 2.70278 15.1912 3.15713V8.84266C15.1912 10.3456 13.9687 11.5662 12.4677 11.5662H3.53216C2.03116 11.5662 0.808594 10.3456 0.808594 8.84266V3.15713Z" fill="true" />
 								</svg>
-								<span className="d-none d-lg-inline-block">contato@carento.com</span>
+								<span className="d-none d-lg-inline-block">contato@navegarsistemas.com.br</span>
 							</Link>
 						</div>
 						<div className="top-right-header">
@@ -93,8 +93,8 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, handle
 						<div className="header-left">
 							<div className="header-logo">
 								<Link className="d-flex" href="/">
-									<img className="light-mode" alt="Carento" src="/assets/imgs/template/logo.svg" />
-									<img className="dark-mode" alt="Carento" src="/assets/imgs/template/logo-white.svg" />
+									<img className="light-mode" alt="Navegar Sistemas" src="/assets/imgs/template/logo.svg" />
+									<img className="dark-mode" alt="Navegar Sistemas" src="/assets/imgs/template/logo-white.svg" />
 								</Link>
 							</div>
 							<div className="header-nav">

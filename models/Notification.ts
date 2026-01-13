@@ -77,7 +77,7 @@ export const notificationTemplates: Record<NotificationType, { title: string; me
 		message: 'Important system notification.',
 	},
 	welcome: {
-		title: 'Welcome to Carento!',
-		message: 'Thank you for joining us. Start exploring our vehicle collection.',
+		title: 'Bem-vindo à Navegar Sistemas!',
+		message: 'Obrigado por se juntar a nós. Comece a explorar nossa coleção de veículos.',
 	},
 }

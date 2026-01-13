@@ -116,7 +116,7 @@ export default function Offcanvas({ isOffcanvas, handleOffcanvas }: any) {
 								<p className="address-2 text-md-medium neutral-1000">4517 Washington Ave. <br />Manchester, Kentucky
 									39495</p>
 								<p className="hour-work-2 text-md-medium neutral-1000">Hours: 8:00 - 17:00, Mon - Sat</p>
-								<p className="email-2 text-md-medium neutral-1000">support@carento.com</p>
+								<p className="email-2 text-md-medium neutral-1000">contato@navegarsistemas.com.br</p>
 							</div>
 						</div>
 					</div>

@@ -169,7 +169,7 @@ export default function AdminSidebar({ isOpen = true, onClose }: AdminSidebarPro
 				{/* Header */}
 				<div className="p-4 border-bottom border-secondary d-flex justify-content-between align-items-center">
 					<Link href="/admin" className="d-flex align-items-center text-white text-decoration-none" onClick={handleLinkClick}>
-						<span className="h4 mb-0 fw-bold">Carento</span>
+						<span className="h4 mb-0 fw-bold">Navegar Sistemas</span>
 						<span className="badge bg-primary ms-2">Admin</span>
 					</Link>
 					{isMobile && (

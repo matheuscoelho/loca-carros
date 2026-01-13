@@ -35,7 +35,7 @@ export default function Footer1() {
 									<p className="text-md neutral-400 icon-address">2356 Oakwood Drive, Suite 18, San Francisco,
 										California 94111, US</p>
 									<p className="text-md neutral-400 icon-worktime">{t('hours')}</p>
-									<p className="text-md neutral-400 icon-email">support@carento.com</p>
+									<p className="text-md neutral-400 icon-email">contato@navegarsistemas.com.br</p>
 								</div>
 								<div className="box-need-help">
 									<p className="need-help text-md-medium mb-5">{t('needHelp')}</p>

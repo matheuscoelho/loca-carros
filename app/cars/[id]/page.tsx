@@ -226,7 +226,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 											</svg>
 											See All Photos
 										</Link>
-										<a className="btn btn-white-md popup-youtube" onClick={() => setOpen(true)}> <img src="/assets/imgs/page/activities/video.svg" alt="Carento" />Video Clips</a>
+										<a className="btn btn-white-md popup-youtube" onClick={() => setOpen(true)}> <img src="/assets/imgs/page/activities/video.svg" alt="Navegar Sistemas" />Video Clips</a>
 									</div>
 								</div>
 								<div className="slider-thumnail-activities">
@@ -296,7 +296,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 										<div className="list-feature-car">
 											<div className="item-feature-car w-md-25">
 												<div className="item-feature-car-inner">
-													<div className="feature-image"><img src="/assets/imgs/page/car/km.svg" alt="Carento" /></div>
+													<div className="feature-image"><img src="/assets/imgs/page/car/km.svg" alt="Navegar Sistemas" /></div>
 													<div className="feature-info">
 														<p className="text-md-medium neutral-1000">{car.specs?.mileage?.toLocaleString() || '0'} km</p>
 													</div>
@@ -304,7 +304,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 											</div>
 											<div className="item-feature-car w-md-25">
 												<div className="item-feature-car-inner">
-													<div className="feature-image"><img src="/assets/imgs/page/car/diesel.svg" alt="Carento" /></div>
+													<div className="feature-image"><img src="/assets/imgs/page/car/diesel.svg" alt="Navegar Sistemas" /></div>
 													<div className="feature-info">
 														<p className="text-md-medium neutral-1000">{car.fuelType}</p>
 													</div>
@@ -312,7 +312,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 											</div>
 											<div className="item-feature-car w-md-25">
 												<div className="item-feature-car-inner">
-													<div className="feature-image"><img src="/assets/imgs/page/car/auto.svg" alt="Carento" /></div>
+													<div className="feature-image"><img src="/assets/imgs/page/car/auto.svg" alt="Navegar Sistemas" /></div>
 													<div className="feature-info">
 														<p className="text-md-medium neutral-1000">{car.transmission}</p>
 													</div>
@@ -320,7 +320,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 											</div>
 											<div className="item-feature-car w-md-25">
 												<div className="item-feature-car-inner">
-													<div className="feature-image"><img src="/assets/imgs/page/car/seat.svg" alt="Carento" /></div>
+													<div className="feature-image"><img src="/assets/imgs/page/car/seat.svg" alt="Navegar Sistemas" /></div>
 													<div className="feature-info">
 														<p className="text-md-medium neutral-1000">{car.specs?.seats || 5} seats</p>
 													</div>
@@ -328,7 +328,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 											</div>
 											<div className="item-feature-car w-md-25">
 												<div className="item-feature-car-inner">
-													<div className="feature-image"><img src="/assets/imgs/page/car/bag.svg" alt="Carento" /></div>
+													<div className="feature-image"><img src="/assets/imgs/page/car/bag.svg" alt="Navegar Sistemas" /></div>
 													<div className="feature-info">
 														<p className="text-md-medium neutral-1000">{car.specs?.bags || 2} bags</p>
 													</div>
@@ -336,7 +336,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 											</div>
 											<div className="item-feature-car w-md-25">
 												<div className="item-feature-car-inner">
-													<div className="feature-image"><img src="/assets/imgs/page/car/suv.svg" alt="Carento" /></div>
+													<div className="feature-image"><img src="/assets/imgs/page/car/suv.svg" alt="Navegar Sistemas" /></div>
 													<div className="feature-info">
 														<p className="text-md-medium neutral-1000">{car.carType}</p>
 													</div>
@@ -344,7 +344,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 											</div>
 											<div className="item-feature-car w-md-25">
 												<div className="item-feature-car-inner">
-													<div className="feature-image"><img src="/assets/imgs/page/car/door.svg" alt="Carento" /></div>
+													<div className="feature-image"><img src="/assets/imgs/page/car/door.svg" alt="Navegar Sistemas" /></div>
 													<div className="feature-info">
 														<p className="text-md-medium neutral-1000">{car.specs?.doors || 4} Doors</p>
 													</div>
@@ -352,7 +352,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 											</div>
 											<div className="item-feature-car w-md-25">
 												<div className="item-feature-car-inner">
-													<div className="feature-image"><img src="/assets/imgs/page/car/lit.svg" alt="Carento" /></div>
+													<div className="feature-image"><img src="/assets/imgs/page/car/lit.svg" alt="Navegar Sistemas" /></div>
 													<div className="feature-info">
 														<p className="text-md-medium neutral-1000">{car.year}</p>
 													</div>
@@ -720,14 +720,14 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 												<div className="card-author">
 													<div className="me-2"><img src="/assets/imgs/template/icons/car-1.png" alt="Dealer" /></div>
 													<div className="card-author-info">
-														<p className="text-lg-bold neutral-1000">{car.dealer?.name || 'Carento Rentals'}</p>
+														<p className="text-lg-bold neutral-1000">{car.dealer?.name || 'Navegar Sistemas Rentals'}</p>
 														<p className="text-sm-medium neutral-500">{car.dealer?.location || locationText}</p>
 													</div>
 												</div>
 											</div>
 											<div className="box-info-contact">
 												<p className="text-md-medium mobile-phone neutral-1000"><span className="text-md-bold">Mobile:</span> {car.dealer?.phone || '1-800-CARENTO'}</p>
-												<p className="text-md-medium email neutral-1000"><span className="text-md-bold">Email:</span> {car.dealer?.email || 'contact@carento.com'}</p>
+												<p className="text-md-medium email neutral-1000"><span className="text-md-bold">Email:</span> {car.dealer?.email || 'contato@navegarsistemas.com.br'}</p>
 												<p className="text-md-medium whatsapp neutral-1000"><span className="text-md-bold">WhatsApp:</span> {car.dealer?.whatsapp || car.dealer?.phone || '1-800-CARENTO'}</p>
 											</div>
 											<div className="box-link-bottom">

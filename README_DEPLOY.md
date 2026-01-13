@@ -1,4 +1,4 @@
-# Deploy do Carento em VPS com Docker
+# Deploy do Navegar Sistemas em VPS com Docker
 
 ## Requisitos na VPS
 
@@ -37,8 +37,8 @@ newgrp docker
 
 ```bash
 cd /opt
-git clone <seu-repositorio> carento
-cd carento
+git clone <seu-repositorio> navegar-sistemas
+cd navegar-sistemas
 ```
 
 ### 2. Configurar variáveis de ambiente
@@ -90,7 +90,7 @@ docker-compose build --no-cache && docker-compose up -d
 docker-compose ps
 
 # Entrar no container
-docker-compose exec carento sh
+docker-compose exec navegar-sistemas sh
 ```
 
 ## Nginx Reverse Proxy (Opcional)
@@ -98,7 +98,7 @@ docker-compose exec carento sh
 Se quiser usar Nginx como proxy reverso:
 
 ```nginx
-# /etc/nginx/sites-available/carento
+# /etc/nginx/sites-available/navegar-sistemas
 server {
     listen 80;
     server_name seudominio.com;
@@ -119,7 +119,7 @@ server {
 
 Ativar site:
 ```bash
-sudo ln -s /etc/nginx/sites-available/carento /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/navegar-sistemas /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 ```
@@ -135,7 +135,7 @@ sudo certbot --nginx -d seudominio.com
 
 ### Container não inicia
 ```bash
-docker-compose logs carento
+docker-compose logs navegar-sistemas
 ```
 
 ### Verificar se a porta está ocupada

@@ -23,7 +23,7 @@ export default function BlogList() {
 							<div className="row">
 								<div className="col-lg-7">
 									<div className="card-blog">
-										<div className="card-image"><img src="/assets/imgs/blog/blog-list/img-1.png" alt="carento" /></div>
+										<div className="card-image"><img src="/assets/imgs/blog/blog-list/img-1.png" alt="Navegar Sistemas" /></div>
 										<div className="card-info">
 											<div className="card-info-blog">
 												<Link className="btn btn-label-tag" href="#">Car Rental Tips</Link>
@@ -46,7 +46,7 @@ export default function BlogList() {
 										<li>
 											<div className="card-post">
 												<div className="card-image">
-													<Link href="/blog-details"><img src="/assets/imgs/blog/blog-list/img-2.png" alt="carento" /></Link>
+													<Link href="/blog-details"><img src="/assets/imgs/blog/blog-list/img-2.png" alt="Navegar Sistemas" /></Link>
 												</div>
 												<div className="card-info">
 													<Link className="text-xl-bold neutral-1000" href="/blog-details">How to Choose the Right Rental Car for Your Needs</Link>
@@ -60,7 +60,7 @@ export default function BlogList() {
 										<li>
 											<div className="card-post">
 												<div className="card-image">
-													<Link href="/blog-details"><img src="/assets/imgs/blog/blog-list/img-3.png" alt="carento" /></Link>
+													<Link href="/blog-details"><img src="/assets/imgs/blog/blog-list/img-3.png" alt="Navegar Sistemas" /></Link>
 												</div>
 												<div className="card-info">
 													<Link className="text-xl-bold neutral-1000" href="/blog-details">The Top 5 Luxury Cars to Rent for Special Occasions</Link>
@@ -74,7 +74,7 @@ export default function BlogList() {
 										<li>
 											<div className="card-post">
 												<div className="card-image">
-													<Link href="/blog-details"><img src="/assets/imgs/blog/blog-list/img-4.png" alt="carento" /></Link>
+													<Link href="/blog-details"><img src="/assets/imgs/blog/blog-list/img-4.png" alt="Navegar Sistemas" /></Link>
 												</div>
 												<div className="card-info">
 													<Link className="text-xl-bold neutral-1000" href="/blog-details">Exploring the Countryside: Best Cars for Scenic Drives</Link>
@@ -88,7 +88,7 @@ export default function BlogList() {
 										<li>
 											<div className="card-post">
 												<div className="card-image">
-													<Link href="/blog-details"><img src="/assets/imgs/blog/blog-list/img-5.png" alt="carento" /></Link>
+													<Link href="/blog-details"><img src="/assets/imgs/blog/blog-list/img-5.png" alt="Navegar Sistemas" /></Link>
 												</div>
 												<div className="card-info">
 													<Link className="text-xl-bold neutral-1000" href="/blog-details">What to Know Before Renting a Car Abroad</Link>

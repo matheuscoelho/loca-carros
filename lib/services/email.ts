@@ -43,7 +43,7 @@ interface SendEmailOptions {
 export async function sendEmail({ to, subject, text, html }: SendEmailOptions) {
 	const transporter = getTransporter()
 	const fromEmail = process.env.SMTP_FROM || process.env.SMTP_USER
-	const fromName = process.env.SMTP_FROM_NAME || 'Carento'
+	const fromName = process.env.SMTP_FROM_NAME || 'Navegar Sistemas'
 	const domain = fromEmail?.split('@')[1] || 'navegarsistemas.com.br'
 
 	const mailOptions: Mail.Options = {
@@ -71,7 +71,7 @@ export async function sendEmail({ to, subject, text, html }: SendEmailOptions) {
 export async function sendPasswordResetEmail(email: string, token: string) {
 	const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3050'
 	const resetUrl = `${baseUrl}/reset-password/${token}`
-	const companyName = 'Carento'
+	const companyName = 'Navegar Sistemas'
 	const supportEmail = process.env.SMTP_FROM || 'no-reply@navegarsistemas.com.br'
 
 	// Versão texto puro (obrigatório para evitar spam)

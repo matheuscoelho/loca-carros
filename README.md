@@ -1,8 +1,8 @@
-# Carento
+# Navegar Sistemas
 
 ## O que é?
 
-Carento é uma plataforma completa de aluguel de veículos. O sistema permite que clientes encontrem, comparem e aluguem carros de forma simples e segura, enquanto administradores gerenciam toda a operação através de um painel intuitivo.
+Navegar Sistemas é uma plataforma completa de aluguel de veículos. O sistema permite que clientes encontrem, comparem e aluguem carros de forma simples e segura, enquanto administradores gerenciam toda a operação através de um painel intuitivo.
 
 ## Para quem é?
 

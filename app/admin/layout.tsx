@@ -79,7 +79,7 @@ export default function AdminLayout({
 								<line x1="3" y1="18" x2="21" y2="18" />
 							</svg>
 						</button>
-						<span className="fw-bold">Carento</span>
+						<span className="fw-bold">Navegar Sistemas</span>
 						<span className="badge bg-primary ms-2">Admin</span>
 					</div>
 				)}

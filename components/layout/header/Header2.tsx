@@ -47,8 +47,8 @@ export default function Header2({ scroll, isMobileMenu, handleMobileMenu, handle
 						<div className="header-left">
 							<div className="header-logo">
 								<Link className="d-flex" href="/">
-									<img className="light-mode" alt="Carento" src="/assets/imgs/template/logo.svg" />
-									<img className="dark-mode" alt="Carento" src="/assets/imgs/template/logo-white.svg" />
+									<img className="light-mode" alt="Navegar Sistemas" src="/assets/imgs/template/logo.svg" />
+									<img className="dark-mode" alt="Navegar Sistemas" src="/assets/imgs/template/logo-white.svg" />
 								</Link>
 							</div>
 							<div className="header-nav">
