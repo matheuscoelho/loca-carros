@@ -1,8 +1,10 @@
 'use client'
 
 import { useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 
 export default function DemoBanner() {
+	const t = useTranslations('demoBanner')
 	const showBanner = process.env.NEXT_PUBLIC_SHOW_DEMO_BANNER === 'true'
 
 	useEffect(() => {
@@ -38,8 +40,8 @@ export default function DemoBanner() {
 			justifyContent: 'center',
 		}}>
 			<span style={{ marginRight: '8px' }}>⚠️</span>
-			<strong>PROJETO DEMONSTRATIVO</strong> - Este site é apenas para testes.
-			<strong> NÃO realize pagamentos.</strong> Não há suporte para reembolsos.
+			<strong>{t('title')}</strong> - {t('description')}
+			<strong> {t('noPayments')}</strong> {t('noRefunds')}
 		</div>
 		</>
 	)

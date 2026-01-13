@@ -1,4 +1,10 @@
 {
+  "demoBanner": {
+    "title": "PROJETO DEMONSTRATIVO",
+    "description": "Este site é apenas para testes.",
+    "noPayments": "NÃO realize pagamentos.",
+    "noRefunds": "Não há suporte para reembolsos."
+  },
   "common": {
     "loading": "Carregando...",
     "error": "Ocorreu um erro",
