@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  carento:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: carento-app
+    restart: unless-stopped
+    ports:
+      - "3050:3050"
+    environment:
+      - NODE_ENV=production
+      - PORT=3050
+      # MongoDB
+      - MONGODB_URI=${MONGODB_URI}
+      # NextAuth
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      # Stripe
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+    networks:
+      - carento-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3050/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  carento-network:
+    driver: bridge
