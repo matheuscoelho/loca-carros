@@ -24,6 +24,7 @@ services:
       - SMTP_USER=${SMTP_USER}
       - SMTP_PASS=${SMTP_PASS}
       - SMTP_FROM=${SMTP_FROM}
+      - SMTP_HOSTNAME=${SMTP_HOSTNAME}
     networks:
       - carento-network
     healthcheck:

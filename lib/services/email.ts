@@ -26,7 +26,8 @@ function getTransporter(): nodemailer.Transporter {
 			},
 			tls: {
 				rejectUnauthorized: false
-			}
+			},
+			name: process.env.SMTP_HOSTNAME
 		})
 	}
 	return _transporter
