@@ -612,6 +612,11 @@
 | POST | `/api/payments/create-intent` | Criar Payment Intent |
 | POST | `/api/payments/webhook` | Webhook Stripe |
 
+### Sistema
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| GET | `/api/health` | Health check para Docker |
+
 ### Perfil
 | Método | Rota | Descrição |
 |--------|------|-----------|
@@ -649,7 +654,8 @@
 | next-intl | Internacionalização (PT/EN) |
 | Bootstrap 5 | Framework CSS |
 | React Slick | Carrossel de imagens |
-| PM2 | Gerenciador de processos (porta 3050) |
+| Docker | Containerização para deploy |
+| docker-compose | Orquestração de containers |
 
 ---
 
@@ -672,5 +678,45 @@
 
 ---
 
+## Anexo: Deploy com Docker
+
+### Arquivos de Deploy
+
+| Arquivo | Descrição |
+|---------|-----------|
+| `Dockerfile` | Multi-stage build otimizado para Next.js standalone |
+| `docker-compose.yml` | Orquestração do container com variáveis de ambiente |
+| `.dockerignore` | Arquivos ignorados no build Docker |
+| `deploy.sh` | Script automatizado de deploy |
+| `README_DEPLOY.md` | Guia completo de deploy em VPS |
+
+### Comandos Docker
+
+```bash
+# Build e start
+docker-compose build
+docker-compose up -d
+
+# Ver logs
+docker-compose logs -f
+
+# Reiniciar
+docker-compose restart
+
+# Parar
+docker-compose down
+```
+
+### Health Check
+- **Endpoint:** `/api/health`
+- **Intervalo:** 30 segundos
+- **Timeout:** 10 segundos
+- **Retries:** 3
+
+### Porta
+- **Aplicação:** 3050
+
+---
+
 *Documento atualizado em: Janeiro 2026*
-*Versão: 2.1 - Adicionadas páginas admin: Payments, Reviews, Reports, Settings*
+*Versão: 2.2 - Adicionada configuração Docker para deploy em VPS*
