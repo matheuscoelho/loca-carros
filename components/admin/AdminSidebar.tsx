@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
@@ -91,9 +92,31 @@ const menuItems = [
 	},
 ]
 
-export default function AdminSidebar() {
+interface AdminSidebarProps {
+	isOpen?: boolean
+	onClose?: () => void
+}
+
+export default function AdminSidebar({ isOpen = true, onClose }: AdminSidebarProps) {
 	const pathname = usePathname()
 	const t = useTranslations('admin')
+	const [isMobile, setIsMobile] = useState(false)
+
+	useEffect(() => {
+		const checkMobile = () => {
+			setIsMobile(window.innerWidth < 992)
+		}
+		checkMobile()
+		window.addEventListener('resize', checkMobile)
+		return () => window.removeEventListener('resize', checkMobile)
+	}, [])
+
+	// Close sidebar on route change in mobile
+	useEffect(() => {
+		if (isMobile && onClose) {
+			onClose()
+		}
+	}, [pathname])
 
 	const isActive = (href: string) => {
 		if (href === '/admin') {
@@ -102,49 +125,103 @@ export default function AdminSidebar() {
 		return pathname.startsWith(href)
 	}
 
+	const handleLinkClick = () => {
+		if (isMobile && onClose) {
+			onClose()
+		}
+	}
+
 	return (
-		<aside className="admin-sidebar bg-dark text-white" style={{ width: '260px', minHeight: '100vh', position: 'fixed', left: 0, top: 0 }}>
-			<div className="p-4 border-bottom border-secondary">
-				<Link href="/admin" className="d-flex align-items-center text-white text-decoration-none">
-					<span className="h4 mb-0 fw-bold">Carento</span>
-					<span className="badge bg-primary ms-2">Admin</span>
-				</Link>
-			</div>
+		<>
+			{/* Overlay for mobile */}
+			{isMobile && isOpen && (
+				<div
+					className="sidebar-overlay"
+					onClick={onClose}
+					style={{
+						position: 'fixed',
+						top: 0,
+						left: 0,
+						right: 0,
+						bottom: 0,
+						background: 'rgba(0,0,0,0.5)',
+						zIndex: 1040,
+						transition: 'opacity 0.3s ease'
+					}}
+				/>
+			)}
 
-			<nav className="p-3">
-				<ul className="nav flex-column">
-					{menuItems.map((item) => (
-						<li key={item.key} className="nav-item mb-1">
-							<Link
-								href={item.href}
-								className={`nav-link d-flex align-items-center gap-3 rounded px-3 py-2 ${
-									isActive(item.href)
-										? 'bg-primary text-white'
-										: 'text-white-50 hover-bg-dark'
-								}`}
-								style={{
-									transition: 'all 0.2s ease',
-								}}
-							>
-								{item.icon}
-								<span>{t(`menu.${item.key}`)}</span>
-							</Link>
-						</li>
-					))}
-				</ul>
-			</nav>
+			{/* Sidebar */}
+			<aside
+				className={`admin-sidebar bg-dark text-white ${isOpen ? 'open' : ''}`}
+				style={{
+					width: '260px',
+					minHeight: '100vh',
+					position: 'fixed',
+					left: isMobile ? (isOpen ? 0 : '-260px') : 0,
+					top: 0,
+					zIndex: 1050,
+					transition: 'left 0.3s ease',
+					display: 'flex',
+					flexDirection: 'column'
+				}}
+			>
+				{/* Header */}
+				<div className="p-4 border-bottom border-secondary d-flex justify-content-between align-items-center">
+					<Link href="/admin" className="d-flex align-items-center text-white text-decoration-none" onClick={handleLinkClick}>
+						<span className="h4 mb-0 fw-bold">Carento</span>
+						<span className="badge bg-primary ms-2">Admin</span>
+					</Link>
+					{isMobile && (
+						<button
+							onClick={onClose}
+							className="btn btn-link text-white p-0"
+							style={{ fontSize: '24px', lineHeight: 1 }}
+						>
+							×
+						</button>
+					)}
+				</div>
 
-			<div className="mt-auto p-3 border-top border-secondary" style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
-				<Link
-					href="/"
-					className="nav-link d-flex align-items-center gap-3 text-white-50 px-3 py-2"
-				>
-					<svg width={20} height={20} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-					</svg>
-					<span>{t('backToSite')}</span>
-				</Link>
-			</div>
-		</aside>
+				{/* Navigation */}
+				<nav className="p-3 flex-grow-1 overflow-auto">
+					<ul className="nav flex-column">
+						{menuItems.map((item) => (
+							<li key={item.key} className="nav-item mb-1">
+								<Link
+									href={item.href}
+									onClick={handleLinkClick}
+									className={`nav-link d-flex align-items-center gap-3 rounded px-3 py-2 ${
+										isActive(item.href)
+											? 'bg-primary text-white'
+											: 'text-white-50'
+									}`}
+									style={{
+										transition: 'all 0.2s ease',
+									}}
+								>
+									{item.icon}
+									<span>{t(`menu.${item.key}`)}</span>
+								</Link>
+							</li>
+						))}
+					</ul>
+				</nav>
+
+				{/* Footer */}
+				<div className="p-3 border-top border-secondary">
+					<Link
+						href="/"
+						onClick={handleLinkClick}
+						className="nav-link d-flex align-items-center gap-3 text-white-50 px-3 py-2"
+					>
+						<svg width={20} height={20} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+						</svg>
+						<span>{t('backToSite')}</span>
+					</Link>
+				</div>
+			</aside>
+		</>
 	)
 }

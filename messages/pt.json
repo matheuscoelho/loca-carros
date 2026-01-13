@@ -138,6 +138,12 @@
     "total": "Total",
     "confirmBooking": "Confirmar Reserva",
     "bookingNumber": "Número da Reserva",
+    "step": "Etapa",
+    "steps": {
+      "details": "Detalhes",
+      "payment": "Pagamento",
+      "confirmation": "Confirmação"
+    },
     "status": {
       "pending": "Pendente",
       "confirmed": "Confirmada",
@@ -324,6 +330,21 @@
       "pricing": "Configurações de Preços",
       "notifications": "Configurações de Notificações",
       "save": "Salvar Configurações"
+    }
+  },
+  "notifications": {
+    "title": "Notificações",
+    "empty": "Nenhuma notificação",
+    "markAllRead": "Marcar todas como lidas",
+    "viewAll": "Ver todas as notificações",
+    "justNow": "Agora",
+    "types": {
+      "booking_confirmed": "Reserva Confirmada",
+      "booking_cancelled": "Reserva Cancelada",
+      "payment_received": "Pagamento Recebido",
+      "vehicle_available": "Veículo Disponível",
+      "review_reminder": "Lembrete de Avaliação",
+      "system": "Notificação do Sistema"
     }
   }
 }

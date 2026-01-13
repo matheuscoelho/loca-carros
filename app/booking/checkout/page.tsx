@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import Layout from "@/components/layout/Layout"
+import BookingStepper from "@/components/booking/BookingStepper"
 
 // Initialize Stripe
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
@@ -213,6 +214,7 @@ export default function CheckoutPage() {
 	return (
 		<Layout footerStyle={1}>
 			<div className="container pt-140 pb-170">
+				<BookingStepper currentStep={2} bookingId={bookingId || undefined} carId={booking.car?._id} />
 				<div className="row justify-content-center">
 					<div className="col-lg-8">
 						<div className="row">

@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import Layout from "@/components/layout/Layout"
 import Link from "next/link"
+import BookingStepper from "@/components/booking/BookingStepper"
 
 interface Booking {
 	_id: string
@@ -116,6 +117,7 @@ export default function ConfirmationPage() {
 	return (
 		<Layout footerStyle={1}>
 			<div className="container pt-140 pb-170">
+				<BookingStepper currentStep={3} bookingId={booking._id} carId={booking.car?._id} />
 				<div className="row justify-content-center">
 					<div className="col-lg-8">
 						<div className="text-center mb-5">

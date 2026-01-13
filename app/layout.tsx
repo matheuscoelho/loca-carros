@@ -6,6 +6,9 @@ import "@/node_modules/react-modal-video/css/modal-video.css"
 import "/public/assets/css/main.css"
 import AuthProvider from "@/context/AuthProvider"
 import { FavoritesProvider } from "@/context/FavoritesContext"
+import { CompareProvider } from "@/context/CompareContext"
+import { ToastProvider } from "@/components/ui/Toast"
+import CompareDrawer from "@/components/elements/CompareDrawer"
 
 const urbanist = Urbanist({
 	weight: ['300', '400', '500', '600', '700', '800', '900'],
@@ -33,7 +36,11 @@ export default async function RootLayout({
 				<NextIntlClientProvider messages={messages}>
 					<AuthProvider>
 						<FavoritesProvider>
-							{children}
+							<CompareProvider>
+								<ToastProvider />
+								{children}
+								<CompareDrawer />
+							</CompareProvider>
 						</FavoritesProvider>
 					</AuthProvider>
 				</NextIntlClientProvider>

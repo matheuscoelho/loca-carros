@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import Layout from "@/components/layout/Layout"
 import Link from "next/link"
+import BookingStepper from "@/components/booking/BookingStepper"
 
 interface Car {
 	_id: string
@@ -258,6 +259,7 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 	return (
 		<Layout footerStyle={1}>
 			<div className="container pt-140 pb-170">
+				<BookingStepper currentStep={1} carId={params.carId} />
 				<div className="row">
 					{/* Car Info */}
 					<div className="col-lg-4 mb-4">

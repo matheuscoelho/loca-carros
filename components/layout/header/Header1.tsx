@@ -10,6 +10,7 @@ import { useLocale, useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { Locale, locales } from '@/i18n/config'
+import NotificationBell from '@/components/ui/NotificationBell'
 
 const localeNames: Record<Locale, string> = {
 	en: 'EN',
@@ -120,6 +121,9 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, handle
 								</nav>
 							</div>
 							<div className="header-right">
+								<div className="d-none d-xl-inline-block align-middle mr-15">
+									<NotificationBell variant="dark" />
+								</div>
 								<div className="d-none d-xxl-inline-block align-middle mr-15">
 									{session ? (
 										<Link className="btn btn-signin" href="/dashboard">

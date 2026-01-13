@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { hash } from 'bcryptjs'
 import { getDatabase } from '@/lib/mongodb'

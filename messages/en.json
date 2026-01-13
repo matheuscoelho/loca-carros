@@ -138,6 +138,12 @@
     "total": "Total",
     "confirmBooking": "Confirm Booking",
     "bookingNumber": "Booking Number",
+    "step": "Step",
+    "steps": {
+      "details": "Details",
+      "payment": "Payment",
+      "confirmation": "Confirmation"
+    },
     "status": {
       "pending": "Pending",
       "confirmed": "Confirmed",
@@ -324,6 +330,21 @@
       "pricing": "Pricing Settings",
       "notifications": "Notification Settings",
       "save": "Save Settings"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "No notifications",
+    "markAllRead": "Mark all as read",
+    "viewAll": "View all notifications",
+    "justNow": "Just now",
+    "types": {
+      "booking_confirmed": "Booking Confirmed",
+      "booking_cancelled": "Booking Cancelled",
+      "payment_received": "Payment Received",
+      "vehicle_available": "Vehicle Available",
+      "review_reminder": "Review Reminder",
+      "system": "System Notification"
     }
   }
 }
