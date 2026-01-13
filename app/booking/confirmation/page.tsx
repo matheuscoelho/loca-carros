@@ -120,21 +120,41 @@ export default function ConfirmationPage() {
 				<BookingStepper currentStep={3} bookingId={booking._id} carId={booking.car?._id} />
 				<div className="row justify-content-center">
 					<div className="col-lg-8">
-						<div className="text-center mb-5">
+						<div className="text-center mb-5 animate-fade-in-up">
 							{isConfirmed ? (
 								<>
 									<div className="mb-4">
-										<span style={{ fontSize: '80px' }}>✅</span>
+										<div className="d-inline-flex align-items-center justify-content-center bg-success bg-opacity-10 rounded-circle animate-scale-in" style={{ width: '120px', height: '120px' }}>
+											<svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+												<circle cx="30" cy="30" r="28" stroke="#198754" strokeWidth="4" fill="none" className="animate-fade-in" />
+												<path
+													d="M18 30L26 38L42 22"
+													stroke="#198754"
+													strokeWidth="4"
+													strokeLinecap="round"
+													strokeLinejoin="round"
+													fill="none"
+													className="animate-checkmark"
+													style={{ strokeDasharray: 100 }}
+												/>
+											</svg>
+										</div>
 									</div>
-									<h2 className="text-success">{t('confirmation')}</h2>
-									<p className="text-muted lead">
+									<h2 className="text-success animate-fade-in-up animate-delay-200">{t('confirmation')}</h2>
+									<p className="text-muted lead animate-fade-in-up animate-delay-300">
 										Your booking has been confirmed. Check your email for details.
 									</p>
 								</>
 							) : (
 								<>
 									<div className="mb-4">
-										<span style={{ fontSize: '80px' }}>⏳</span>
+										<div className="d-inline-flex align-items-center justify-content-center bg-warning bg-opacity-10 rounded-circle animate-pulse" style={{ width: '120px', height: '120px' }}>
+											<svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+												<circle cx="30" cy="30" r="28" stroke="#ffc107" strokeWidth="4" fill="none" />
+												<path d="M30 16V34" stroke="#ffc107" strokeWidth="4" strokeLinecap="round" />
+												<circle cx="30" cy="42" r="3" fill="#ffc107" />
+											</svg>
+										</div>
 									</div>
 									<h2 className="text-warning">Booking Pending</h2>
 									<p className="text-muted lead">
@@ -266,11 +286,11 @@ export default function ConfirmationPage() {
 						</div>
 
 						{/* Actions */}
-						<div className="d-flex gap-3 justify-content-center">
-							<Link href="/dashboard/my-rentals" className="btn btn-primary">
+						<div className="d-flex gap-3 justify-content-center animate-fade-in-up animate-delay-400">
+							<Link href="/dashboard/my-rentals" className="btn btn-primary btn-press hover-lift">
 								View My Rentals
 							</Link>
-							<Link href="/cars-list-1" className="btn btn-outline-primary">
+							<Link href="/cars-list-1" className="btn btn-outline-primary btn-press hover-lift">
 								Browse More Cars
 							</Link>
 						</div>

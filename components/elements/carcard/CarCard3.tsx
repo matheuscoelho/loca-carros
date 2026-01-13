@@ -44,10 +44,10 @@ export default function CarCard3({ car }: CarCard3Props) {
 
 	return (
 		<>
-			<div className="card-flight card-hotel card-property background-card">
-				<div className="card-image" style={{ position: 'relative' }}>
+			<div className="card-flight card-hotel card-property background-card card-hover">
+				<div className="card-image img-zoom-container" style={{ position: 'relative' }}>
 					<Link href={detailsLink}>
-						<img src={primaryImage} alt={carName} style={{ height: '250px', objectFit: 'cover', width: '100%' }} />
+						<img src={primaryImage} alt={carName} className="img-zoom" style={{ height: '250px', objectFit: 'cover', width: '100%' }} />
 					</Link>
 					{carId && (
 						<div style={{ position: 'absolute', top: '10px', right: '10px' }}>
@@ -97,7 +97,7 @@ export default function CarCard3({ car }: CarCard3Props) {
 								<p className="text-md-medium neutral-500">/ day</p>
 							</div>
 							<div className="card-button">
-								<Link className="btn btn-gray" href={detailsLink}>Book Now</Link>
+								<Link className="btn btn-gray btn-press" href={detailsLink}>Book Now</Link>
 							</div>
 						</div>
 					</div>
