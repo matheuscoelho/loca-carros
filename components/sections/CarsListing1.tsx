@@ -1,12 +1,78 @@
 'use client'
-import { Swiper, SwiperSlide } from "swiper/react";
+import { useState, useEffect } from 'react'
+import { Swiper, SwiperSlide } from "swiper/react"
 import Link from "next/link"
 import { swiperGroup3 } from '@/util/swiperOptions'
 
+interface Car {
+	_id: string
+	name: string
+	brand: string
+	model: string
+	year: number
+	pricing: {
+		dailyRate: number
+		currency: string
+	}
+	specs: {
+		seats: number
+		mileage: number
+	}
+	location: {
+		city: string
+		state: string
+		country: string
+	}
+	images: Array<{
+		url: string
+		isPrimary: boolean
+	}>
+	transmission: string
+	fuelType: string
+	rating: number
+	reviewCount: number
+}
+
 export default function CarsListing1() {
+	const [cars, setCars] = useState<Car[]>([])
+	const [loading, setLoading] = useState(true)
+
+	useEffect(() => {
+		fetchCars()
+	}, [])
+
+	const fetchCars = async () => {
+		try {
+			const response = await fetch('/api/cars?limit=6')
+			if (response.ok) {
+				const data = await response.json()
+				setCars(data.cars || [])
+			}
+		} catch (err) {
+			console.error('Error fetching cars:', err)
+		} finally {
+			setLoading(false)
+		}
+	}
+
+	const getCarImage = (car: Car) => {
+		const primary = car.images?.find(img => img.isPrimary)
+		return primary?.url || car.images?.[0]?.url || '/assets/imgs/template/placeholder-car.jpg'
+	}
+
+	const getLocation = (car: Car) => {
+		const parts = [car.location?.city, car.location?.state].filter(Boolean)
+		return parts.join(', ') || 'Location TBD'
+	}
+
+	// Group cars in pairs for the swiper
+	const carPairs: Car[][] = []
+	for (let i = 0; i < cars.length; i += 2) {
+		carPairs.push(cars.slice(i, i + 2))
+	}
+
 	return (
 		<>
-
 			<section className="section-box box-flights background-body">
 				<div className="container">
 					<div className="row align-items-end">
@@ -31,232 +97,68 @@ export default function CarsListing1() {
 					</div>
 					<div className="block-flights wow fadeInUp">
 						<div className="box-swiper mt-30">
-							<Swiper {...swiperGroup3} className="swiper-container swiper-group-3 swiper-group-journey">
-								<div className="swiper-wrapper">
-									<SwiperSlide>
-										<div className="card-journey-small background-card hover-up">
-											<div className="card-image">
-												<Link href="/cars-details-1">
-													<img src="/assets/imgs/cars-listing/cars-listing-1/car-1.png" alt="Iuri" />
-												</Link>
-											</div>
-											<div className="card-info">
-												<div className="card-rating">
-													<div className="card-left" />
-													<div className="card-right">
-														<span className="rating">4.96 <span className="text-sm-medium neutral-500">(672
-															reviews)</span></span>
-													</div>
-												</div>
-												<div className="card-title"><Link className="heading-6 neutral-1000" href="/cars-details-1">Audi A3 1.6 TDI S line</Link></div>
-												<div className="card-program">
-													<div className="card-location">
-														<p className="text-location text-md-medium neutral-500">Manchester,
-															England</p>
-													</div>
-													<div className="card-facitlities">
-														<p className="card-miles text-md-medium">25,100 miles</p>
-														<p className="card-gear text-md-medium">Automatic</p>
-														<p className="card-fuel text-md-medium">Diesel</p>
-														<p className="card-seat text-md-medium">7 seats</p>
-													</div>
-													<div className="endtime">
-														<div className="card-price">
-															<p className="text-md-medium neutral-500 me-2">From</p>
-															<h6 className="heading-6 neutral-1000">$498.25</h6>
-														</div>
-														<div className="card-button"><Link className="btn btn-gray" href="/cars-details-1">Book Now</Link></div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div className="card-journey-small background-card hover-up">
-											<div className="card-image">
-												<Link href="/cars-details-1">
-													<img src="/assets/imgs/cars-listing/cars-listing-1/car-2.png" alt="Iuri" />
-												</Link>
-											</div>
-											<div className="card-info">
-												<div className="card-rating">
-													<div className="card-left" />
-													<div className="card-right">
-														<span className="rating">4.96 <span className="text-sm-medium neutral-500">(672
-															reviews)</span></span>
-													</div>
-												</div>
-												<div className="card-title"><Link className="heading-6 neutral-1000" href="/cars-details-1">Volvo S60 D4 R-Design</Link></div>
-												<div className="card-program">
-													<div className="card-location">
-														<p className="text-location text-md-medium neutral-500">New South Wales,
-															Australia</p>
-													</div>
-													<div className="card-facitlities">
-														<p className="card-miles text-md-medium">25,100 miles</p>
-														<p className="card-gear text-md-medium">Automatic</p>
-														<p className="card-fuel text-md-medium">Diesel</p>
-														<p className="card-seat text-md-medium">7 seats</p>
-													</div>
-													<div className="endtime">
-														<div className="card-price">
-															<p className="text-md-medium neutral-500 me-2">From</p>
-															<h6 className="heading-6 neutral-1000">$498.25</h6>
-														</div>
-														<div className="card-button"><Link className="btn btn-gray" href="/cars-details-1">Book Now</Link></div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</SwiperSlide>
-									<SwiperSlide>
-										<div className="card-journey-small background-card hover-up">
-											<div className="card-image">
-												<Link href="/cars-details-1">
-													<img src="/assets/imgs/cars-listing/cars-listing-1/car-3.png" alt="Iuri" />
-												</Link>
-											</div>
-											<div className="card-info">
-												<div className="card-rating">
-													<div className="card-left" />
-													<div className="card-right">
-														<span className="rating">4.96 <span className="text-sm-medium neutral-500">(672
-															reviews)</span></span>
-													</div>
-												</div>
-												<div className="card-title"><Link className="heading-6 neutral-1000" href="/cars-details-1">Mercedes-Benz C220d</Link></div>
-												<div className="card-program">
-													<div className="card-location">
-														<p className="text-location text-md-medium neutral-500">Manchester,
-															England</p>
-													</div>
-													<div className="card-facitlities">
-														<p className="card-miles text-md-medium">25,100 miles</p>
-														<p className="card-gear text-md-medium">Automatic</p>
-														<p className="card-fuel text-md-medium">Diesel</p>
-														<p className="card-seat text-md-medium">7 seats</p>
-													</div>
-													<div className="endtime">
-														<div className="card-price">
-															<p className="text-md-medium neutral-500 me-2">From</p>
-															<h6 className="heading-6 neutral-1000">$498.25</h6>
-														</div>
-														<div className="card-button"><Link className="btn btn-gray" href="/cars-details-1">Book Now</Link></div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div className="card-journey-small background-card hover-up">
-											<div className="card-image">
-												<Link href="/cars-details-1">
-													<img src="/assets/imgs/cars-listing/cars-listing-1/car-4.png" alt="Iuri" />
-												</Link>
-											</div>
-											<div className="card-info">
-												<div className="card-rating">
-													<div className="card-left" />
-													<div className="card-right">
-														<span className="rating">4.96 <span className="text-sm-medium neutral-500">(672
-															reviews)</span></span>
-													</div>
-												</div>
-												<div className="card-title"><Link className="heading-6 neutral-1000" href="/cars-details-1">Jaguar XE 2.0d R-Sport</Link></div>
-												<div className="card-program">
-													<div className="card-location">
-														<p className="text-location text-md-medium neutral-500">Manchester,
-															England</p>
-													</div>
-													<div className="card-facitlities">
-														<p className="card-miles text-md-medium">25,100 miles</p>
-														<p className="card-gear text-md-medium">Automatic</p>
-														<p className="card-fuel text-md-medium">Diesel</p>
-														<p className="card-seat text-md-medium">7 seats</p>
-													</div>
-													<div className="endtime">
-														<div className="card-price">
-															<p className="text-md-medium neutral-500 me-2">From</p>
-															<h6 className="heading-6 neutral-1000">$498.25</h6>
-														</div>
-														<div className="card-button"><Link className="btn btn-gray" href="/cars-details-1">Book Now</Link></div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</SwiperSlide>
-									<SwiperSlide>
-										<div className="card-journey-small background-card hover-up">
-											<div className="card-image">
-												<Link href="/cars-details-1">
-													<img src="/assets/imgs/cars-listing/cars-listing-1/car-5.png" alt="Iuri" />
-												</Link>
-											</div>
-											<div className="card-info">
-												<div className="card-rating">
-													<div className="card-left" />
-													<div className="card-right">
-														<span className="rating">4.96 <span className="text-sm-medium neutral-500">(672
-															reviews)</span></span>
-													</div>
-												</div>
-												<div className="card-title"><Link className="heading-6 neutral-1000 text-nowrap" href="/cars-details-1">Volkswagen Golf GTD 2.0 TDI</Link></div>
-												<div className="card-program">
-													<div className="card-location">
-														<p className="text-location text-md-medium neutral-500">Manchester,
-															England</p>
-													</div>
-													<div className="card-facitlities">
-														<p className="card-miles text-md-medium">25,100 miles</p>
-														<p className="card-gear text-md-medium">Automatic</p>
-														<p className="card-fuel text-md-medium">Diesel</p>
-														<p className="card-seat text-md-medium">7 seats</p>
-													</div>
-													<div className="endtime">
-														<div className="card-price">
-															<p className="text-md-medium neutral-500 me-2">From</p>
-															<h6 className="heading-6 neutral-1000">$498.25</h6>
-														</div>
-														<div className="card-button"><Link className="btn btn-gray" href="/cars-details-1">Book Now</Link></div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div className="card-journey-small background-card hover-up">
-											<div className="card-image">
-												<Link href="/cars-details-1">
-													<img src="/assets/imgs/cars-listing/cars-listing-1/car-6.png" alt="Iuri" />
-												</Link>
-											</div>
-											<div className="card-info">
-												<div className="card-rating">
-													<div className="card-left" />
-													<div className="card-right">
-														<span className="rating">4.96 <span className="text-sm-medium neutral-500">(672
-															reviews)</span></span>
-													</div>
-												</div>
-												<div className="card-title"><Link className="heading-6 neutral-1000" href="/cars-details-1">Lexus IS 300h F Sport</Link></div>
-												<div className="card-program">
-													<div className="card-location">
-														<p className="text-location text-md-medium neutral-500">Manchester,
-															England</p>
-													</div>
-													<div className="card-facitlities">
-														<p className="card-miles text-md-medium">25,100 miles</p>
-														<p className="card-gear text-md-medium">Automatic</p>
-														<p className="card-fuel text-md-medium">Diesel</p>
-														<p className="card-seat text-md-medium">7 seats</p>
-													</div>
-													<div className="endtime">
-														<div className="card-price">
-															<p className="text-md-medium neutral-500 me-2">From</p>
-															<h6 className="heading-6 neutral-1000">$498.25</h6>
-														</div>
-														<div className="card-button"><Link className="btn btn-gray" href="/cars-details-1">Book Now</Link></div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</SwiperSlide>
+							{loading ? (
+								<div className="text-center py-5">
+									<div className="spinner-border text-primary" role="status">
+										<span className="visually-hidden">Loading...</span>
+									</div>
 								</div>
-							</Swiper>
+							) : cars.length === 0 ? (
+								<div className="text-center py-5">
+									<p className="text-muted">No vehicles available</p>
+								</div>
+							) : (
+								<Swiper {...swiperGroup3} className="swiper-container swiper-group-3 swiper-group-journey">
+									<div className="swiper-wrapper">
+										{carPairs.map((pair, pairIndex) => (
+											<SwiperSlide key={pairIndex}>
+												{pair.map((car) => (
+													<div key={car._id} className="card-journey-small background-card hover-up">
+														<div className="card-image">
+															<Link href={`/cars/${car._id}`}>
+																<img src={getCarImage(car)} alt={`${car.brand} ${car.model}`} />
+															</Link>
+														</div>
+														<div className="card-info">
+															<div className="card-rating">
+																<div className="card-left" />
+																<div className="card-right">
+																	<span className="rating">{car.rating?.toFixed(2) || '4.50'} <span className="text-sm-medium neutral-500">({car.reviewCount || 0} reviews)</span></span>
+																</div>
+															</div>
+															<div className="card-title">
+																<Link className="heading-6 neutral-1000" href={`/cars/${car._id}`}>
+																	{car.brand} {car.model}
+																</Link>
+															</div>
+															<div className="card-program">
+																<div className="card-location">
+																	<p className="text-location text-md-medium neutral-500">{getLocation(car)}</p>
+																</div>
+																<div className="card-facitlities">
+																	<p className="card-miles text-md-medium">{car.specs?.mileage?.toLocaleString() || 0} miles</p>
+																	<p className="card-gear text-md-medium">{car.transmission || 'Automatic'}</p>
+																	<p className="card-fuel text-md-medium">{car.fuelType || 'Gasoline'}</p>
+																	<p className="card-seat text-md-medium">{car.specs?.seats || 5} seats</p>
+																</div>
+																<div className="endtime">
+																	<div className="card-price">
+																		<p className="text-md-medium neutral-500 me-2">From</p>
+																		<h6 className="heading-6 neutral-1000">${car.pricing?.dailyRate?.toFixed(2) || '0.00'}</h6>
+																	</div>
+																	<div className="card-button">
+																		<Link className="btn btn-gray" href={`/cars/${car._id}`}>Book Now</Link>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												))}
+											</SwiperSlide>
+										))}
+									</div>
+								</Swiper>
+							)}
 						</div>
 					</div>
 					<div className="d-flex justify-content-center">

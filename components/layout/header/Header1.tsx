@@ -5,7 +5,39 @@ const ThemeSwitch = dynamic(() => import('@/components/elements/ThemeSwitch'), {
 })
 import Link from 'next/link'
 import Dropdown from 'react-bootstrap/Dropdown'
+import { useSession } from 'next-auth/react'
+import { useLocale } from 'next-intl'
+import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
+import { Locale, locales } from '@/i18n/config'
+
+const localeNames: Record<Locale, string> = {
+	en: 'EN',
+	pt: 'PT'
+}
+
+const localeFullNames: Record<Locale, string> = {
+	en: 'English',
+	pt: 'Português'
+}
+
 export default function Header1({ scroll, isMobileMenu, handleMobileMenu, handleOffcanvas, isOffcanvas }: any) {
+	const { data: session } = useSession()
+	const locale = useLocale() as Locale
+	const router = useRouter()
+	const [isPending, startTransition] = useTransition()
+
+	const handleLocaleChange = async (newLocale: Locale) => {
+		if (newLocale === locale) return
+		await fetch('/api/locale', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ locale: newLocale })
+		})
+		startTransition(() => {
+			router.refresh()
+		})
+	}
 	return (
 		<>
 			<header className={`header header-fixed sticky-bar ${scroll ? 'stick' : ''}`}>
@@ -37,14 +69,23 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, handle
 						</div>
 						<div className="top-right-header">
 							<Dropdown className="d-none d-xl-inline-block box-dropdown-cart align-middle mr-15 head-lang">
-								<Dropdown.Toggle as="span" className="text-14-medium icon-list icon-account icon-lang">
-									<span className="text-14-medium arrow-down">EN</span>
+								<Dropdown.Toggle as="span" className="text-14-medium icon-list icon-account icon-lang" style={{ cursor: 'pointer' }}>
+									<span className="text-14-medium arrow-down">{localeNames[locale]}</span>
 								</Dropdown.Toggle>
 								<Dropdown.Menu className="dropdown-account" style={{visibility: 'visible'}}>
 									<ul>
-										<li><Link className="text-sm-medium" href="#">English</Link></li>
-										<li><Link className="text-sm-medium" href="#">French</Link></li>
-										<li><Link className="text-sm-medium" href="#">Chinese</Link></li>
+										{locales.map((loc) => (
+											<li key={loc}>
+												<button
+													className={`text-sm-medium bg-transparent border-0 w-100 text-start ${loc === locale ? 'text-primary' : ''}`}
+													onClick={() => handleLocaleChange(loc)}
+													disabled={isPending}
+													style={{ cursor: 'pointer' }}
+												>
+													{localeFullNames[loc]}
+												</button>
+											</li>
+										))}
 									</ul>
 								</Dropdown.Menu>
 							</Dropdown>
@@ -165,12 +206,21 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, handle
 							</div>
 							<div className="header-right">
 								<div className="d-none d-xxl-inline-block align-middle mr-15">
-									<Link className="btn btn-signin" href="/login">
-										<svg className="mb-1" xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 16 16" fill="none">
-											<path d="M3 14C3 14 2 14 2 13C2 12 3 9 8 9C13 9 14 12 14 13C14 14 13 14 13 14H3ZM8 8C8.79565 8 9.55871 7.68393 10.1213 7.12132C10.6839 6.55871 11 5.79565 11 5C11 4.20435 10.6839 3.44129 10.1213 2.87868C9.55871 2.31607 8.79565 2 8 2C7.20435 2 6.44129 2.31607 5.87868 2.87868C5.31607 3.44129 5 4.20435 5 5C5 5.79565 5.31607 6.55871 5.87868 7.12132C6.44129 7.68393 7.20435 8 8 8Z" fill="white" />
-										</svg>
-										Sign in
-									</Link>
+									{session ? (
+										<Link className="btn btn-signin" href="/dashboard">
+											<svg className="mb-1" xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 16 16" fill="none">
+												<path d="M3 14C3 14 2 14 2 13C2 12 3 9 8 9C13 9 14 12 14 13C14 14 13 14 13 14H3ZM8 8C8.79565 8 9.55871 7.68393 10.1213 7.12132C10.6839 6.55871 11 5.79565 11 5C11 4.20435 10.6839 3.44129 10.1213 2.87868C9.55871 2.31607 8.79565 2 8 2C7.20435 2 6.44129 2.31607 5.87868 2.87868C5.31607 3.44129 5 4.20435 5 5C5 5.79565 5.31607 6.55871 5.87868 7.12132C6.44129 7.68393 7.20435 8 8 8Z" fill="white" />
+											</svg>
+											{session.user?.name?.split(' ')[0] || 'Dashboard'}
+										</Link>
+									) : (
+										<Link className="btn btn-signin" href="/login">
+											<svg className="mb-1" xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 16 16" fill="none">
+												<path d="M3 14C3 14 2 14 2 13C2 12 3 9 8 9C13 9 14 12 14 13C14 14 13 14 13 14H3ZM8 8C8.79565 8 9.55871 7.68393 10.1213 7.12132C10.6839 6.55871 11 5.79565 11 5C11 4.20435 10.6839 3.44129 10.1213 2.87868C9.55871 2.31607 8.79565 2 8 2C7.20435 2 6.44129 2.31607 5.87868 2.87868C5.31607 3.44129 5 4.20435 5 5C5 5.79565 5.31607 6.55871 5.87868 7.12132C6.44129 7.68393 7.20435 8 8 8Z" fill="white" />
+											</svg>
+											Sign in
+										</Link>
+									)}
 									<Link className="btn btn-signin bg-white text-dark" href="/pricing">Add Listing</Link>
 								</div>
 								<div className="burger-icon-2 burger-icon-white" onClick={handleOffcanvas}>

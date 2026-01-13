@@ -1,7 +1,57 @@
 'use client'
 import { ChangeEvent, useState } from "react"
 
-interface Car {
+// Interface para carros do MongoDB
+export interface MongoDBCar {
+	_id: string
+	name: string
+	brand: string
+	model: string
+	year: number
+	licensePlate: string
+	carType: string
+	fuelType: string
+	transmission: string
+	specs: {
+		seats: number
+		doors: number
+		bags: number
+		mileage: number
+	}
+	pricing: {
+		dailyRate: number
+		weeklyRate?: number
+		deposit: number
+		currency: string
+	}
+	extras: Array<{
+		name: string
+		price: number
+	}>
+	amenities: string[]
+	images: Array<{
+		url: string
+		isPrimary: boolean
+	}>
+	location: {
+		city: string
+		state: string
+		country: string
+	}
+	availability: {
+		isAvailable: boolean
+		unavailableDates: Date[]
+	}
+	rating: number
+	reviewCount: number
+	totalBookings: number
+	status: string
+	createdAt: Date
+	updatedAt: Date
+}
+
+// Interface legada para compatibilidade com JSON antigo
+interface LegacyCar {
 	id: number
 	price: number
 	carType: string
@@ -12,6 +62,9 @@ interface Car {
 	location: string
 	image: string
 }
+
+// Tipo que aceita ambas estruturas
+type Car = MongoDBCar | LegacyCar
 
 export interface Filter {
 	names: string[]
@@ -25,13 +78,41 @@ export interface Filter {
 
 type SortCriteria = "name" | "price" | "rating"
 
+// Funções auxiliares para extrair dados de ambas estruturas
+const getPrice = (car: Car): number => {
+	if ('pricing' in car && car.pricing) {
+		return car.pricing.dailyRate
+	}
+	return (car as LegacyCar).price || 0
+}
+
+const getLocation = (car: Car): string => {
+	if ('location' in car && typeof car.location === 'object' && car.location !== null) {
+		const loc = car.location as { city?: string; state?: string; country?: string }
+		return loc.city || ''
+	}
+	return (car as LegacyCar).location || ''
+}
+
+const getAmenities = (car: Car): string[] => {
+	if ('amenities' in car && Array.isArray(car.amenities)) {
+		return car.amenities
+	}
+	const legacyAmenity = (car as LegacyCar).amenities
+	return legacyAmenity ? [legacyAmenity] : []
+}
+
+const getRating = (car: Car): number => {
+	return car.rating || 0
+}
+
 const useCarFilter = (carsData: Car[]) => {
 	const [filter, setFilter] = useState<Filter>({
 		names: [],
 		fuelType: [],
 		amenities: [],
 		locations: [],
-		priceRange: [0, 500],
+		priceRange: [0, 1000],
 		ratings: [],
 		carType: [],
 	})
@@ -41,19 +122,26 @@ const useCarFilter = (carsData: Car[]) => {
 
 	const uniqueNames = [...new Set(carsData.map((car) => car.name))]
 	const uniqueFuelTypes = [...new Set(carsData.map((car) => car.fuelType))]
-	const uniqueAmenities = [...new Set(carsData.map((car) => car.amenities))]
-	const uniqueLocations = [...new Set(carsData.map((car) => car.location))]
-	const uniqueRatings = [...new Set(carsData.map((car) => car.rating))]
+
+	// Achatar amenities para criar lista única
+	const uniqueAmenities = [...new Set(carsData.flatMap((car) => getAmenities(car)))]
+	const uniqueLocations = [...new Set(carsData.map((car) => getLocation(car)).filter(Boolean))]
+	const uniqueRatings = [...new Set(carsData.map((car) => getRating(car)))]
 	const uniqueCarTypes = [...new Set(carsData.map((car) => car.carType))]
 
 	const filteredCars = carsData.filter((car) => {
+		const carPrice = getPrice(car)
+		const carLocation = getLocation(car)
+		const carAmenities = getAmenities(car)
+		const carRating = getRating(car)
+
 		return (
 			(filter.names.length === 0 || filter.names.includes(car.name)) &&
 			(filter.fuelType.length === 0 || filter.fuelType.includes(car.fuelType)) &&
-			(filter.amenities.length === 0 || filter.amenities.includes(car.amenities)) &&
-			(filter.locations.length === 0 || filter.locations.includes(car.location)) &&
-			(car.price >= filter.priceRange[0] && car.price <= filter.priceRange[1]) &&
-			(filter.ratings.length === 0 || filter.ratings.includes(car.rating)) &&
+			(filter.amenities.length === 0 || filter.amenities.some(a => carAmenities.includes(a))) &&
+			(filter.locations.length === 0 || filter.locations.includes(carLocation)) &&
+			(carPrice >= filter.priceRange[0] && carPrice <= filter.priceRange[1]) &&
+			(filter.ratings.length === 0 || filter.ratings.includes(carRating)) &&
 			(filter.carType.length === 0 || filter.carType.includes(car.carType))
 		)
 	})
@@ -62,9 +150,9 @@ const useCarFilter = (carsData: Car[]) => {
 		if (sortCriteria === "name") {
 			return a.name.localeCompare(b.name)
 		} else if (sortCriteria === "price") {
-			return a.price - b.price
+			return getPrice(a) - getPrice(b)
 		} else if (sortCriteria === "rating") {
-			return b.rating - a.rating
+			return getRating(b) - getRating(a)
 		}
 		return 0
 	})
@@ -127,7 +215,7 @@ const useCarFilter = (carsData: Car[]) => {
 			fuelType: [],
 			amenities: [],
 			locations: [],
-			priceRange: [0, 500],
+			priceRange: [0, 1000],
 			ratings: [],
 			carType: [],
 		})

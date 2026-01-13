@@ -96,7 +96,7 @@ export default function CarsDetails2() {
 										<div className="row g-3">
 											<div className="col-lg-7">
 												<div className="position-relative rounded-12 overflow-hidden">
-													<img src="/assets/imgs/cars-details//banner6.png" alt="Travile" />
+													<img src="/assets/imgs/cars-details//banner6.png" alt="Iuri" />
 													<div className="box-button-abs">
 														<Link className="btn btn-primary rounded-pill" href="#">
 															<svg width={22} height={22} viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -114,12 +114,12 @@ export default function CarsDetails2() {
 											<div className="col-lg-5">
 												<div className="d-flex gap-3">
 													<div className="d-flex gap-3 flex-column w-100">
-														<div className="rounded-12 overflow-hidden w-100"><img className="w-100" src="/assets/imgs/cars-details//banner7.png" alt="Travile" /></div>
-														<div className="rounded-12 overflow-hidden w-100"><img className="w-100" src="/assets/imgs/cars-details//banner8.png" alt="Travile" /></div>
+														<div className="rounded-12 overflow-hidden w-100"><img className="w-100" src="/assets/imgs/cars-details//banner7.png" alt="Iuri" /></div>
+														<div className="rounded-12 overflow-hidden w-100"><img className="w-100" src="/assets/imgs/cars-details//banner8.png" alt="Iuri" /></div>
 													</div>
 													<div className="d-flex gap-3 flex-column w-100">
-														<div className="rounded-12 overflow-hidden w-100"><img className="w-100" src="/assets/imgs/cars-details//banner9.png" alt="Travile" /></div>
-														<div className="rounded-12 overflow-hidden w-100"><img className="w-100" src="/assets/imgs/cars-details//banner10.png" alt="Travile" /></div>
+														<div className="rounded-12 overflow-hidden w-100"><img className="w-100" src="/assets/imgs/cars-details//banner9.png" alt="Iuri" /></div>
+														<div className="rounded-12 overflow-hidden w-100"><img className="w-100" src="/assets/imgs/cars-details//banner10.png" alt="Iuri" /></div>
 													</div>
 												</div>
 											</div>
@@ -282,7 +282,7 @@ export default function CarsDetails2() {
 															<div className="review-info-inner">
 																<h6 className="neutral-1000">4.95 / 5</h6>
 																<p className="text-sm-medium neutral-400">(672 reviews)</p>
-																<div className="review-rate"> <img src="/assets/imgs/page/tour-detail/star.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star.svg" alt="Travila" /></div>
+																<div className="review-rate"> <img src="/assets/imgs/page/tour-detail/star.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star.svg" alt="Iuri" /></div>
 															</div>
 														</div>
 														<div className="review-right">
@@ -371,13 +371,13 @@ export default function CarsDetails2() {
 													<div className="list-reviews">
 														<div className="item-review">
 															<div className="head-review">
-																<div className="author-review"> <img src="/assets/imgs/page/tour-detail/avatar.png" alt="Travila" />
+																<div className="author-review"> <img src="/assets/imgs/page/tour-detail/avatar.png" alt="Iuri" />
 																	<div className="author-info">
 																		<p className="text-lg-bold">Sarah Johnson</p>
 																		<p className="text-sm-medium neutral-500">December 4, 2024 at 3:12 pm</p>
 																	</div>
 																</div>
-																<div className="rate-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /></div>
+																<div className="rate-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /></div>
 															</div>
 															<div className="content-review">
 																<p className="text-sm-medium neutral-800">The views from The High Roller were absolutely stunning! It's a fantastic way to see the Strip and the surrounding area. The cabins are spacious and comfortable, and the audio commentary adds an extra layer of enjoyment. Highly recommend!</p>
@@ -385,13 +385,13 @@ export default function CarsDetails2() {
 														</div>
 														<div className="item-review">
 															<div className="head-review">
-																<div className="author-review"> <img src="/assets/imgs/page/tour-detail/avatar.png" alt="Travila" />
+																<div className="author-review"> <img src="/assets/imgs/page/tour-detail/avatar.png" alt="Iuri" />
 																	<div className="author-info">
 																		<p className="text-lg-bold">Sarah Johnson</p>
 																		<p className="text-sm-medium neutral-500">December 4, 2024 at 3:12 pm</p>
 																	</div>
 																</div>
-																<div className="rate-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /></div>
+																<div className="rate-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /></div>
 															</div>
 															<div className="content-review">
 																<p className="text-sm-medium neutral-800">The views from The High Roller were absolutely stunning! It's a fantastic way to see the Strip and the surrounding area. The cabins are spacious and comfortable, and the audio commentary adds an extra layer of enjoyment. Highly recommend!</p>
@@ -399,13 +399,13 @@ export default function CarsDetails2() {
 														</div>
 														<div className="item-review">
 															<div className="head-review">
-																<div className="author-review"> <img src="/assets/imgs/page/tour-detail/avatar.png" alt="Travila" />
+																<div className="author-review"> <img src="/assets/imgs/page/tour-detail/avatar.png" alt="Iuri" />
 																	<div className="author-info">
 																		<p className="text-lg-bold">Sarah Johnson</p>
 																		<p className="text-sm-medium neutral-500">December 4, 2024 at 3:12 pm</p>
 																	</div>
 																</div>
-																<div className="rate-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /></div>
+																<div className="rate-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /></div>
 															</div>
 															<div className="content-review">
 																<p className="text-sm-medium neutral-800">The views from The High Roller were absolutely stunning! It's a fantastic way to see the Strip and the surrounding area. The cabins are spacious and comfortable, and the audio commentary adds an extra layer of enjoyment. Highly recommend!</p>
@@ -447,31 +447,31 @@ export default function CarsDetails2() {
 															<div className="col-lg-4">
 																<div className="box-type-review">
 																	<p className="text-sm-bold text-type-rv">Price</p>
-																	<p className="rate-type-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /></p>
+																	<p className="rate-type-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /></p>
 																</div>
 																<div className="box-type-review">
 																	<p className="text-sm-bold text-type-rv">Service</p>
-																	<p className="rate-type-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /></p>
+																	<p className="rate-type-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /></p>
 																</div>
 															</div>
 															<div className="col-lg-4">
 																<div className="box-type-review">
 																	<p className="text-sm-bold text-type-rv">Safety</p>
-																	<p className="rate-type-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /></p>
+																	<p className="rate-type-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /></p>
 																</div>
 																<div className="box-type-review">
 																	<p className="text-sm-bold text-type-rv">Entertainment</p>
-																	<p className="rate-type-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /></p>
+																	<p className="rate-type-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /></p>
 																</div>
 															</div>
 															<div className="col-lg-4">
 																<div className="box-type-review">
 																	<p className="text-sm-bold text-type-rv">Accessibility</p>
-																	<p className="rate-type-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /></p>
+																	<p className="rate-type-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /></p>
 																</div>
 																<div className="box-type-review">
 																	<p className="text-sm-bold text-type-rv">Support</p>
-																	<p className="rate-type-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Travila" /></p>
+																	<p className="rate-type-review"> <img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /><img src="/assets/imgs/page/tour-detail/star-big.svg" alt="Iuri" /></p>
 																</div>
 															</div>
 														</div>

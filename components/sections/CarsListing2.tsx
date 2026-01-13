@@ -1,10 +1,70 @@
-
+'use client'
+import { useState, useEffect } from 'react'
 import Link from "next/link"
 
+interface Car {
+	_id: string
+	name: string
+	brand: string
+	model: string
+	year: number
+	pricing: {
+		dailyRate: number
+		currency: string
+	}
+	specs: {
+		seats: number
+		mileage: number
+	}
+	location: {
+		city: string
+		state: string
+		country: string
+	}
+	images: Array<{
+		url: string
+		isPrimary: boolean
+	}>
+	transmission: string
+	fuelType: string
+	rating: number
+	reviewCount: number
+}
+
 export default function CarsListing2() {
+	const [cars, setCars] = useState<Car[]>([])
+	const [loading, setLoading] = useState(true)
+
+	useEffect(() => {
+		fetchCars()
+	}, [])
+
+	const fetchCars = async () => {
+		try {
+			const response = await fetch('/api/cars?limit=4')
+			if (response.ok) {
+				const data = await response.json()
+				setCars(data.cars || [])
+			}
+		} catch (err) {
+			console.error('Error fetching cars:', err)
+		} finally {
+			setLoading(false)
+		}
+	}
+
+	const getCarImage = (car: Car) => {
+		const primary = car.images?.find(img => img.isPrimary)
+		return primary?.url || car.images?.[0]?.url || '/assets/imgs/template/placeholder-car.jpg'
+	}
+
+	const getLocation = (car: Car) => {
+		const parts = [car.location?.city, car.location?.state].filter(Boolean)
+		return parts.join(', ') || 'Location TBD'
+	}
+
 	return (
 		<>
-
 			<section className="section-box box-flights background-body">
 				<div className="container">
 					<div className="row align-items-end mb-10">
@@ -24,155 +84,64 @@ export default function CarsListing2() {
 						</div>
 					</div>
 					<div className="row pt-30">
-						<div className="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.1s">
-							<div className="card-journey-small background-card hover-up">
-								<div className="card-image">
-									<Link href="/cars-details-2">
-										<img src="/assets/imgs/cars-listing/cars-listing-2/car-1.png" alt="Iuri" />
-									</Link>
-								</div>
-								<div className="card-info p-4 pt-30">
-									<div className="card-rating">
-										<div className="card-left" />
-										<div className="card-right">
-											<span className="rating text-xs-medium py-1 rounded-pill">4.96 <span className="text-xs-medium neutral-500">(672 reviews)</span></span>
-										</div>
-									</div>
-									<div className="card-title"><Link className="text-lg-bold neutral-1000 text-nowrap" href="/cars-details-2">Volkswagen Golf GTD</Link></div>
-									<div className="card-program">
-										<div className="card-location">
-											<p className="text-location text-sm-medium neutral-500">Manchester, England</p>
-										</div>
-										<div className="card-facitlities">
-											<p className="card-miles text-md-medium">25,100 miles</p>
-											<p className="card-gear text-md-medium">Automatic</p>
-											<p className="card-fuel text-md-medium">Diesel</p>
-											<p className="card-seat text-md-medium">7 seats</p>
-										</div>
-										<div className="endtime">
-											<div className="card-price">
-												<h6 className="text-lg-bold neutral-1000">$498.25</h6>
-												<p className="text-md-medium neutral-500" />
-											</div>
-											<div className="card-button"><Link className="btn btn-gray" href="/cars-details-2">Book
-												Now</Link></div>
-										</div>
-									</div>
+						{loading ? (
+							<div className="col-12 text-center py-5">
+								<div className="spinner-border text-primary" role="status">
+									<span className="visually-hidden">Loading...</span>
 								</div>
 							</div>
-						</div>
-						<div className="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.2s">
-							<div className="card-journey-small background-card hover-up">
-								<div className="card-image">
-									<Link href="/cars-details-2">
-										<img src="/assets/imgs/cars-listing/cars-listing-2/car-2.png" alt="Iuri" />
-									</Link>
-								</div>
-								<div className="card-info p-4 pt-30">
-									<div className="card-rating">
-										<div className="card-left" />
-										<div className="card-right">
-											<span className="rating text-xs-medium py-1 rounded-pill">4.96 <span className="text-xs-medium neutral-500">(672 reviews)</span></span>
-										</div>
-									</div>
-									<div className="card-title"><Link className="text-lg-bold neutral-1000" href="/cars-details-2">Volvo S60 D4 R-Design</Link></div>
-									<div className="card-program">
-										<div className="card-location">
-											<p className="text-location text-sm-medium neutral-500">New South Wales, Australia
-											</p>
-										</div>
-										<div className="card-facitlities">
-											<p className="card-miles text-md-medium">25,100 miles</p>
-											<p className="card-gear text-md-medium">Automatic</p>
-											<p className="card-fuel text-md-medium">Diesel</p>
-											<p className="card-seat text-md-medium">7 seats</p>
-										</div>
-										<div className="endtime">
-											<div className="card-price">
-												<h6 className="text-lg-bold neutral-1000">$498.25</h6>
-												<p className="text-md-medium neutral-500" />
-											</div>
-											<div className="card-button"><Link className="btn btn-gray" href="/cars-details-2">Book
-												Now</Link></div>
-										</div>
-									</div>
-								</div>
+						) : cars.length === 0 ? (
+							<div className="col-12 text-center py-5">
+								<p className="text-muted">No vehicles available</p>
 							</div>
-						</div>
-						<div className="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.3s">
-							<div className="card-journey-small background-card hover-up">
-								<div className="card-image">
-									<Link href="/cars-details-2">
-										<img src="/assets/imgs/cars-listing/cars-listing-2/car-3.png" alt="Iuri" />
-									</Link>
-								</div>
-								<div className="card-info p-4 pt-30">
-									<div className="card-rating">
-										<div className="card-left" />
-										<div className="card-right">
-											<span className="rating text-xs-medium py-1 rounded-pill">4.96 <span className="text-xs-medium neutral-500">(672 reviews)</span></span>
+						) : (
+							cars.map((car, index) => (
+								<div key={car._id} className="col-lg-3 col-md-6 wow fadeIn" data-wow-delay={`${0.1 * (index + 1)}s`}>
+									<div className="card-journey-small background-card hover-up">
+										<div className="card-image">
+											<Link href={`/cars/${car._id}`}>
+												<img src={getCarImage(car)} alt={`${car.brand} ${car.model}`} />
+											</Link>
 										</div>
-									</div>
-									<div className="card-title"><Link className="text-lg-bold neutral-1000" href="/cars-details-2">Jaguar XE 2.0d R-Sport</Link></div>
-									<div className="card-program">
-										<div className="card-location">
-											<p className="text-location text-sm-medium neutral-500">Manchester, England</p>
-										</div>
-										<div className="card-facitlities">
-											<p className="card-miles text-md-medium">25,100 miles</p>
-											<p className="card-gear text-md-medium">Automatic</p>
-											<p className="card-fuel text-md-medium">Diesel</p>
-											<p className="card-seat text-md-medium">7 seats</p>
-										</div>
-										<div className="endtime">
-											<div className="card-price">
-												<h6 className="text-lg-bold neutral-1000">$498.25</h6>
-												<p className="text-md-medium neutral-500" />
+										<div className="card-info p-4 pt-30">
+											<div className="card-rating">
+												<div className="card-left" />
+												<div className="card-right">
+													<span className="rating text-xs-medium py-1 rounded-pill">
+														{car.rating?.toFixed(2) || '4.50'} <span className="text-xs-medium neutral-500">({car.reviewCount || 0} reviews)</span>
+													</span>
+												</div>
 											</div>
-											<div className="card-button"><Link className="btn btn-gray" href="/cars-details-2">Book
-												Now</Link></div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div className="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.4s">
-							<div className="card-journey-small background-card hover-up">
-								<div className="card-image">
-									<Link href="/cars-details-2">
-										<img src="/assets/imgs/cars-listing/cars-listing-2/car-4.png" alt="Iuri" />
-									</Link>
-								</div>
-								<div className="card-info p-4 pt-30">
-									<div className="card-rating">
-										<div className="card-left" />
-										<div className="card-right">
-											<span className="rating text-xs-medium py-1 rounded-pill">4.96 <span className="text-xs-medium neutral-500">(672 reviews)</span></span>
-										</div>
-									</div>
-									<div className="card-title"><Link className="text-lg-bold neutral-1000" href="/cars-details-2">Lexus IS 300h F Sport</Link></div>
-									<div className="card-program">
-										<div className="card-location">
-											<p className="text-location text-sm-medium neutral-500">Manchester, England</p>
-										</div>
-										<div className="card-facitlities">
-											<p className="card-miles text-md-medium">25,100 miles</p>
-											<p className="card-gear text-md-medium">Automatic</p>
-											<p className="card-fuel text-md-medium">Diesel</p>
-											<p className="card-seat text-md-medium">7 seats</p>
-										</div>
-										<div className="endtime">
-											<div className="card-price">
-												<h6 className="text-lg-bold neutral-1000">$498.25</h6>
-												<p className="text-md-medium neutral-500" />
+											<div className="card-title">
+												<Link className="text-lg-bold neutral-1000 text-nowrap" href={`/cars/${car._id}`}>
+													{car.brand} {car.model}
+												</Link>
 											</div>
-											<div className="card-button"><Link className="btn btn-gray" href="/cars-details-2">Book
-												Now</Link></div>
+											<div className="card-program">
+												<div className="card-location">
+													<p className="text-location text-sm-medium neutral-500">{getLocation(car)}</p>
+												</div>
+												<div className="card-facitlities">
+													<p className="card-miles text-md-medium">{car.specs?.mileage?.toLocaleString() || 0} miles</p>
+													<p className="card-gear text-md-medium">{car.transmission || 'Automatic'}</p>
+													<p className="card-fuel text-md-medium">{car.fuelType || 'Gasoline'}</p>
+													<p className="card-seat text-md-medium">{car.specs?.seats || 5} seats</p>
+												</div>
+												<div className="endtime">
+													<div className="card-price">
+														<h6 className="text-lg-bold neutral-1000">${car.pricing?.dailyRate?.toFixed(2) || '0.00'}</h6>
+														<p className="text-md-medium neutral-500" />
+													</div>
+													<div className="card-button">
+														<Link className="btn btn-gray" href={`/cars/${car._id}`}>Book Now</Link>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</div>
+							))
+						)}
 					</div>
 				</div>
 			</section>

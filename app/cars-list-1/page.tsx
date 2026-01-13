@@ -1,4 +1,5 @@
 'use client'
+import { useState, useEffect } from 'react'
 import CarCard1 from '@/components/elements/carcard/CarCard1'
 import HeroSearch from '@/components/elements/HeroSearch'
 import SortCarsFilter from '@/components/elements/SortCarsFilter'
@@ -10,15 +11,36 @@ import ByPagination from '@/components/Filter/ByPagination'
 import ByPrice from '@/components/Filter/ByPrice'
 import ByRating from '@/components/Filter/ByRating'
 import Layout from "@/components/layout/Layout"
-import rawCarsData from "@/util/cars.json"
-import useCarFilter from '@/util/useCarFilter'
+import useCarFilter, { MongoDBCar } from '@/util/useCarFilter'
 import Link from "next/link"
 import Marquee from 'react-fast-marquee'
-const carsData = rawCarsData.map(car => ({
-	...car,
-	rating: parseFloat(car.rating as string)
-}))
+
 export default function CarsList1() {
+	const [cars, setCars] = useState<MongoDBCar[]>([])
+	const [loading, setLoading] = useState(true)
+	const [error, setError] = useState<string | null>(null)
+
+	useEffect(() => {
+		fetchCars()
+	}, [])
+
+	const fetchCars = async () => {
+		try {
+			setLoading(true)
+			const response = await fetch('/api/cars?limit=100')
+			if (!response.ok) {
+				throw new Error('Failed to fetch cars')
+			}
+			const data = await response.json()
+			setCars(data.cars || [])
+		} catch (err) {
+			console.error('Error fetching cars:', err)
+			setError('Erro ao carregar veículos')
+		} finally {
+			setLoading(false)
+		}
+	}
+
 	const {
 		filter,
 		setFilter,
@@ -50,17 +72,16 @@ export default function CarsList1() {
 		handleClearFilters,
 		startItemIndex,
 		endItemIndex,
-	} = useCarFilter(carsData)
+	} = useCarFilter(cars)
 
 	return (
 		<>
-
 			<Layout footerStyle={1}>
 				<div>
 					<div className="page-header-2 pt-30 background-body">
 						<div className="custom-container position-relative mx-auto">
 							<div className="bg-overlay rounded-12 overflow-hidden">
-								<img className="w-100 h-100 img-fluid img-banner" src="/assets/imgs/page-header/banner6.png" alt="Iuri" />
+								<img className="w-100 h-100 img-fluid img-banner" src="/assets/imgs/page-header/banner6.png" alt="Carento" />
 							</div>
 							<div className="container position-absolute z-1 top-50 start-50 pb-70 translate-middle text-center">
 								<span className="text-sm-bold bg-2 px-4 py-3 rounded-12">Find cars for sale and for rent near you</span>
@@ -69,14 +90,10 @@ export default function CarsList1() {
 							</div>
 							<div className="background-body position-absolute z-1 top-100 start-50 translate-middle px-3 py-2 rounded-12 border d-flex gap-3 d-none d-none d-md-flex">
 								<Link href="/" className="neutral-700 text-md-medium">Home</Link>
-								<span className="@@ds-prev-page">
-									<img src="/assets/imgs/template/icons/arrow-right.svg" alt="Iuri" />
-								</span>
-								<Link href="#" className="neutral-1000 text-md-bold">@@prev-page</Link>
 								<span>
-									<img src="/assets/imgs/template/icons/arrow-right.svg" alt="Iuri" />
+									<img src="/assets/imgs/template/icons/arrow-right.svg" alt="Carento" />
 								</span>
-								<Link href="#" className="neutral-1000 text-md-bold text-nowrap">@@current-page</Link>
+								<Link href="#" className="neutral-1000 text-md-bold">Car Listing</Link>
 							</div>
 						</div>
 					</div>
@@ -126,22 +143,44 @@ export default function CarsList1() {
 										/>
 									</div>
 									<div className="box-grid-tours wow fadeIn">
-										<div className="row">
-											{paginatedCars.map((car) => (
-												<div className="col-lg-4 col-md-6 wow fadeInUp" key={car.id}>
-													<CarCard1 car={car} />
+										{loading ? (
+											<div className="text-center py-5">
+												<div className="spinner-border text-primary" role="status">
+													<span className="visually-hidden">Loading...</span>
 												</div>
-											))}
-										</div>
+												<p className="mt-3">Carregando veículos...</p>
+											</div>
+										) : error ? (
+											<div className="alert alert-danger text-center">
+												{error}
+												<button className="btn btn-sm btn-primary ms-3" onClick={fetchCars}>
+													Tentar novamente
+												</button>
+											</div>
+										) : paginatedCars.length === 0 ? (
+											<div className="text-center py-5">
+												<h5>Nenhum veículo encontrado</h5>
+												<p className="text-muted">Tente ajustar os filtros</p>
+											</div>
+										) : (
+											<div className="row">
+												{paginatedCars.map((car: any) => (
+													<div className="col-lg-4 col-md-6 wow fadeInUp" key={car._id || car.id}>
+														<CarCard1 car={car} />
+													</div>
+												))}
+											</div>
+										)}
 									</div>
-									<ByPagination
-										handlePreviousPage={handlePreviousPage}
-										totalPages={totalPages}
-										currentPage={currentPage}
-										handleNextPage={handleNextPage}
-										handlePageChange={handlePageChange}
-									/>
-
+									{!loading && paginatedCars.length > 0 && (
+										<ByPagination
+											handlePreviousPage={handlePreviousPage}
+											totalPages={totalPages}
+											currentPage={currentPage}
+											handleNextPage={handleNextPage}
+											handlePageChange={handlePageChange}
+										/>
+									)}
 								</div>
 								<div className="content-left order-lg-first">
 									<div className="sidebar-left border-1 background-body">
@@ -234,74 +273,74 @@ export default function CarsList1() {
 									<ul className="carouselTicker__list">
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/lexus.png" alt="Iuri" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/lexus-w.png" alt="Iuri" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/lexus.png" alt="Carento" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/lexus-w.png" alt="Carento" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/mer.png" alt="Iuri" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/mer-w.png" alt="Iuri" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/mer.png" alt="Carento" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/mer-w.png" alt="Carento" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/bugatti.png" alt="Iuri" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/bugatti-w.png" alt="Iuri" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/bugatti.png" alt="Carento" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/bugatti-w.png" alt="Carento" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/jaguar.png" alt="Iuri" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/jaguar-w.png" alt="Iuri" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/jaguar.png" alt="Carento" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/jaguar-w.png" alt="Carento" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/honda.png" alt="Iuri" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/honda-w.png" alt="Iuri" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/honda.png" alt="Carento" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/honda-w.png" alt="Carento" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/chevrolet.png" alt="Iuri" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/chevrolet-w.png" alt="Iuri" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/chevrolet.png" alt="Carento" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/chevrolet-w.png" alt="Carento" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/acura.png" alt="Iuri" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/acura-w.png" alt="Iuri" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/acura.png" alt="Carento" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/acura-w.png" alt="Carento" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/bmw.png" alt="Iuri" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/bmw-w.png" alt="Iuri" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/bmw.png" alt="Carento" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/bmw-w.png" alt="Carento" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/toyota.png" alt="Iuri" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/toyota-w.png" alt="Iuri" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/toyota.png" alt="Carento" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/toyota-w.png" alt="Carento" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/lexus.png" alt="Iuri" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/lexus-w.png" alt="Iuri" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/lexus.png" alt="Carento" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/lexus-w.png" alt="Carento" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/mer.png" alt="Iuri" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/mer-w.png" alt="Iuri" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/mer.png" alt="Carento" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/mer-w.png" alt="Carento" />
 											</div>
 										</li>
 										<li className="carouselTicker__item">
 											<div className="item-brand">
-												<img className="light-mode" src="/assets/imgs/page/homepage2/bugatti.png" alt="Iuri" />
-												<img className="dark-mode" src="/assets/imgs/page/homepage2/bugatti-w.png" alt="Iuri" />
+												<img className="light-mode" src="/assets/imgs/page/homepage2/bugatti.png" alt="Carento" />
+												<img className="dark-mode" src="/assets/imgs/page/homepage2/bugatti-w.png" alt="Carento" />
 											</div>
 										</li>
 									</ul>
