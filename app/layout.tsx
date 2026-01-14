@@ -10,6 +10,7 @@ import { CompareProvider } from "@/context/CompareContext"
 import { ToastProvider } from "@/components/ui/Toast"
 import CompareDrawer from "@/components/elements/CompareDrawer"
 import { BrandingProvider } from "@/contexts/BrandingContext"
+import DynamicHead from "@/components/layout/DynamicHead"
 
 const urbanist = Urbanist({
 	weight: ['300', '400', '500', '600', '700', '800', '900'],
@@ -37,6 +38,7 @@ export default async function RootLayout({
 				<NextIntlClientProvider messages={messages}>
 					<AuthProvider>
 						<BrandingProvider>
+							<DynamicHead />
 							<FavoritesProvider>
 								<CompareProvider>
 									<ToastProvider />

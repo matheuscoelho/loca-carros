@@ -11,11 +11,31 @@ export interface ISettings {
     siteName: string
     primaryColor: string
     secondaryColor: string
+    accentColor: string
+    successColor: string
+    warningColor: string
+    dangerColor: string
+    backgroundColor: string
+    textColor: string
+  }
+  socialMedia: {
+    instagram: string
+    facebook: string
+    twitter: string
+    youtube: string
+    linkedin: string
+    whatsapp: string
   }
   general: {
     siteDescription: string
+    siteTitle: string
     contactEmail: string
     contactPhone: string
+    whatsappNumber: string
+    address: string
+    city: string
+    state: string
+    zipCode: string
     currency: string
     timezone: string
   }
@@ -53,11 +73,31 @@ export const defaultSettings: Omit<ISettings, '_id'> = {
     siteName: 'Navegar Sistemas',
     primaryColor: '#70f46d',
     secondaryColor: '#8acfff',
+    accentColor: '#ffc700',
+    successColor: '#34d674',
+    warningColor: '#ffc107',
+    dangerColor: '#ff2e00',
+    backgroundColor: '#ffffff',
+    textColor: '#101010',
+  },
+  socialMedia: {
+    instagram: '',
+    facebook: '',
+    twitter: '',
+    youtube: '',
+    linkedin: '',
+    whatsapp: '',
   },
   general: {
     siteDescription: 'Serviço premium de aluguel de carros',
+    siteTitle: 'Navegar Sistemas - Aluguel de Carros',
     contactEmail: 'contato@navegarsistemas.com.br',
     contactPhone: '+55 (11) 99999-9999',
+    whatsappNumber: '+5511999999999',
+    address: '',
+    city: '',
+    state: '',
+    zipCode: '',
     currency: 'BRL',
     timezone: 'America/Sao_Paulo',
   },

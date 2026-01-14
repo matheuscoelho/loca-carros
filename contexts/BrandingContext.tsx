@@ -11,16 +11,40 @@ export interface Branding {
   siteName: string
   primaryColor: string
   secondaryColor: string
+  accentColor: string
+  successColor: string
+  warningColor: string
+  dangerColor: string
+  backgroundColor: string
+  textColor: string
+}
+
+export interface SocialMedia {
+  instagram: string
+  facebook: string
+  twitter: string
+  youtube: string
+  linkedin: string
+  whatsapp: string
+}
+
+export interface GeneralSettings {
+  siteName: string
+  siteTitle: string
+  siteDescription: string
+  contactEmail: string
+  contactPhone: string
+  whatsappNumber: string
+  address: string
+  city: string
+  state: string
+  zipCode: string
 }
 
 export interface PublicSettings {
   branding: Branding
-  general: {
-    siteName: string
-    siteDescription: string
-    contactEmail: string
-    contactPhone: string
-  }
+  socialMedia: SocialMedia
+  general: GeneralSettings
 }
 
 const defaultBranding: Branding = {
@@ -32,20 +56,46 @@ const defaultBranding: Branding = {
   siteName: 'Navegar Sistemas',
   primaryColor: '#70f46d',
   secondaryColor: '#8acfff',
+  accentColor: '#ffc700',
+  successColor: '#34d674',
+  warningColor: '#ffc107',
+  dangerColor: '#ff2e00',
+  backgroundColor: '#ffffff',
+  textColor: '#101010',
+}
+
+const defaultSocialMedia: SocialMedia = {
+  instagram: '',
+  facebook: '',
+  twitter: '',
+  youtube: '',
+  linkedin: '',
+  whatsapp: '',
+}
+
+const defaultGeneral: GeneralSettings = {
+  siteName: 'Navegar Sistemas',
+  siteTitle: 'Navegar Sistemas - Aluguel de Carros',
+  siteDescription: 'Serviço premium de aluguel de carros',
+  contactEmail: 'contato@navegarsistemas.com.br',
+  contactPhone: '+55 (11) 99999-9999',
+  whatsappNumber: '+5511999999999',
+  address: '',
+  city: '',
+  state: '',
+  zipCode: '',
 }
 
 const defaultSettings: PublicSettings = {
   branding: defaultBranding,
-  general: {
-    siteName: 'Navegar Sistemas',
-    siteDescription: 'Serviço premium de aluguel de carros',
-    contactEmail: 'contato@navegarsistemas.com.br',
-    contactPhone: '+55 (11) 99999-9999',
-  },
+  socialMedia: defaultSocialMedia,
+  general: defaultGeneral,
 }
 
 interface BrandingContextType {
   branding: Branding
+  socialMedia: SocialMedia
+  general: GeneralSettings
   settings: PublicSettings
   isLoading: boolean
   refreshBranding: () => Promise<void>
@@ -53,6 +103,8 @@ interface BrandingContextType {
 
 const BrandingContext = createContext<BrandingContextType>({
   branding: defaultBranding,
+  socialMedia: defaultSocialMedia,
+  general: defaultGeneral,
   settings: defaultSettings,
   isLoading: true,
   refreshBranding: async () => {},
@@ -84,12 +136,25 @@ export function BrandingProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!isLoading) {
       const root = document.documentElement
-      root.style.setProperty('--bs-brand-2', settings.branding.primaryColor)
-      root.style.setProperty('--bs-brand-2-dark', settings.branding.primaryColor)
-      root.style.setProperty('--bs-button-bg', settings.branding.primaryColor)
-      root.style.setProperty('--bs-brand-1', settings.branding.secondaryColor)
+      const { branding } = settings
+
+      // Cores principais
+      root.style.setProperty('--bs-brand-2', branding.primaryColor)
+      root.style.setProperty('--bs-brand-2-dark', branding.primaryColor)
+      root.style.setProperty('--bs-button-bg', branding.primaryColor)
+      root.style.setProperty('--bs-brand-1', branding.secondaryColor)
+      root.style.setProperty('--bs-accent', branding.accentColor)
+
+      // Cores de feedback
+      root.style.setProperty('--bs-success', branding.successColor)
+      root.style.setProperty('--bs-warning', branding.warningColor)
+      root.style.setProperty('--bs-danger', branding.dangerColor)
+
+      // Cores de fundo e texto
+      root.style.setProperty('--bs-background', branding.backgroundColor)
+      root.style.setProperty('--bs-text', branding.textColor)
     }
-  }, [settings.branding.primaryColor, settings.branding.secondaryColor, isLoading])
+  }, [settings.branding, isLoading])
 
   const refreshBranding = async () => {
     setIsLoading(true)
@@ -100,6 +165,8 @@ export function BrandingProvider({ children }: { children: ReactNode }) {
     <BrandingContext.Provider
       value={{
         branding: settings.branding,
+        socialMedia: settings.socialMedia || defaultSocialMedia,
+        general: settings.general || defaultGeneral,
         settings,
         isLoading,
         refreshBranding,

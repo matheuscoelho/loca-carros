@@ -16,8 +16,9 @@ export async function GET() {
     // Usar settings do banco ou valores padrão
     const branding = settings?.branding || defaultSettings.branding
     const general = settings?.general || defaultSettings.general
+    const socialMedia = settings?.socialMedia || defaultSettings.socialMedia
 
-    // Retornar apenas dados públicos (branding e nome do site)
+    // Retornar apenas dados públicos (branding, social media e informações de contato)
     return NextResponse.json({
       branding: {
         logoLight: branding.logoLight,
@@ -28,12 +29,32 @@ export async function GET() {
         siteName: branding.siteName,
         primaryColor: branding.primaryColor,
         secondaryColor: branding.secondaryColor,
+        accentColor: branding.accentColor || defaultSettings.branding.accentColor,
+        successColor: branding.successColor || defaultSettings.branding.successColor,
+        warningColor: branding.warningColor || defaultSettings.branding.warningColor,
+        dangerColor: branding.dangerColor || defaultSettings.branding.dangerColor,
+        backgroundColor: branding.backgroundColor || defaultSettings.branding.backgroundColor,
+        textColor: branding.textColor || defaultSettings.branding.textColor,
+      },
+      socialMedia: {
+        instagram: socialMedia.instagram || '',
+        facebook: socialMedia.facebook || '',
+        twitter: socialMedia.twitter || '',
+        youtube: socialMedia.youtube || '',
+        linkedin: socialMedia.linkedin || '',
+        whatsapp: socialMedia.whatsapp || '',
       },
       general: {
         siteName: branding.siteName,
+        siteTitle: general.siteTitle || defaultSettings.general.siteTitle,
         siteDescription: general.siteDescription,
         contactEmail: general.contactEmail,
         contactPhone: general.contactPhone,
+        whatsappNumber: general.whatsappNumber || defaultSettings.general.whatsappNumber,
+        address: general.address || '',
+        city: general.city || '',
+        state: general.state || '',
+        zipCode: general.zipCode || '',
       },
     }, {
       headers: {
@@ -55,12 +76,32 @@ export async function GET() {
         siteName: defaultSettings.branding.siteName,
         primaryColor: defaultSettings.branding.primaryColor,
         secondaryColor: defaultSettings.branding.secondaryColor,
+        accentColor: defaultSettings.branding.accentColor,
+        successColor: defaultSettings.branding.successColor,
+        warningColor: defaultSettings.branding.warningColor,
+        dangerColor: defaultSettings.branding.dangerColor,
+        backgroundColor: defaultSettings.branding.backgroundColor,
+        textColor: defaultSettings.branding.textColor,
+      },
+      socialMedia: {
+        instagram: '',
+        facebook: '',
+        twitter: '',
+        youtube: '',
+        linkedin: '',
+        whatsapp: '',
       },
       general: {
         siteName: defaultSettings.branding.siteName,
+        siteTitle: defaultSettings.general.siteTitle,
         siteDescription: defaultSettings.general.siteDescription,
         contactEmail: defaultSettings.general.contactEmail,
         contactPhone: defaultSettings.general.contactPhone,
+        whatsappNumber: defaultSettings.general.whatsappNumber,
+        address: '',
+        city: '',
+        state: '',
+        zipCode: '',
       },
     })
   }

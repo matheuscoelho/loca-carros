@@ -5,7 +5,7 @@ import { useBranding } from '@/contexts/BrandingContext'
 
 export default function Offcanvas({ isOffcanvas, handleOffcanvas }: any) {
 	const t = useTranslations('offcanvas')
-	const { branding } = useBranding()
+	const { branding, general } = useBranding()
 
 	return (
 		<>
@@ -72,7 +72,7 @@ export default function Offcanvas({ isOffcanvas, handleOffcanvas }: any) {
 							<h6 className="title-contactus neutral-1000">{t('contactUs')}</h6>
 							<div className="contact-info">
 								<p className="hour-work-2 text-md-medium neutral-1000">{t('hours')}</p>
-								<p className="email-2 text-md-medium neutral-1000">contato@navegarsistemas.com.br</p>
+								<p className="email-2 text-md-medium neutral-1000">{general.contactEmail}</p>
 							</div>
 						</div>
 					</div>
