@@ -9,10 +9,40 @@ interface BookingStepperProps {
   carId?: string
 }
 
+// SVG Icons
+const ClipboardIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"></path>
+    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+    <path d="M9 14l2 2 4-4"></path>
+  </svg>
+)
+
+const CreditCardIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+    <line x1="1" y1="10" x2="23" y2="10"></line>
+    <line x1="6" y1="15" x2="10" y2="15"></line>
+  </svg>
+)
+
+const CheckCircleIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+  </svg>
+)
+
+const stepIcons = {
+  details: ClipboardIcon,
+  payment: CreditCardIcon,
+  confirmation: CheckCircleIcon,
+}
+
 const steps = [
-  { id: 1, key: 'details', icon: '📋' },
-  { id: 2, key: 'payment', icon: '💳' },
-  { id: 3, key: 'confirmation', icon: '✅' },
+  { id: 1, key: 'details' as const },
+  { id: 2, key: 'payment' as const },
+  { id: 3, key: 'confirmation' as const },
 ]
 
 export default function BookingStepper({ currentStep, bookingId, carId }: BookingStepperProps) {
@@ -56,7 +86,10 @@ export default function BookingStepper({ currentStep, bookingId, carId }: Bookin
                           <path d="M16.667 5L7.5 14.167L3.333 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       ) : (
-                        <span>{step.icon}</span>
+                        (() => {
+                          const IconComponent = stepIcons[step.key]
+                          return <IconComponent />
+                        })()
                       )}
                     </div>
                     <div className="stepper-label">
@@ -72,7 +105,10 @@ export default function BookingStepper({ currentStep, bookingId, carId }: Bookin
                           <path d="M16.667 5L7.5 14.167L3.333 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       ) : (
-                        <span>{step.icon}</span>
+                        (() => {
+                          const IconComponent = stepIcons[step.key]
+                          return <IconComponent />
+                        })()
                       )}
                     </div>
                     <div className="stepper-label">

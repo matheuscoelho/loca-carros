@@ -59,7 +59,7 @@ export default function AdminBookingsPage() {
 			const data = await response.json()
 			setBookings(data.bookings)
 		} catch (err) {
-			setError('Error loading bookings')
+			setError(t('bookings.errorLoading'))
 			console.error(err)
 		} finally {
 			setLoading(false)
@@ -143,7 +143,13 @@ export default function AdminBookingsPage() {
 								<span className={`badge ${getStatusBadge(status)} mb-2`} style={{ fontSize: '1.2rem' }}>
 									{bookings.filter(b => b.status === status).length}
 								</span>
-								<p className="mb-0 small text-capitalize">{status.replace('_', ' ')}</p>
+								<p className="mb-0 small">
+									{status === 'pending' && t('bookings.statusOptions.pending')}
+									{status === 'confirmed' && t('bookings.statusOptions.confirmed')}
+									{status === 'in_progress' && t('bookings.statusOptions.inProgress')}
+									{status === 'completed' && t('bookings.statusOptions.completed')}
+									{status === 'cancelled' && t('bookings.statusOptions.cancelled')}
+								</p>
 							</div>
 						</div>
 					</div>
@@ -158,7 +164,7 @@ export default function AdminBookingsPage() {
 							<input
 								type="text"
 								className="form-control"
-								placeholder={`${tCommon('search')} by booking #, name, email...`}
+								placeholder={`${tCommon('search')} ${t('bookings.searchPlaceholder')}`}
 								value={searchTerm}
 								onChange={(e) => setSearchTerm(e.target.value)}
 							/>
@@ -179,7 +185,7 @@ export default function AdminBookingsPage() {
 						</div>
 						<div className="col-md-3 text-end">
 							<span className="text-muted">
-								{filteredBookings.length} bookings
+								{filteredBookings.length} {t('bookings.bookingsCount')}
 							</span>
 						</div>
 					</div>
@@ -197,14 +203,14 @@ export default function AdminBookingsPage() {
 						<table className="table table-hover mb-0">
 							<thead className="bg-light">
 								<tr>
-									<th className="border-0">Booking #</th>
-									<th className="border-0">Customer</th>
-									<th className="border-0">Vehicle</th>
-									<th className="border-0">Dates</th>
-									<th className="border-0">Amount</th>
-									<th className="border-0">Status</th>
-									<th className="border-0">Payment</th>
-									<th className="border-0">Actions</th>
+									<th className="border-0">{t('bookings.tableHeaders.bookingNumber')}</th>
+									<th className="border-0">{t('bookings.tableHeaders.customer')}</th>
+									<th className="border-0">{t('bookings.tableHeaders.vehicle')}</th>
+									<th className="border-0">{t('bookings.tableHeaders.dates')}</th>
+									<th className="border-0">{t('bookings.tableHeaders.amount')}</th>
+									<th className="border-0">{t('bookings.tableHeaders.status')}</th>
+									<th className="border-0">{t('bookings.tableHeaders.payment')}</th>
+									<th className="border-0">{t('bookings.tableHeaders.actions')}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -232,28 +238,28 @@ export default function AdminBookingsPage() {
 											</td>
 											<td>
 												<small>
-													<strong>Pickup:</strong> {new Date(booking.pickupDate).toLocaleDateString()}
+													<strong>{t('bookings.pickup')}:</strong> {new Date(booking.pickupDate).toLocaleDateString()}
 													<br />
-													<strong>Return:</strong> {new Date(booking.dropoffDate).toLocaleDateString()}
+													<strong>{t('bookings.return')}:</strong> {new Date(booking.dropoffDate).toLocaleDateString()}
 													<br />
-													<span className="badge bg-light text-dark">{booking.totalDays} days</span>
+													<span className="badge bg-light text-dark">{booking.totalDays} {booking.totalDays === 1 ? t('bookings.day') : t('bookings.days')}</span>
 												</small>
 											</td>
 											<td>
-												<strong>${booking.pricing.total.toFixed(2)}</strong>
+												<strong>R$ {booking.pricing.total.toFixed(2)}</strong>
 											</td>
 											<td>
 												<select
 													className={`form-select form-select-sm`}
 													value={booking.status}
 													onChange={(e) => handleStatusChange(booking._id, e.target.value)}
-													style={{ width: '130px' }}
+													style={{ width: '140px' }}
 												>
-													<option value="pending">Pending</option>
-													<option value="confirmed">Confirmed</option>
-													<option value="in_progress">In Progress</option>
-													<option value="completed">Completed</option>
-													<option value="cancelled">Cancelled</option>
+													<option value="pending">{t('bookings.statusOptions.pending')}</option>
+													<option value="confirmed">{t('bookings.statusOptions.confirmed')}</option>
+													<option value="in_progress">{t('bookings.statusOptions.inProgress')}</option>
+													<option value="completed">{t('bookings.statusOptions.completed')}</option>
+													<option value="cancelled">{t('bookings.statusOptions.cancelled')}</option>
 												</select>
 											</td>
 											<td>
@@ -274,7 +280,7 @@ export default function AdminBookingsPage() {
 								) : (
 									<tr>
 										<td colSpan={8} className="text-center py-4 text-muted">
-											No bookings found
+											{t('bookings.noBookingsFound')}
 										</td>
 									</tr>
 								)}

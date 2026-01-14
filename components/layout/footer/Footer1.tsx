@@ -32,14 +32,12 @@ export default function Footer1() {
 									<img className="dark-mode" alt="Iuri" src="/assets/imgs/template/logo.svg" />
 								</Link>
 								<div className="box-info-contact mt-0">
-									<p className="text-md neutral-400 icon-address">2356 Oakwood Drive, Suite 18, San Francisco,
-										California 94111, US</p>
 									<p className="text-md neutral-400 icon-worktime">{t('hours')}</p>
 									<p className="text-md neutral-400 icon-email">contato@navegarsistemas.com.br</p>
 								</div>
 								<div className="box-need-help">
 									<p className="need-help text-md-medium mb-5">{t('needHelp')}</p>
-									<br /><Link className="heading-6 phone-support" href="/tel:+1 222-555-33-99">+1 222-555-33-99</Link>
+									<br /><Link className="heading-6 phone-support" href="tel:+5500000000000">{t('phoneNumber')}</Link>
 								</div>
 							</div>
 						</div>
@@ -94,7 +92,7 @@ export default function Footer1() {
 					<div className="footer-bottom mt-50">
 						<div className="row align-items-center justify-content-center">
 							<div className="col-md-6 text-md-start text-center mb-20">
-								<p className="text-sm color-white">© {new Date().getFullYear()} Iuri Inc. {t('allRightsReserved')}</p>
+								<p className="text-sm color-white">© {new Date().getFullYear()} Navegar Sistemas. {t('allRightsReserved')}</p>
 							</div>
 							<div className="col-md-6 text-md-end text-center mb-20">
 								<div className="d-flex align-items-center justify-content-center justify-content-md-end">

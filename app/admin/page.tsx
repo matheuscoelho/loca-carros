@@ -73,7 +73,7 @@ export default function AdminDashboard() {
 			const data = await response.json()
 			setStats(data.stats)
 		} catch (err) {
-			setError('Error loading dashboard')
+			setError(t('dashboard.errorLoadingDashboard'))
 			console.error(err)
 		} finally {
 			setLoading(false)
@@ -113,7 +113,7 @@ export default function AdminDashboard() {
 
 	if (error || !stats) {
 		return (
-			<div className="alert alert-danger">{error || 'Error loading data'}</div>
+			<div className="alert alert-danger">{error || t('dashboard.errorLoadingData')}</div>
 		)
 	}
 
@@ -132,7 +132,7 @@ export default function AdminDashboard() {
 							<div className="d-flex justify-content-between align-items-start">
 								<div>
 									<p className="text-muted mb-1">{t('dashboard.totalRevenue')}</p>
-									<h3 className="mb-0 text-success">${stats.revenue.total.toLocaleString()}</h3>
+									<h3 className="mb-0 text-success">R$ {stats.revenue.total.toLocaleString()}</h3>
 								</div>
 								<div className="bg-success bg-opacity-10 p-3 rounded">
 									<svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -140,7 +140,7 @@ export default function AdminDashboard() {
 									</svg>
 								</div>
 							</div>
-							<small className="text-muted">{stats.revenue.paidBookings} paid bookings</small>
+							<small className="text-muted">{stats.revenue.paidBookings} {t('dashboard.paidBookings')}</small>
 						</div>
 					</div>
 				</div>
@@ -162,7 +162,7 @@ export default function AdminDashboard() {
 									</svg>
 								</div>
 							</div>
-							<small className="text-muted">{stats.bookings.today} today, {stats.bookings.thisMonth} this month</small>
+							<small className="text-muted">{stats.bookings.today} {t('dashboard.today')}, {stats.bookings.thisMonth} {t('dashboard.thisMonth')}</small>
 						</div>
 					</div>
 				</div>
@@ -183,7 +183,7 @@ export default function AdminDashboard() {
 									</svg>
 								</div>
 							</div>
-							<small className="text-muted">{stats.vehicles.total} total, {stats.vehicles.inactive} inactive</small>
+							<small className="text-muted">{stats.vehicles.total} {t('dashboard.total')}, {stats.vehicles.inactive} {t('dashboard.inactive')}</small>
 						</div>
 					</div>
 				</div>
@@ -204,7 +204,7 @@ export default function AdminDashboard() {
 									</svg>
 								</div>
 							</div>
-							<small className="text-muted">Registered users</small>
+							<small className="text-muted">{t('dashboard.registeredUsers')}</small>
 						</div>
 					</div>
 				</div>
@@ -220,11 +220,11 @@ export default function AdminDashboard() {
 						<div className="card-body d-flex justify-content-center">
 							<DonutChart
 								data={[
-									{ label: 'Pending', value: stats.bookings.pending, color: '#ffc107' },
-									{ label: 'Confirmed', value: stats.bookings.confirmed, color: '#0dcaf0' },
-									{ label: 'In Progress', value: stats.bookings.inProgress, color: '#0d6efd' },
-									{ label: 'Completed', value: stats.bookings.completed, color: '#198754' },
-									{ label: 'Cancelled', value: stats.bookings.cancelled, color: '#dc3545' },
+									{ label: t('dashboard.chartLabels.pending'), value: stats.bookings.pending, color: '#ffc107' },
+									{ label: t('dashboard.chartLabels.confirmed'), value: stats.bookings.confirmed, color: '#0dcaf0' },
+									{ label: t('dashboard.chartLabels.inProgress'), value: stats.bookings.inProgress, color: '#0d6efd' },
+									{ label: t('dashboard.chartLabels.completed'), value: stats.bookings.completed, color: '#198754' },
+									{ label: t('dashboard.chartLabels.cancelled'), value: stats.bookings.cancelled, color: '#dc3545' },
 								]}
 								size={180}
 								strokeWidth={25}
@@ -242,17 +242,17 @@ export default function AdminDashboard() {
 							{stats.revenue.monthly && stats.revenue.monthly.length > 0 ? (
 								<LineChart
 									data={stats.revenue.monthly.slice(-6).map(item => ({
-										label: new Date(item.year, item.month - 1).toLocaleDateString('en', { month: 'short' }),
+										label: new Date(item.year, item.month - 1).toLocaleDateString('pt-BR', { month: 'short' }),
 										value: item.revenue
 									}))}
 									height={200}
 									lineColor="#198754"
 									fillColor="#19875415"
-									valuePrefix="$"
+									valuePrefix="R$ "
 								/>
 							) : (
 								<div className="text-center text-muted py-5">
-									No revenue data available
+									{t('dashboard.noRevenueData')}
 								</div>
 							)}
 						</div>
@@ -293,7 +293,7 @@ export default function AdminDashboard() {
 							{stats.revenue.monthly && stats.revenue.monthly.length > 0 ? (
 								<BarChart
 									data={stats.revenue.monthly.slice(-6).map(item => ({
-										label: new Date(item.year, item.month - 1).toLocaleDateString('en', { month: 'short' }),
+										label: new Date(item.year, item.month - 1).toLocaleDateString('pt-BR', { month: 'short' }),
 										value: item.bookings
 									}))}
 									height={180}
@@ -301,7 +301,7 @@ export default function AdminDashboard() {
 								/>
 							) : (
 								<div className="text-center text-muted py-5">
-									No booking data available
+									{t('dashboard.noBookingData')}
 								</div>
 							)}
 						</div>
@@ -322,13 +322,13 @@ export default function AdminDashboard() {
 						<table className="table table-hover mb-0">
 							<thead className="bg-light">
 								<tr>
-									<th className="border-0">Booking #</th>
-									<th className="border-0">Customer</th>
-									<th className="border-0">Vehicle</th>
-									<th className="border-0">Dates</th>
-									<th className="border-0">Amount</th>
-									<th className="border-0">Status</th>
-									<th className="border-0">Payment</th>
+									<th className="border-0">{t('dashboard.tableHeaders.bookingNumber')}</th>
+									<th className="border-0">{t('dashboard.tableHeaders.customer')}</th>
+									<th className="border-0">{t('dashboard.tableHeaders.vehicle')}</th>
+									<th className="border-0">{t('dashboard.tableHeaders.dates')}</th>
+									<th className="border-0">{t('dashboard.tableHeaders.amount')}</th>
+									<th className="border-0">{t('dashboard.tableHeaders.status')}</th>
+									<th className="border-0">{t('dashboard.tableHeaders.payment')}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -358,7 +358,7 @@ export default function AdminDashboard() {
 												</small>
 											</td>
 											<td>
-												<strong>${booking.total.toFixed(2)}</strong>
+												<strong>R$ {booking.total.toFixed(2)}</strong>
 											</td>
 											<td>
 												<span className={`badge ${getStatusBadge(booking.status)}`}>
@@ -375,7 +375,7 @@ export default function AdminDashboard() {
 								) : (
 									<tr>
 										<td colSpan={7} className="text-center py-4 text-muted">
-											No bookings yet
+											{t('dashboard.noBookingsYet')}
 										</td>
 									</tr>
 								)}

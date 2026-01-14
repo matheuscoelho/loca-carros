@@ -1,16 +1,18 @@
-
+'use client'
+import { useTranslations } from 'next-intl'
 
 export default function WhyUs1({cls}:any) {
+	const t = useTranslations('howItWorks')
+
 	return (
 		<>
 
 			<section className={`section-box box-why-book-22 background-body ${cls}`}>
 				<div className="container">
 					<div className="text-center wow fadeInUp">
-						<p className="text-xl-medium neutral-500 wow fadeInUp">HOW IT WORKS</p>
+						<p className="text-xl-medium neutral-500 wow fadeInUp">{t('title')}</p>
 						<h3 className="neutral-1000 wow fadeInUp">
-							Presenting Your New Go-To Car <br className="d-none d-lg-block" />
-							Rental Experience
+							{t('subtitle')}
 						</h3>
 					</div>
 					<div className="row mt-40">
@@ -26,9 +28,8 @@ export default function WhyUs1({cls}:any) {
 									</svg>
 								</div>
 								<div className="card-info">
-									<h6 className="text-xl-bold neutral-1000">Choose a Location</h6>
-									<p className="text-md-medium neutral-500">Select the ideal destination to begin your journey
-										with ease</p>
+									<h6 className="text-xl-bold neutral-1000">{t('step1Title')}</h6>
+									<p className="text-md-medium neutral-500">{t('step1Description')}</p>
 								</div>
 							</div>
 						</div>
@@ -45,9 +46,8 @@ export default function WhyUs1({cls}:any) {
 									</svg>
 								</div>
 								<div className="card-info">
-									<h6 className="text-xl-bold neutral-1000">Choose Your Vehicle</h6>
-									<p className="text-md-medium neutral-500">Browse our fleet and find the perfect car for your
-										needs</p>
+									<h6 className="text-xl-bold neutral-1000">{t('step2Title')}</h6>
+									<p className="text-md-medium neutral-500">{t('step2Description')}</p>
 								</div>
 							</div>
 						</div>
@@ -70,9 +70,8 @@ export default function WhyUs1({cls}:any) {
 									</svg>
 								</div>
 								<div className="card-info">
-									<h6 className="text-xl-bold neutral-1000">Verification</h6>
-									<p className="text-md-medium neutral-500">Review your information and confirm your booking
-									</p>
+									<h6 className="text-xl-bold neutral-1000">{t('step3Title')}</h6>
+									<p className="text-md-medium neutral-500">{t('step3Description')}</p>
 								</div>
 							</div>
 						</div>
@@ -89,8 +88,8 @@ export default function WhyUs1({cls}:any) {
 									</svg>
 								</div>
 								<div className="card-info">
-									<h6 className="text-xl-bold neutral-1000">Begin Your Journey</h6>
-									<p className="text-md-medium neutral-500">Start your adventure with confidence and ease</p>
+									<h6 className="text-xl-bold neutral-1000">{t('step4Title')}</h6>
+									<p className="text-md-medium neutral-500">{t('step4Description')}</p>
 								</div>
 							</div>
 						</div>

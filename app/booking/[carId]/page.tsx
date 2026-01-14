@@ -76,6 +76,10 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 	const [driverName, setDriverName] = useState('')
 	const [driverEmail, setDriverEmail] = useState('')
 	const [driverPhone, setDriverPhone] = useState('')
+	const [driverCpf, setDriverCpf] = useState('')
+	const [driverCnh, setDriverCnh] = useState('')
+	const [driverBirthDate, setDriverBirthDate] = useState('')
+	const [acceptTerms, setAcceptTerms] = useState(false)
 
 	useEffect(() => {
 		if (session?.user) {
@@ -167,6 +171,45 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 		)
 	}
 
+	// CPF validation function
+	const validateCPF = (cpf: string): boolean => {
+		const cleanCpf = cpf.replace(/\D/g, '')
+		if (cleanCpf.length !== 11 || /^(\d)\1+$/.test(cleanCpf)) return false
+
+		let sum = 0
+		for (let i = 0; i < 9; i++) sum += parseInt(cleanCpf[i]) * (10 - i)
+		let remainder = (sum * 10) % 11
+		if (remainder === 10 || remainder === 11) remainder = 0
+		if (remainder !== parseInt(cleanCpf[9])) return false
+
+		sum = 0
+		for (let i = 0; i < 10; i++) sum += parseInt(cleanCpf[i]) * (11 - i)
+		remainder = (sum * 10) % 11
+		if (remainder === 10 || remainder === 11) remainder = 0
+		return remainder === parseInt(cleanCpf[10])
+	}
+
+	// Age validation (minimum 21 years)
+	const validateAge = (birthDate: string): boolean => {
+		const birth = new Date(birthDate)
+		const today = new Date()
+		let age = today.getFullYear() - birth.getFullYear()
+		const monthDiff = today.getMonth() - birth.getMonth()
+		if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+			age--
+		}
+		return age >= 21
+	}
+
+	// CPF mask function
+	const formatCPF = (value: string): string => {
+		const digits = value.replace(/\D/g, '').slice(0, 11)
+		return digits
+			.replace(/(\d{3})(\d)/, '$1.$2')
+			.replace(/(\d{3})(\d)/, '$1.$2')
+			.replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+	}
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 
@@ -176,7 +219,35 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 		}
 
 		if (!pickupDate || !dropoffDate || !pickupLocation) {
-			setError('Please fill in all required fields')
+			setError(t('fillAllFields'))
+			return
+		}
+
+		// Validate CPF
+		if (!driverCpf) {
+			setError(t('cpfRequired'))
+			return
+		}
+		if (!validateCPF(driverCpf)) {
+			setError(t('invalidCpf'))
+			return
+		}
+
+		// Validate CNH
+		if (!driverCnh) {
+			setError(t('cnhRequired'))
+			return
+		}
+
+		// Validate age
+		if (!driverBirthDate || !validateAge(driverBirthDate)) {
+			setError(t('minimumAge'))
+			return
+		}
+
+		// Validate terms acceptance
+		if (!acceptTerms) {
+			setError(t('termsRequired'))
 			return
 		}
 
@@ -207,6 +278,9 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 						name: driverName,
 						email: driverEmail,
 						phone: driverPhone,
+						cpf: driverCpf.replace(/\D/g, ''),
+						cnh: driverCnh,
+						birthDate: driverBirthDate,
 					},
 				}),
 			})
@@ -273,9 +347,9 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 							<p className="text-muted">{car.brand} {car.model} {car.year}</p>
 
 							<div className="d-flex gap-3 mb-3">
-								<span><i className="me-1">👥</i> {car.specs?.seats} seats</span>
-								<span><i className="me-1">🚪</i> {car.specs?.doors} doors</span>
-								<span><i className="me-1">🧳</i> {car.specs?.bags} bags</span>
+								<span><i className="me-1">👥</i> {car.specs?.seats} {t('seats')}</span>
+								<span><i className="me-1">🚪</i> {car.specs?.doors} {t('doors')}</span>
+								<span><i className="me-1">🧳</i> {car.specs?.bags} {t('bags')}</span>
 							</div>
 
 							<div className="d-flex gap-3 mb-3">
@@ -286,16 +360,16 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 							<hr />
 
 							<div className="d-flex justify-content-between align-items-center">
-								<span className="text-muted">Daily Rate:</span>
+								<span className="text-muted">{t('dailyRate')}:</span>
 								<span className="h5 text-primary mb-0">
-									${car.pricing?.dailyRate}{tVehicles('perDay')}
+									R$ {car.pricing?.dailyRate}{tVehicles('perDay')}
 								</span>
 							</div>
 
 							{car.pricing?.deposit > 0 && (
 								<div className="d-flex justify-content-between align-items-center mt-2">
-									<span className="text-muted">Deposit:</span>
-									<span>${car.pricing.deposit}</span>
+									<span className="text-muted">{t('deposit')}:</span>
+									<span>R$ {car.pricing.deposit}</span>
 								</div>
 							)}
 						</div>
@@ -314,7 +388,7 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 								{/* Dates */}
 								<div className="row g-3 mb-4">
 									<div className="col-md-6">
-										<label className="form-label">{tVehicles('pickUpDate')} *</label>
+										<label className="form-label">{tVehicles('pickUpDate')} <span className="text-danger">*</span></label>
 										<input
 											type="date"
 											className="form-control"
@@ -325,7 +399,7 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 										/>
 									</div>
 									<div className="col-md-6">
-										<label className="form-label">{tVehicles('returnDate')} *</label>
+										<label className="form-label">{tVehicles('returnDate')} <span className="text-danger">*</span></label>
 										<input
 											type="date"
 											className="form-control"
@@ -339,13 +413,13 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 
 								{/* Locations */}
 								<div className="mb-4">
-									<label className="form-label">{tVehicles('pickUpLocation')} *</label>
+									<label className="form-label">{tVehicles('pickUpLocation')} <span className="text-danger">*</span></label>
 									<input
 										type="text"
 										className="form-control"
 										value={pickupLocation}
 										onChange={(e) => setPickupLocation(e.target.value)}
-										placeholder="Enter pickup location"
+										placeholder={t('enterPickupLocation')}
 										required
 									/>
 								</div>
@@ -359,19 +433,19 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 										id="sameLocation"
 									/>
 									<label className="form-check-label" htmlFor="sameLocation">
-										Return to same location
+										{t('sameLocation')}
 									</label>
 								</div>
 
 								{!sameLocation && (
 									<div className="mb-4">
-										<label className="form-label">{tVehicles('dropOffLocation')} *</label>
+										<label className="form-label">{tVehicles('dropOffLocation')} <span className="text-danger">*</span></label>
 										<input
 											type="text"
 											className="form-control"
 											value={dropoffLocation}
 											onChange={(e) => setDropoffLocation(e.target.value)}
-											placeholder="Enter drop-off location"
+											placeholder={t('enterDropoffLocation')}
 											required={!sameLocation}
 										/>
 									</div>
@@ -398,7 +472,7 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 															/>
 															<label className="form-check-label d-flex justify-content-between w-100">
 																<span>{extra.name}</span>
-																<span className="text-primary">+${extra.price}/day</span>
+																<span className="text-primary">+R$ {extra.price}{t('perDay')}</span>
 															</label>
 														</div>
 													</div>
@@ -409,10 +483,10 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 								)}
 
 								{/* Driver Info */}
-								<h5 className="mb-3">Driver Information</h5>
+								<h5 className="mb-3">{t('driverInformation')}</h5>
 								<div className="row g-3 mb-4">
 									<div className="col-md-6">
-										<label className="form-label">Full Name *</label>
+										<label className="form-label">{t('fullName')} <span className="text-danger">*</span></label>
 										<input
 											type="text"
 											className="form-control"
@@ -422,7 +496,7 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 										/>
 									</div>
 									<div className="col-md-6">
-										<label className="form-label">Email *</label>
+										<label className="form-label">Email <span className="text-danger">*</span></label>
 										<input
 											type="email"
 											className="form-control"
@@ -432,7 +506,7 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 										/>
 									</div>
 									<div className="col-md-6">
-										<label className="form-label">Phone</label>
+										<label className="form-label">{t('phone')}</label>
 										<input
 											type="tel"
 											className="form-control"
@@ -440,6 +514,54 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 											onChange={(e) => setDriverPhone(e.target.value)}
 										/>
 									</div>
+									<div className="col-md-6">
+										<label className="form-label">{t('cpf')} <span className="text-danger">*</span></label>
+										<input
+											type="text"
+											className="form-control"
+											value={driverCpf}
+											onChange={(e) => setDriverCpf(formatCPF(e.target.value))}
+											placeholder={t('cpfPlaceholder')}
+											required
+										/>
+									</div>
+									<div className="col-md-6">
+										<label className="form-label">{t('cnh')} <span className="text-danger">*</span></label>
+										<input
+											type="text"
+											className="form-control"
+											value={driverCnh}
+											onChange={(e) => setDriverCnh(e.target.value)}
+											placeholder={t('cnhPlaceholder')}
+											required
+										/>
+									</div>
+									<div className="col-md-6">
+										<label className="form-label">{t('birthDate')} <span className="text-danger">*</span></label>
+										<input
+											type="date"
+											className="form-control"
+											value={driverBirthDate}
+											onChange={(e) => setDriverBirthDate(e.target.value)}
+											max={new Date(new Date().setFullYear(new Date().getFullYear() - 21)).toISOString().split('T')[0]}
+											required
+										/>
+									</div>
+								</div>
+
+								{/* Terms and Conditions */}
+								<div className="form-check mb-4">
+									<input
+										className="form-check-input"
+										type="checkbox"
+										checked={acceptTerms}
+										onChange={(e) => setAcceptTerms(e.target.checked)}
+										id="acceptTerms"
+										required
+									/>
+									<label className="form-check-label" htmlFor="acceptTerms">
+										{t('acceptTerms')} <a href="/terms" target="_blank" className="text-primary">{t('termsAndConditions')}</a> <span className="text-danger">*</span>
+									</label>
 								</div>
 
 								{/* Price Summary */}
@@ -447,34 +569,34 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 									<div className="bg-light rounded-3 p-4 mb-4">
 										<h5 className="mb-3">{t('summary')}</h5>
 										<div className="d-flex justify-content-between mb-2">
-											<span>Duration:</span>
-											<span>{calculation.dates.totalDays} days</span>
+											<span>{t('duration')}:</span>
+											<span>{calculation.dates.totalDays} {calculation.dates.totalDays === 1 ? t('day') : t('days')}</span>
 										</div>
 										<div className="d-flex justify-content-between mb-2">
-											<span>${calculation.pricing.dailyRate} x {calculation.dates.totalDays} days:</span>
-											<span>${calculation.pricing.subtotal.toFixed(2)}</span>
+											<span>R$ {calculation.pricing.dailyRate} x {calculation.dates.totalDays} {calculation.dates.totalDays === 1 ? t('day') : t('days')}:</span>
+											<span>R$ {calculation.pricing.subtotal.toFixed(2)}</span>
 										</div>
 										{calculation.pricing.extrasTotal > 0 && (
 											<div className="d-flex justify-content-between mb-2">
 												<span>{t('extras')}:</span>
-												<span>${calculation.pricing.extrasTotal.toFixed(2)}</span>
+												<span>R$ {calculation.pricing.extrasTotal.toFixed(2)}</span>
 											</div>
 										)}
 										{calculation.pricing.discount > 0 && (
 											<div className="d-flex justify-content-between mb-2 text-success">
-												<span>Discount ({calculation.pricing.discountPercentage}%):</span>
-												<span>-${calculation.pricing.discount.toFixed(2)}</span>
+												<span>{t('discount')} ({calculation.pricing.discountPercentage}%):</span>
+												<span>-R$ {calculation.pricing.discount.toFixed(2)}</span>
 											</div>
 										)}
 										<div className="d-flex justify-content-between mb-2">
 											<span>{t('taxes')} (10%):</span>
-											<span>${calculation.pricing.tax.toFixed(2)}</span>
+											<span>R$ {calculation.pricing.tax.toFixed(2)}</span>
 										</div>
 										<hr />
 										<div className="d-flex justify-content-between">
 											<strong>{t('total')}:</strong>
 											<strong className="text-primary h5 mb-0">
-												${calculation.pricing.total.toFixed(2)}
+												R$ {calculation.pricing.total.toFixed(2)}
 											</strong>
 										</div>
 									</div>
@@ -485,7 +607,7 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 										<div className="spinner-border spinner-border-sm text-primary" role="status">
 											<span className="visually-hidden">{tCommon('loading')}</span>
 										</div>
-										<span className="ms-2">Calculating...</span>
+										<span className="ms-2">{t('calculating')}</span>
 									</div>
 								)}
 
