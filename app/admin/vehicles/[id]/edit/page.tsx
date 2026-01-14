@@ -39,7 +39,7 @@ export default function EditVehiclePage({ params }: { params: { id: string } }) 
 			currency: 'USD',
 		},
 		amenities: [] as string[],
-		images: [{ url: '', isPrimary: true }],
+		images: [] as Array<{ url: string; isPrimary: boolean }>,
 		location: {
 			city: '',
 			state: '',
@@ -49,6 +49,7 @@ export default function EditVehiclePage({ params }: { params: { id: string } }) 
 	})
 
 	const [newAmenity, setNewAmenity] = useState('')
+	const [newImageUrl, setNewImageUrl] = useState('')
 
 	useEffect(() => {
 		fetchCar()
@@ -64,7 +65,7 @@ export default function EditVehiclePage({ params }: { params: { id: string } }) 
 			setFormData({
 				...data.car,
 				amenities: data.car.amenities || [],
-				images: data.car.images?.length > 0 ? data.car.images : [{ url: '', isPrimary: true }],
+				images: data.car.images || [],
 			})
 		} catch (err) {
 			setError('Error loading vehicle')
@@ -122,6 +123,38 @@ export default function EditVehiclePage({ params }: { params: { id: string } }) 
 		setFormData(prev => ({
 			...prev,
 			amenities: prev.amenities.filter(a => a !== amenity),
+		}))
+	}
+
+	const addImage = () => {
+		if (newImageUrl.trim()) {
+			const isPrimary = formData.images.length === 0
+			setFormData(prev => ({
+				...prev,
+				images: [...prev.images, { url: newImageUrl.trim(), isPrimary }],
+			}))
+			setNewImageUrl('')
+		}
+	}
+
+	const removeImage = (index: number) => {
+		setFormData(prev => {
+			const newImages = prev.images.filter((_, i) => i !== index)
+			// Se removeu a imagem primária, define a primeira como primária
+			if (newImages.length > 0 && !newImages.some(img => img.isPrimary)) {
+				newImages[0].isPrimary = true
+			}
+			return { ...prev, images: newImages }
+		})
+	}
+
+	const setPrimaryImage = (index: number) => {
+		setFormData(prev => ({
+			...prev,
+			images: prev.images.map((img, i) => ({
+				...img,
+				isPrimary: i === index,
+			})),
 		}))
 	}
 
@@ -472,34 +505,74 @@ export default function EditVehiclePage({ params }: { params: { id: string } }) 
 							</div>
 						</div>
 
-						{/* Image */}
+						{/* Images */}
 						<div className="card border-0 shadow-sm mb-4">
 							<div className="card-header bg-white">
 								<h5 className="mb-0">{t('vehicles.images')}</h5>
 							</div>
 							<div className="card-body">
-								<div className="mb-3">
-									<label className="form-label">Image URL</label>
+								<div className="d-flex gap-2 mb-3">
 									<input
 										type="text"
 										className="form-control"
-										placeholder="https://..."
-										value={formData.images[0]?.url || ''}
-										onChange={(e) => setFormData(prev => ({
-											...prev,
-											images: [{ url: e.target.value, isPrimary: true }]
-										}))}
+										placeholder="https://exemplo.com/imagem.jpg"
+										value={newImageUrl}
+										onChange={(e) => setNewImageUrl(e.target.value)}
+										onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addImage())}
 									/>
+									<button
+										type="button"
+										className="btn btn-outline-primary"
+										onClick={addImage}
+									>
+										Adicionar
+									</button>
 								</div>
-								{formData.images[0]?.url && (
-									<img
-										src={formData.images[0].url}
-										alt="Preview"
-										className="img-fluid rounded"
-										onError={(e) => {
-											(e.target as HTMLImageElement).src = '/assets/imgs/template/placeholder-car.jpg'
-										}}
-									/>
+
+								{formData.images.length === 0 ? (
+									<p className="text-muted small">Nenhuma imagem adicionada.</p>
+								) : (
+									<div className="row g-2">
+										{formData.images.map((image, index) => (
+											<div key={index} className="col-6">
+												<div className={`position-relative border rounded p-1 ${image.isPrimary ? 'border-primary border-2' : ''}`}>
+													<img
+														src={image.url}
+														alt={`Imagem ${index + 1}`}
+														className="img-fluid rounded"
+														style={{ width: '100%', height: '80px', objectFit: 'cover' }}
+														onError={(e) => {
+															(e.target as HTMLImageElement).src = '/assets/imgs/template/placeholder-car.jpg'
+														}}
+													/>
+													<div className="position-absolute top-0 end-0 p-1">
+														<button
+															type="button"
+															className="btn btn-sm btn-danger"
+															onClick={() => removeImage(index)}
+															style={{ padding: '2px 6px', fontSize: '10px' }}
+														>
+															X
+														</button>
+													</div>
+													{image.isPrimary ? (
+														<span className="badge bg-primary position-absolute bottom-0 start-0 m-1" style={{ fontSize: '9px' }}>
+															Principal
+														</span>
+													) : (
+														<button
+															type="button"
+															className="btn btn-sm btn-outline-primary position-absolute bottom-0 start-0 m-1"
+															onClick={() => setPrimaryImage(index)}
+															style={{ padding: '1px 4px', fontSize: '9px' }}
+														>
+															Definir como principal
+														</button>
+													)}
+												</div>
+											</div>
+										))}
+									</div>
 								)}
 							</div>
 						</div>
