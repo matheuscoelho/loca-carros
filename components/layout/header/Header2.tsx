@@ -49,8 +49,8 @@ export default function Header2({ scroll, isMobileMenu, handleMobileMenu, handle
 						<div className="header-left">
 							<div className="header-logo">
 								<Link className="d-flex" href="/">
-									<img className="light-mode" alt={branding.siteName} src={branding.logoLight} />
-									<img className="dark-mode" alt={branding.siteName} src={branding.logoDark} />
+									<img className="light-mode" alt={branding.siteName} src={branding.logoLight} style={{ width: branding.logoWidth, height: branding.logoHeight, objectFit: 'contain' }} />
+									<img className="dark-mode" alt={branding.siteName} src={branding.logoDark} style={{ width: branding.logoWidth, height: branding.logoHeight, objectFit: 'contain' }} />
 								</Link>
 							</div>
 							<div className="header-nav">

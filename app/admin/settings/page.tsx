@@ -7,6 +7,8 @@ interface Settings {
 	branding: {
 		logoLight: string
 		logoDark: string
+		logoWidth: number
+		logoHeight: number
 		favicon: string
 		siteName: string
 		primaryColor: string
@@ -45,6 +47,8 @@ const defaultSettings: Settings = {
 	branding: {
 		logoLight: '/assets/imgs/template/logo.svg',
 		logoDark: '/assets/imgs/template/logo-white.svg',
+		logoWidth: 150,
+		logoHeight: 40,
 		favicon: '/favicon.ico',
 		siteName: 'Navegar Sistemas',
 		primaryColor: '#70f46d',
@@ -214,7 +218,7 @@ export default function AdminSettingsPage() {
 		setUploadingLogo(null)
 	}
 
-	const updateBranding = (field: keyof Settings['branding'], value: string) => {
+	const updateBranding = (field: keyof Settings['branding'], value: string | number) => {
 		setSettings(prev => ({
 			...prev,
 			branding: { ...prev.branding, [field]: value }
@@ -458,6 +462,39 @@ export default function AdminSettingsPage() {
 								/>
 							</div>
 
+							{/* Logo Size */}
+							<div className="col-md-3">
+								<label className="form-label">{t('settings.brandingFields.logoWidth')}</label>
+								<div className="input-group">
+									<input
+										type="number"
+										className="form-control"
+										value={settings.branding.logoWidth}
+										onChange={(e) => updateBranding('logoWidth', parseInt(e.target.value) || 150)}
+										min="50"
+										max="500"
+									/>
+									<span className="input-group-text">px</span>
+								</div>
+								<small className="text-muted">{t('settings.brandingFields.logoWidthHelp')}</small>
+							</div>
+
+							<div className="col-md-3">
+								<label className="form-label">{t('settings.brandingFields.logoHeight')}</label>
+								<div className="input-group">
+									<input
+										type="number"
+										className="form-control"
+										value={settings.branding.logoHeight}
+										onChange={(e) => updateBranding('logoHeight', parseInt(e.target.value) || 40)}
+										min="20"
+										max="200"
+									/>
+									<span className="input-group-text">px</span>
+								</div>
+								<small className="text-muted">{t('settings.brandingFields.logoHeightHelp')}</small>
+							</div>
+
 							{/* Primary Color */}
 							<div className="col-md-6">
 								<label className="form-label">{t('settings.brandingFields.primaryColor')}</label>
@@ -511,7 +548,11 @@ export default function AdminSettingsPage() {
 												<img
 													src={settings.branding.logoLight}
 													alt="Logo"
-													style={{ maxHeight: '40px' }}
+													style={{
+														width: `${settings.branding.logoWidth}px`,
+														height: `${settings.branding.logoHeight}px`,
+														objectFit: 'contain'
+													}}
 												/>
 												<button
 													className="btn btn-sm"
@@ -533,7 +574,11 @@ export default function AdminSettingsPage() {
 												<img
 													src={settings.branding.logoDark}
 													alt="Logo"
-													style={{ maxHeight: '40px' }}
+													style={{
+														width: `${settings.branding.logoWidth}px`,
+														height: `${settings.branding.logoHeight}px`,
+														objectFit: 'contain'
+													}}
 												/>
 												<button
 													className="btn btn-sm"

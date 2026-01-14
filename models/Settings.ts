@@ -5,6 +5,8 @@ export interface ISettings {
   branding: {
     logoLight: string
     logoDark: string
+    logoWidth: number
+    logoHeight: number
     favicon: string
     siteName: string
     primaryColor: string
@@ -45,6 +47,8 @@ export const defaultSettings: Omit<ISettings, '_id'> = {
   branding: {
     logoLight: '/assets/imgs/template/logo.svg',
     logoDark: '/assets/imgs/template/logo-white.svg',
+    logoWidth: 150,
+    logoHeight: 40,
     favicon: '/favicon.ico',
     siteName: 'Navegar Sistemas',
     primaryColor: '#70f46d',

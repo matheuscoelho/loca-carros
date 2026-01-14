@@ -30,8 +30,8 @@ export default function Footer1() {
 						<div className="col-md-3 col-sm-12 footer-1">
 							<div className="mt-20 mb-20">
 								<Link className="d-flex" href="/">
-									<img className="light-mode" alt={branding.siteName} src={branding.logoLight} />
-									<img className="dark-mode" alt={branding.siteName} src={branding.logoDark} />
+									<img className="light-mode" alt={branding.siteName} src={branding.logoLight} style={{ width: branding.logoWidth, height: branding.logoHeight, objectFit: 'contain' }} />
+									<img className="dark-mode" alt={branding.siteName} src={branding.logoDark} style={{ width: branding.logoWidth, height: branding.logoHeight, objectFit: 'contain' }} />
 								</Link>
 								<div className="box-info-contact mt-0">
 									<p className="text-md neutral-400 icon-worktime">{t('hours')}</p>

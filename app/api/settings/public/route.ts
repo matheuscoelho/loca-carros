@@ -22,6 +22,8 @@ export async function GET() {
       branding: {
         logoLight: branding.logoLight,
         logoDark: branding.logoDark,
+        logoWidth: branding.logoWidth || defaultSettings.branding.logoWidth,
+        logoHeight: branding.logoHeight || defaultSettings.branding.logoHeight,
         favicon: branding.favicon,
         siteName: branding.siteName,
         primaryColor: branding.primaryColor,
@@ -47,6 +49,8 @@ export async function GET() {
       branding: {
         logoLight: defaultSettings.branding.logoLight,
         logoDark: defaultSettings.branding.logoDark,
+        logoWidth: defaultSettings.branding.logoWidth,
+        logoHeight: defaultSettings.branding.logoHeight,
         favicon: defaultSettings.branding.favicon,
         siteName: defaultSettings.branding.siteName,
         primaryColor: defaultSettings.branding.primaryColor,

@@ -5,6 +5,8 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 export interface Branding {
   logoLight: string
   logoDark: string
+  logoWidth: number
+  logoHeight: number
   favicon: string
   siteName: string
   primaryColor: string
@@ -24,6 +26,8 @@ export interface PublicSettings {
 const defaultBranding: Branding = {
   logoLight: '/assets/imgs/template/logo.svg',
   logoDark: '/assets/imgs/template/logo-white.svg',
+  logoWidth: 150,
+  logoHeight: 40,
   favicon: '/favicon.ico',
   siteName: 'Navegar Sistemas',
   primaryColor: '#70f46d',

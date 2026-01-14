@@ -1,9 +1,11 @@
 'use client'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
+import { useBranding } from '@/contexts/BrandingContext'
 
 export default function Offcanvas({ isOffcanvas, handleOffcanvas }: any) {
 	const t = useTranslations('offcanvas')
+	const { branding } = useBranding()
 
 	return (
 		<>
@@ -12,8 +14,8 @@ export default function Offcanvas({ isOffcanvas, handleOffcanvas }: any) {
 					<div className="sidebar-canvas-head">
 						<div className="sidebar-canvas-logo">
 							<Link className="d-flex" href="/">
-								<img className="light-mode" alt="Carento" src="/assets/imgs/template/logo.svg" />
-								<img className="dark-mode" alt="Carento" src="/assets/imgs/template/logo.svg" />
+								<img className="light-mode" alt={branding.siteName} src={branding.logoLight} style={{ width: branding.logoWidth, height: branding.logoHeight, objectFit: 'contain' }} />
+								<img className="dark-mode" alt={branding.siteName} src={branding.logoDark} style={{ width: branding.logoWidth, height: branding.logoHeight, objectFit: 'contain' }} />
 							</Link>
 						</div>
 						<div className="sidebar-canvas-lang">
