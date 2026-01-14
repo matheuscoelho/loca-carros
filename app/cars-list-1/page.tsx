@@ -1,5 +1,6 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import CarCard1 from '@/components/elements/carcard/CarCard1'
 import HeroSearch from '@/components/elements/HeroSearch'
 import SortCarsFilter from '@/components/elements/SortCarsFilter'
@@ -15,19 +16,30 @@ import useCarFilter, { MongoDBCar } from '@/util/useCarFilter'
 import Link from "next/link"
 import Marquee from 'react-fast-marquee'
 
-export default function CarsList1() {
+function CarsListContent() {
+	const searchParams = useSearchParams()
+	const cityParam = searchParams.get('city')
+	const pickupDateParam = searchParams.get('pickupDate')
+	const returnDateParam = searchParams.get('returnDate')
+
 	const [cars, setCars] = useState<MongoDBCar[]>([])
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState<string | null>(null)
 
 	useEffect(() => {
 		fetchCars()
-	}, [])
+	}, [cityParam])
 
 	const fetchCars = async () => {
 		try {
 			setLoading(true)
-			const response = await fetch('/api/cars?limit=100')
+			const params = new URLSearchParams()
+			params.set('limit', '100')
+			if (cityParam) {
+				params.set('city', cityParam)
+			}
+
+			const response = await fetch(`/api/cars?${params.toString()}`)
 			if (!response.ok) {
 				throw new Error('Failed to fetch cars')
 			}
@@ -72,7 +84,7 @@ export default function CarsList1() {
 		handleClearFilters,
 		startItemIndex,
 		endItemIndex,
-	} = useCarFilter(cars)
+	} = useCarFilter(cars, { initialLocation: cityParam || undefined })
 
 	return (
 		<>
@@ -352,5 +364,20 @@ export default function CarsList1() {
 
 			</Layout >
 		</>
+	)
+}
+
+export default function CarsList1() {
+	return (
+		<Suspense fallback={
+			<div className="text-center py-5">
+				<div className="spinner-border text-primary" role="status">
+					<span className="visually-hidden">Loading...</span>
+				</div>
+				<p className="mt-3">Carregando...</p>
+			</div>
+		}>
+			<CarsListContent />
+		</Suspense>
 	)
 }

@@ -78,6 +78,10 @@ export interface Filter {
 
 type SortCriteria = "name" | "price" | "rating"
 
+export interface UseCarFilterOptions {
+	initialLocation?: string
+}
+
 // Funções auxiliares para extrair dados de ambas estruturas
 const getPrice = (car: Car): number => {
 	if ('pricing' in car && car.pricing) {
@@ -106,12 +110,12 @@ const getRating = (car: Car): number => {
 	return car.rating || 0
 }
 
-const useCarFilter = (carsData: Car[]) => {
+const useCarFilter = (carsData: Car[], options?: UseCarFilterOptions) => {
 	const [filter, setFilter] = useState<Filter>({
 		names: [],
 		fuelType: [],
 		amenities: [],
-		locations: [],
+		locations: options?.initialLocation ? [options.initialLocation] : [],
 		priceRange: [0, 1000],
 		ratings: [],
 		carType: [],

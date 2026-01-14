@@ -19,90 +19,74 @@ export default function DemoBanner() {
 	if (!showBanner) return null
 
 	return (
-		<>
-		{/* Spacer para compensar o banner fixo */}
-		<div className="demo-banner-spacer" />
 		<div className="demo-banner">
-			<div className="demo-banner-content">
+			<div className="demo-banner-row demo-banner-row-1">
 				<span className="demo-banner-icon">⚠️</span>
-				<strong className="demo-banner-title">{t('title')}</strong>
-				<span className="demo-banner-separator">-</span>
-				<span className="demo-banner-desc">{t('description')}</span>
+				<strong>{t('title')}</strong>
+				<span className="demo-banner-sep">—</span>
+				<span>{t('description')}</span>
 			</div>
-			<div className="demo-banner-warnings">
-				<strong className="demo-banner-warning">{t('noPayments')}</strong>
-				<span className="demo-banner-warning">{t('noRefunds')}</span>
+			<div className="demo-banner-row demo-banner-row-2">
+				<strong>{t('noPayments')}</strong>
+				<span>{t('noRefunds')}</span>
 			</div>
-		</div>
-		<style jsx>{`
-			.demo-banner-spacer {
-				height: 40px;
-			}
-			.demo-banner {
-				background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
-				color: #fff;
-				padding: 8px 16px;
-				text-align: center;
-				font-size: 13px;
-				font-weight: 500;
-				position: fixed;
-				top: 0;
-				left: 0;
-				right: 0;
-				min-height: 40px;
-				z-index: 9999;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				gap: 8px;
-				flex-wrap: wrap;
-			}
-			.demo-banner-content {
-				display: flex;
-				align-items: center;
-				gap: 6px;
-				flex-wrap: wrap;
-				justify-content: center;
-			}
-			.demo-banner-warnings {
-				display: flex;
-				align-items: center;
-				gap: 8px;
-				flex-wrap: wrap;
-				justify-content: center;
-			}
-			.demo-banner-icon {
-				font-size: 14px;
-			}
-			.demo-banner-title {
-				white-space: nowrap;
-			}
-			.demo-banner-warning {
-				white-space: nowrap;
-			}
-			@media (max-width: 768px) {
-				.demo-banner-spacer {
-					height: 56px;
-				}
+			<style jsx>{`
 				.demo-banner {
-					min-height: 56px;
-					padding: 6px 12px;
-					font-size: 11px;
-					flex-direction: column;
-					gap: 2px;
+					background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
+					color: #fff;
+					padding: 8px 12px;
+					text-align: center;
+					font-size: 12px;
+					font-weight: 500;
+					position: fixed;
+					top: 0;
+					left: 0;
+					right: 0;
+					z-index: 9999;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					gap: 16px;
+					height: 40px;
+					box-sizing: border-box;
 				}
-				.demo-banner-content {
-					gap: 4px;
-				}
-				.demo-banner-warnings {
+				.demo-banner-row {
+					display: flex;
+					align-items: center;
+					justify-content: center;
 					gap: 6px;
-					font-size: 10px;
+					flex-wrap: nowrap;
 				}
-				.demo-banner-separator {
-					display: none;
+				.demo-banner-icon {
+					font-size: 14px;
 				}
-			}
-		`}</style>
-		</>
+				.demo-banner-sep {
+					opacity: 0.7;
+				}
+				@media (max-width: 768px) {
+					.demo-banner {
+						flex-direction: column;
+						gap: 2px;
+						padding: 8px 10px;
+						font-size: 11px;
+						height: 60px;
+					}
+					.demo-banner-row {
+						gap: 4px;
+					}
+					.demo-banner-row-1 {
+						flex-wrap: wrap;
+					}
+					.demo-banner-sep {
+						display: none;
+					}
+				}
+				@media (max-width: 400px) {
+					.demo-banner {
+						font-size: 10px;
+					}
+				}
+			`}</style>
+		</div>
 	)
 }

@@ -13920,11 +13920,27 @@ html {
 }
 
 
-/* Demo Banner - Ajuste do header sticky */
+/* Demo Banner - Ajuste do header */
+body.has-demo-banner {
+  padding-top: 60px;
+}
+
 body.has-demo-banner .sticky-bar.stick {
-  top: 40px;
+  top: 60px;
 }
 
 body.has-demo-banner .header.header-fixed {
-  top: 40px;
+  top: 60px;
+}
+
+@media (min-width: 769px) {
+  body.has-demo-banner {
+    padding-top: 40px;
+  }
+  body.has-demo-banner .sticky-bar.stick {
+    top: 40px;
+  }
+  body.has-demo-banner .header.header-fixed {
+    top: 40px;
+  }
 }

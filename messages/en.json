@@ -653,5 +653,17 @@
       "author": "Happy Customer",
       "comment": "Excellent vehicle! Very clean and well-maintained. The rental process was smooth and the staff was helpful. Would definitely recommend!"
     }
+  },
+  "heroSearch": {
+    "pickupLocation": "Pick-up Location",
+    "dropoffLocation": "Drop-off Location",
+    "pickupDateTime": "Pick-up Date & Time",
+    "returnDateTime": "Return Date & Time",
+    "findVehicle": "Find Vehicle",
+    "selectLocation": "Select location",
+    "selectDate": "Select date",
+    "loading": "Loading...",
+    "noLocations": "No locations available",
+    "sameLocation": "Return to same location"
   }
 }

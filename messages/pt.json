@@ -5,6 +5,18 @@
     "noPayments": "NÃO realize pagamentos.",
     "noRefunds": "Não há suporte para reembolsos."
   },
+  "heroSearch": {
+    "pickupLocation": "Local de Retirada",
+    "dropoffLocation": "Local de Devolução",
+    "pickupDateTime": "Data e Hora de Retirada",
+    "returnDateTime": "Data e Hora de Devolução",
+    "findVehicle": "Buscar Veículo",
+    "selectLocation": "Selecione o local",
+    "selectDate": "Selecione a data",
+    "loading": "Carregando...",
+    "noLocations": "Nenhum local disponível",
+    "sameLocation": "Devolver no mesmo local"
+  },
   "offcanvas": {
     "quickLinks": "Links Rápidos",
     "ourFleet": "Nossa Frota",
