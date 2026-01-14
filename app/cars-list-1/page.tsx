@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, Suspense } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import CarCard1 from '@/components/elements/carcard/CarCard1'
 import HeroSearch from '@/components/elements/HeroSearch'
 import SortCarsFilter from '@/components/elements/SortCarsFilter'
@@ -18,6 +19,8 @@ import Marquee from 'react-fast-marquee'
 
 function CarsListContent() {
 	const searchParams = useSearchParams()
+	const router = useRouter()
+	const t = useTranslations('carsList')
 	const cityParam = searchParams.get('city')
 	const pickupDateParam = searchParams.get('pickupDate')
 	const returnDateParam = searchParams.get('returnDate')
@@ -86,6 +89,12 @@ function CarsListContent() {
 		endItemIndex,
 	} = useCarFilter(cars, { initialLocation: cityParam || undefined })
 
+	// Função customizada para limpar filtros E parâmetros da URL
+	const handleClearAllFilters = () => {
+		handleClearFilters()
+		router.push('/cars-list-1')
+	}
+
 	return (
 		<>
 			<Layout footerStyle={1}>
@@ -96,16 +105,16 @@ function CarsListContent() {
 								<img className="w-100 h-100 img-fluid img-banner" src="/assets/imgs/page-header/banner6.png" alt="Navegar Sistemas" />
 							</div>
 							<div className="container position-absolute z-1 top-50 start-50 pb-70 translate-middle text-center">
-								<span className="text-sm-bold bg-2 px-4 py-3 rounded-12">Find cars for sale and for rent near you</span>
-								<h2 className="text-white mt-4">Find Your Perfect Car</h2>
-								<span className="text-white text-lg-medium">Search and find your best car rental with easy way</span>
+								<span className="text-sm-bold bg-2 px-4 py-3 rounded-12">{t('banner.tag')}</span>
+								<h2 className="text-white mt-4">{t('banner.title')}</h2>
+								<span className="text-white text-lg-medium">{t('banner.subtitle')}</span>
 							</div>
 							<div className="background-body position-absolute z-1 top-100 start-50 translate-middle px-3 py-2 rounded-12 border d-flex gap-3 d-none d-none d-md-flex">
-								<Link href="/" className="neutral-700 text-md-medium">Home</Link>
+								<Link href="/" className="neutral-700 text-md-medium">{t('breadcrumb.home')}</Link>
 								<span>
 									<img src="/assets/imgs/template/icons/arrow-right.svg" alt="Navegar Sistemas" />
 								</span>
-								<Link href="#" className="neutral-1000 text-md-bold">Car Listing</Link>
+								<Link href="/cars-list-1" className="neutral-1000 text-md-bold">{t('breadcrumb.carListing')}</Link>
 							</div>
 						</div>
 					</div>
@@ -114,13 +123,8 @@ function CarsListContent() {
 						<div className="container">
 							<div className="box-search-advance background-card wow fadeIn">
 								<div className="box-top-search">
-									<div className="left-top-search">
-										<Link className="category-link text-sm-bold btn-click active" href="#">All cars</Link>
-										<Link className="category-link text-sm-bold btn-click" href="#">New cars</Link>
-										<Link className="category-link text-sm-bold btn-click" href="#">Used cars</Link>
-									</div>
-									<div className="right-top-search d-none d-md-flex">
-										<Link className="text-sm-medium need-some-help" href="/contact">Need help?</Link>
+									<div className="right-top-search d-none d-md-flex ms-auto">
+										<Link className="text-sm-medium need-some-help" href="/contact">{t('needHelp')}</Link>
 									</div>
 								</div>
 								<HeroSearch />
@@ -132,8 +136,8 @@ function CarsListContent() {
 						<div className="container">
 							<div className="row align-items-end">
 								<div className="col-md-9 mb-30 wow fadeInUp">
-									<h4 className="title-svg neutral-1000 mb-15">Our Vehicle Fleet</h4>
-									<p className="text-lg-medium text-bold neutral-500">Turning dreams into reality with versatile vehicles.</p>
+									<h4 className="title-svg neutral-1000 mb-15">{t('fleet.title')}</h4>
+									<p className="text-lg-medium text-bold neutral-500">{t('fleet.subtitle')}</p>
 								</div>
 							</div>
 						</div>
@@ -148,7 +152,7 @@ function CarsListContent() {
 											handleSortChange={handleSortChange}
 											itemsPerPage={itemsPerPage}
 											handleItemsPerPageChange={handleItemsPerPageChange}
-											handleClearFilters={handleClearFilters}
+											handleClearFilters={handleClearAllFilters}
 											startItemIndex={startItemIndex}
 											endItemIndex={endItemIndex}
 											sortedCars={sortedCars}
@@ -158,21 +162,21 @@ function CarsListContent() {
 										{loading ? (
 											<div className="text-center py-5">
 												<div className="spinner-border text-primary" role="status">
-													<span className="visually-hidden">Loading...</span>
+													<span className="visually-hidden">{t('loadingGeneric')}</span>
 												</div>
-												<p className="mt-3">Carregando veículos...</p>
+												<p className="mt-3">{t('loading')}</p>
 											</div>
 										) : error ? (
 											<div className="alert alert-danger text-center">
-												{error}
+												{t('errorLoading')}
 												<button className="btn btn-sm btn-primary ms-3" onClick={fetchCars}>
-													Tentar novamente
+													{t('tryAgain')}
 												</button>
 											</div>
 										) : paginatedCars.length === 0 ? (
 											<div className="text-center py-5">
-												<h5>Nenhum veículo encontrado</h5>
-												<p className="text-muted">Tente ajustar os filtros</p>
+												<h5>{t('noVehicles')}</h5>
+												<p className="text-muted">{t('adjustFilters')}</p>
 											</div>
 										) : (
 											<div className="row">
@@ -198,21 +202,7 @@ function CarsListContent() {
 									<div className="sidebar-left border-1 background-body">
 										<div className="box-filters-sidebar">
 											<div className="block-filter border-1">
-												<h6 className="text-lg-bold item-collapse neutral-1000">Show on map</h6>
-												<div className="box-collapse scrollFilter mb-15">
-													<div className="pt-0">
-														<div className="box-map-small">
-															<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5249.611419370571!2d2.3406913487788334!3d48.86191519358772!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e18a5f84801%3A0x6eb5daa624bdebd2!2sLes%20Halles%2C%2075001%20Pa%20ri%2C%20Ph%C3%A1p!5e0!3m2!1svi!2s!4v1711728202093!5m2!1svi!2s" width="100%" height={160} style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div className="sidebar-left border-1 background-body">
-										<div className="box-filters-sidebar">
-											<div className="block-filter border-1">
-												<h6 className="text-lg-bold item-collapse neutral-1000">Filter Price </h6>
+												<h6 className="text-lg-bold item-collapse neutral-1000">{t('filters.price')}</h6>
 												<ByPrice filter={filter} handlePriceRangeChange={handlePriceRangeChange} />
 											</div>
 										</div>
@@ -220,7 +210,7 @@ function CarsListContent() {
 									<div className="sidebar-left border-1 background-body">
 										<div className="box-filters-sidebar">
 											<div className="block-filter border-1">
-												<h6 className="text-lg-bold item-collapse neutral-1000">Car type</h6>
+												<h6 className="text-lg-bold item-collapse neutral-1000">{t('filters.carType')}</h6>
 												<ByCarType
 													uniqueCarTypes={uniqueCarTypes}
 													filter={filter}
@@ -232,7 +222,7 @@ function CarsListContent() {
 									<div className="sidebar-left border-1 background-body">
 										<div className="box-filters-sidebar">
 											<div className="block-filter border-1">
-												<h6 className="text-lg-bold item-collapse neutral-1000">Amenities</h6>
+												<h6 className="text-lg-bold item-collapse neutral-1000">{t('filters.amenities')}</h6>
 												<ByAmenities
 													uniqueAmenities={uniqueAmenities}
 													filter={filter}
@@ -244,7 +234,7 @@ function CarsListContent() {
 									<div className="sidebar-left border-1 background-body">
 										<div className="box-filters-sidebar">
 											<div className="block-filter border-1">
-												<h6 className="text-lg-bold item-collapse neutral-1000">Fuel Type</h6>
+												<h6 className="text-lg-bold item-collapse neutral-1000">{t('filters.fuelType')}</h6>
 												<ByFuel
 													uniqueFuelTypes={uniqueFuelTypes}
 													filter={filter}
@@ -256,7 +246,7 @@ function CarsListContent() {
 									<div className="sidebar-left border-1 background-body">
 										<div className="box-filters-sidebar">
 											<div className="block-filter border-1">
-												<h6 className="text-lg-bold item-collapse neutral-1000">Review Score </h6>
+												<h6 className="text-lg-bold item-collapse neutral-1000">{t('filters.rating')}</h6>
 												<ByRating
 													uniqueRatings={uniqueRatings}
 													filter={filter}
@@ -268,7 +258,7 @@ function CarsListContent() {
 									<div className="sidebar-left border-1 background-body">
 										<div className="box-filters-sidebar">
 											<div className="block-filter border-1">
-												<h6 className="text-lg-bold item-collapse neutral-1000">Booking Location</h6>
+												<h6 className="text-lg-bold item-collapse neutral-1000">{t('filters.location')}</h6>
 												<ByLocation
 													uniqueLocations={uniqueLocations}
 													filter={filter}

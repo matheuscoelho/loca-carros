@@ -405,7 +405,12 @@
     "security": "Security",
     "refundPolicy": "Refund Policy",
     "allRightsReserved": "All rights reserved.",
-    "followUs": "Follow us"
+    "followUs": "Follow us",
+    "quickLinks": "Quick Links",
+    "home": "Home",
+    "vehicles": "Vehicles",
+    "faq": "FAQ",
+    "contact": "Contact"
   },
   "admin": {
     "title": "Admin Panel",
@@ -586,6 +591,55 @@
       "review_reminder": "Review Reminder",
       "system": "System Notification"
     }
+  },
+  "carsList": {
+    "banner": {
+      "tag": "Find cars for rent near you",
+      "title": "Find Your Perfect Car",
+      "subtitle": "Search and find your best car rental with easy way"
+    },
+    "breadcrumb": {
+      "home": "Home",
+      "carListing": "Vehicles"
+    },
+    "needHelp": "Need help?",
+    "fleet": {
+      "title": "Our Vehicle Fleet",
+      "subtitle": "Turning dreams into reality with versatile vehicles."
+    },
+    "filters": {
+      "price": "Filter Price",
+      "carType": "Car type",
+      "amenities": "Amenities",
+      "fuelType": "Fuel Type",
+      "rating": "Review Score",
+      "location": "Booking Location"
+    },
+    "sort": {
+      "showing": "Showing",
+      "of": "of",
+      "results": "results",
+      "sortBy": "Sort by",
+      "name": "Name",
+      "price": "Price",
+      "rating": "Rating",
+      "show": "Show",
+      "clearFilters": "Clear Filters"
+    },
+    "loading": "Loading vehicles...",
+    "loadingGeneric": "Loading...",
+    "errorLoading": "Error loading vehicles",
+    "tryAgain": "Try again",
+    "noVehicles": "No vehicles found",
+    "adjustFilters": "Try adjusting the filters"
+  },
+  "carCard": {
+    "reviews": "reviews",
+    "noReviews": "No reviews",
+    "perDay": "/day",
+    "bookNow": "Book Now",
+    "km": "km",
+    "seats": "seats"
   },
   "carDetails": {
     "breadcrumb": {

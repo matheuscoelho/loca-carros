@@ -26,7 +26,7 @@ export default function Offcanvas({ isOffcanvas, handleOffcanvas }: any) {
 								<p className="text-xl-bold neutral-1000 mb-4">{t('quickLinks')}</p>
 								<ul className="list-unstyled">
 									<li className="mb-3">
-										<Link href="/cars" className="text-md-bold neutral-1000 d-flex align-items-center gap-2">
+										<Link href="/cars-list-1" className="text-md-bold neutral-1000 d-flex align-items-center gap-2">
 											<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
 												<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
 												<circle cx="7" cy="17" r="2"/>
@@ -36,7 +36,7 @@ export default function Offcanvas({ isOffcanvas, handleOffcanvas }: any) {
 										</Link>
 									</li>
 									<li className="mb-3">
-										<Link href="/about" className="text-md-bold neutral-1000 d-flex align-items-center gap-2">
+										<Link href="/about-us" className="text-md-bold neutral-1000 d-flex align-items-center gap-2">
 											<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
 												<circle cx="12" cy="12" r="10"/>
 												<path d="M12 16v-4"/>
@@ -54,7 +54,7 @@ export default function Offcanvas({ isOffcanvas, handleOffcanvas }: any) {
 										</Link>
 									</li>
 									<li className="mb-3">
-										<Link href="/faq" className="text-md-bold neutral-1000 d-flex align-items-center gap-2">
+										<Link href="/faqs" className="text-md-bold neutral-1000 d-flex align-items-center gap-2">
 											<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
 												<circle cx="12" cy="12" r="10"/>
 												<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>

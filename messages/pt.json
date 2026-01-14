@@ -417,7 +417,12 @@
     "security": "Segurança",
     "refundPolicy": "Política de Reembolso",
     "allRightsReserved": "Todos os direitos reservados.",
-    "followUs": "Siga-nos"
+    "followUs": "Siga-nos",
+    "quickLinks": "Links Rápidos",
+    "home": "Início",
+    "vehicles": "Veículos",
+    "faq": "FAQ",
+    "contact": "Contato"
   },
   "admin": {
     "title": "Painel Admin",
@@ -598,6 +603,55 @@
       "review_reminder": "Lembrete de Avaliação",
       "system": "Notificação do Sistema"
     }
+  },
+  "carsList": {
+    "banner": {
+      "tag": "Encontre carros para aluguel perto de você",
+      "title": "Encontre o Carro Perfeito",
+      "subtitle": "Busque e encontre seu aluguel de carro de forma fácil"
+    },
+    "breadcrumb": {
+      "home": "Início",
+      "carListing": "Veículos"
+    },
+    "needHelp": "Precisa de ajuda?",
+    "fleet": {
+      "title": "Nossa Frota de Veículos",
+      "subtitle": "Transformando sonhos em realidade com veículos versáteis."
+    },
+    "filters": {
+      "price": "Filtrar por Preço",
+      "carType": "Tipo de Veículo",
+      "amenities": "Comodidades",
+      "fuelType": "Tipo de Combustível",
+      "rating": "Avaliação",
+      "location": "Local de Retirada"
+    },
+    "sort": {
+      "showing": "Mostrando",
+      "of": "de",
+      "results": "resultados",
+      "sortBy": "Ordenar por",
+      "name": "Nome",
+      "price": "Preço",
+      "rating": "Avaliação",
+      "show": "Mostrar",
+      "clearFilters": "Limpar Filtros"
+    },
+    "loading": "Carregando veículos...",
+    "loadingGeneric": "Carregando...",
+    "errorLoading": "Erro ao carregar veículos",
+    "tryAgain": "Tentar novamente",
+    "noVehicles": "Nenhum veículo encontrado",
+    "adjustFilters": "Tente ajustar os filtros"
+  },
+  "carCard": {
+    "reviews": "avaliações",
+    "noReviews": "Sem avaliações",
+    "perDay": "/dia",
+    "bookNow": "Reservar",
+    "km": "km",
+    "seats": "assentos"
   },
   "carDetails": {
     "breadcrumb": {

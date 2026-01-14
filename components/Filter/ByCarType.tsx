@@ -1,10 +1,9 @@
-
 export default function ByCarType({ uniqueCarTypes, filter, handleCheckboxChange }: any) {
 	return (
 		<>
 			<div className="box-collapse scrollFilter">
 				<ul className="list-filter-checkbox">
-					{uniqueCarTypes.map((car: any,) => (
+					{uniqueCarTypes.map((car: any) => (
 						<li key={car}>
 							<label className="cb-container">
 								<input
@@ -12,11 +11,9 @@ export default function ByCarType({ uniqueCarTypes, filter, handleCheckboxChange
 									checked={filter.carType.includes(car)}
 									onChange={handleCheckboxChange("carType", car)}
 								/>
-
-								<span className="text-sm-medium">{car} </span>
+								<span className="text-sm-medium">{car}</span>
 								<span className="checkmark" />
 							</label>
-							<span className="number-item">{car?.length}</span>
 						</li>
 					))}
 				</ul>

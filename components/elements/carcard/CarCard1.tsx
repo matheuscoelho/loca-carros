@@ -1,4 +1,6 @@
+'use client'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { MongoDBCar } from '@/util/useCarFilter'
 import FavoriteButton from '@/components/elements/FavoriteButton'
 
@@ -7,6 +9,7 @@ interface CarCard1Props {
 }
 
 export default function CarCard1({ car }: CarCard1Props) {
+	const t = useTranslations('carCard')
 	// Extrair dados de forma segura (funciona com MongoDB e dados legados)
 	const carId = car._id || car.id
 	const carName = car.name || 'Unknown'
@@ -59,7 +62,7 @@ export default function CarCard1({ car }: CarCard1Props) {
 						<div className="card-left" />
 						<div className="card-right">
 							<span className="rating text-xs-medium rounded-pill">
-								{rating.toFixed(2)} <span className="text-xs-medium neutral-500">({reviewCount} reviews)</span>
+								{rating.toFixed(2)} <span className="text-xs-medium neutral-500">({reviewCount} {reviewCount === 1 ? t('reviews').slice(0, -1) : t('reviews')})</span>
 							</span>
 						</div>
 					</div>
@@ -73,18 +76,18 @@ export default function CarCard1({ car }: CarCard1Props) {
 							<p className="text-location text-sm-medium neutral-500">{location}</p>
 						</div>
 						<div className="card-facitlities">
-							<p className="card-miles text-md-medium">{mileage.toLocaleString()} miles</p>
+							<p className="card-miles text-md-medium">{mileage.toLocaleString()} {t('km')}</p>
 							<p className="card-gear text-md-medium">{transmission}</p>
 							<p className="card-fuel text-md-medium">{fuelType}</p>
-							<p className="card-seat text-md-medium">{seats} seats</p>
+							<p className="card-seat text-md-medium">{seats} {t('seats')}</p>
 						</div>
 						<div className="endtime">
 							<div className="card-price">
 								<h6 className="text-lg-bold neutral-1000">${price.toFixed(2)}</h6>
-								<p className="text-md-medium neutral-500">/ day</p>
+								<p className="text-md-medium neutral-500">{t('perDay')}</p>
 							</div>
 							<div className="card-button">
-								<Link className="btn btn-gray" href={detailsLink}>Book Now</Link>
+								<Link className="btn btn-gray" href={detailsLink}>{t('bookNow')}</Link>
 							</div>
 						</div>
 					</div>

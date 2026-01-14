@@ -44,48 +44,34 @@ export default function Footer1() {
 						<div className="col-md-2 col-xs-6 footer-3">
 							<h6 className="text-linear-3">{t('company')}</h6>
 							<ul className="menu-footer">
-								<li><Link href="#">{t('aboutUs')}</Link></li>
-								<li><Link href="#">{t('ourAwards')}</Link></li>
-								<li><Link href="#">{t('agencies')}</Link></li>
-								<li><Link href="#">{t('copyrightNotices')}</Link></li>
-								<li><Link href="#">{t('termsOfUse')}</Link></li>
-								<li><Link href="#">{t('privacyNotice')}</Link></li>
-								<li><Link href="#">{t('lostFound')}</Link></li>
+								<li><Link href="/about-us">{t('aboutUs')}</Link></li>
+								<li><Link href="/term">{t('termsOfUse')}</Link></li>
+								<li><Link href="/term">{t('privacyNotice')}</Link></li>
 							</ul>
 						</div>
 						<div className="col-md-2 col-xs-6 footer-2">
 							<h6 className="text-linear-3">{t('ourServices')}</h6>
 							<ul className="menu-footer">
-								<li><Link href="#">{t('carRental')}</Link></li>
-								<li><Link href="#">{t('vehicleLeasing')}</Link></li>
-								<li><Link href="#">{t('longTermRentals')}</Link></li>
-								<li><Link href="#">{t('carSales')}</Link></li>
-								<li><Link href="#">{t('luxuryRentals')}</Link></li>
-								<li><Link href="#">{t('rentToOwn')}</Link></li>
-								<li><Link href="#">{t('fleetManagement')}</Link></li>
+								<li><Link href="/cars-list-1">{t('carRental')}</Link></li>
+								<li><Link href="/cars-list-1">{t('vehicleLeasing')}</Link></li>
+								<li><Link href="/cars-list-1">{t('luxuryRentals')}</Link></li>
 							</ul>
 						</div>
 						<div className="col-md-2 col-xs-6 footer-4">
-							<h6 className="text-linear-3">{t('ourPartners')}</h6>
+							<h6 className="text-linear-3">{t('support')}</h6>
 							<ul className="menu-footer">
-								<li><Link href="#">{t('affiliates')}</Link></li>
-								<li><Link href="#">{t('travelAgents')}</Link></li>
-								<li><Link href="#">{t('aarpMembers')}</Link></li>
-								<li><Link href="#">{t('pointsPrograms')}</Link></li>
-								<li><Link href="#">{t('militaryVeterans')}</Link></li>
-								<li><Link href="#">{t('workWithUs')}</Link></li>
-								<li><Link href="#">{t('advertiseWithUs')}</Link></li>
+								<li><Link href="/faqs">{t('helpCenter')}</Link></li>
+								<li><Link href="/contact">{t('liveChat')}</Link></li>
+								<li><Link href="/faqs">{t('howItWorks')}</Link></li>
 							</ul>
 						</div>
 						<div className="col-md-3 col-xs-6 footer-5">
-							<h6 className="text-linear-3">{t('support')}</h6>
+							<h6 className="text-linear-3">{t('quickLinks')}</h6>
 							<ul className="menu-footer">
-								<li><Link href="#">{t('forumSupport')}</Link></li>
-								<li><Link href="#">{t('helpCenter')}</Link></li>
-								<li><Link href="#">{t('liveChat')}</Link></li>
-								<li><Link href="#">{t('howItWorks')}</Link></li>
-								<li><Link href="#">{t('security')}</Link></li>
-								<li><Link href="#">{t('refundPolicy')}</Link></li>
+								<li><Link href="/">{t('home')}</Link></li>
+								<li><Link href="/cars-list-1">{t('vehicles')}</Link></li>
+								<li><Link href="/faqs">{t('faq')}</Link></li>
+								<li><Link href="/contact">{t('contact')}</Link></li>
 							</ul>
 						</div>
 					</div>
