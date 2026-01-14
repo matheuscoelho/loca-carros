@@ -21,28 +21,88 @@ export default function DemoBanner() {
 	return (
 		<>
 		{/* Spacer para compensar o banner fixo */}
-		<div style={{ height: '40px' }} />
-		<div style={{
-			background: 'linear-gradient(90deg, #dc2626 0%, #b91c1c 100%)',
-			color: '#fff',
-			padding: '10px 20px',
-			textAlign: 'center',
-			fontSize: '13px',
-			fontWeight: 500,
-			position: 'fixed',
-			top: 0,
-			left: 0,
-			right: 0,
-			height: '40px',
-			zIndex: 9999,
-			display: 'flex',
-			alignItems: 'center',
-			justifyContent: 'center',
-		}}>
-			<span style={{ marginRight: '8px' }}>⚠️</span>
-			<strong>{t('title')}</strong> - {t('description')}
-			<strong> {t('noPayments')}</strong> {t('noRefunds')}
+		<div className="demo-banner-spacer" />
+		<div className="demo-banner">
+			<div className="demo-banner-content">
+				<span className="demo-banner-icon">⚠️</span>
+				<strong className="demo-banner-title">{t('title')}</strong>
+				<span className="demo-banner-separator">-</span>
+				<span className="demo-banner-desc">{t('description')}</span>
+			</div>
+			<div className="demo-banner-warnings">
+				<strong className="demo-banner-warning">{t('noPayments')}</strong>
+				<span className="demo-banner-warning">{t('noRefunds')}</span>
+			</div>
 		</div>
+		<style jsx>{`
+			.demo-banner-spacer {
+				height: 40px;
+			}
+			.demo-banner {
+				background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
+				color: #fff;
+				padding: 8px 16px;
+				text-align: center;
+				font-size: 13px;
+				font-weight: 500;
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				min-height: 40px;
+				z-index: 9999;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				flex-wrap: wrap;
+			}
+			.demo-banner-content {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				flex-wrap: wrap;
+				justify-content: center;
+			}
+			.demo-banner-warnings {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				flex-wrap: wrap;
+				justify-content: center;
+			}
+			.demo-banner-icon {
+				font-size: 14px;
+			}
+			.demo-banner-title {
+				white-space: nowrap;
+			}
+			.demo-banner-warning {
+				white-space: nowrap;
+			}
+			@media (max-width: 768px) {
+				.demo-banner-spacer {
+					height: 56px;
+				}
+				.demo-banner {
+					min-height: 56px;
+					padding: 6px 12px;
+					font-size: 11px;
+					flex-direction: column;
+					gap: 2px;
+				}
+				.demo-banner-content {
+					gap: 4px;
+				}
+				.demo-banner-warnings {
+					gap: 6px;
+					font-size: 10px;
+				}
+				.demo-banner-separator {
+					display: none;
+				}
+			}
+		`}</style>
 		</>
 	)
 }
