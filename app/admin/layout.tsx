@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import AdminSidebar from '@/components/admin/AdminSidebar'
 import DemoBanner from '@/components/layout/DemoBanner'
+import LocaleSwitcher from '@/components/LocaleSwitcher'
 
 export default function AdminLayout({
 	children,
@@ -61,31 +62,39 @@ export default function AdminLayout({
 					transition: 'margin-left 0.3s ease'
 				}}
 			>
-				{/* Mobile Header */}
-				{isMobile && (
-					<div
-						className="d-flex align-items-center px-3 py-2 bg-dark text-white"
-						style={{
-							position: 'sticky',
-							top: 0,
-							zIndex: 1030
-						}}
-					>
-						<button
-							onClick={() => setSidebarOpen(true)}
-							className="btn btn-link text-white p-2"
-							style={{ marginRight: '10px' }}
-						>
-							<svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-								<line x1="3" y1="12" x2="21" y2="12" />
-								<line x1="3" y1="6" x2="21" y2="6" />
-								<line x1="3" y1="18" x2="21" y2="18" />
-							</svg>
-						</button>
-						<span className="fw-bold">Navegar Sistemas</span>
-						<span className="badge bg-primary ms-2">Admin</span>
+				{/* Header */}
+				<div
+					className="d-flex align-items-center justify-content-between px-3 py-2 bg-white border-bottom"
+					style={{
+						position: 'sticky',
+						top: 0,
+						zIndex: 1030
+					}}
+				>
+					<div className="d-flex align-items-center">
+						{isMobile && (
+							<button
+								onClick={() => setSidebarOpen(true)}
+								className="btn btn-link text-dark p-2 me-2"
+							>
+								<svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+									<line x1="3" y1="12" x2="21" y2="12" />
+									<line x1="3" y1="6" x2="21" y2="6" />
+									<line x1="3" y1="18" x2="21" y2="18" />
+								</svg>
+							</button>
+						)}
+						{isMobile && (
+							<>
+								<span className="fw-bold">Navegar Sistemas</span>
+								<span className="badge bg-primary ms-2">Admin</span>
+							</>
+						)}
 					</div>
-				)}
+					<div className="d-flex align-items-center gap-3">
+						<LocaleSwitcher />
+					</div>
+				</div>
 				<div className="p-4">
 					{children}
 				</div>

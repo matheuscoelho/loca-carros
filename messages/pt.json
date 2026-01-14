@@ -592,6 +592,9 @@
       "saving": "Salvando...",
       "saved": "Salvo!",
       "uploading": "Enviando...",
+      "saveError": "Falha ao salvar configurações",
+      "uploadError": "Erro no upload",
+      "uploadFailed": "Falha no upload",
       "changeLogo": "Alterar Logo",
       "changeFavicon": "Alterar Favicon",
       "aboutSettings": "Sobre as Configurações",
@@ -620,6 +623,12 @@
         "backgroundColor": "Cor de Fundo",
         "textColor": "Cor do Texto",
         "socialMedia": "Redes Sociais",
+        "instagramPlaceholder": "https://instagram.com/seu-perfil",
+        "facebookPlaceholder": "https://facebook.com/sua-pagina",
+        "twitterPlaceholder": "https://twitter.com/seu-perfil",
+        "youtubePlaceholder": "https://youtube.com/@seu-canal",
+        "linkedinPlaceholder": "https://linkedin.com/company/sua-empresa",
+        "whatsappPlaceholder": "https://wa.me/5511999999999",
         "whatsappHelp": "Use o formato: https://wa.me/5511999999999",
         "logoLightHelp": "Logo exibido em fundos claros. Formatos: SVG, PNG, JPG (máx. 2MB)",
         "logoDarkHelp": "Logo exibido em fundos escuros. Formatos: SVG, PNG, JPG (máx. 2MB)",
@@ -630,7 +639,15 @@
         "previewLight": "Modo Claro",
         "previewDark": "Modo Escuro",
         "sampleButton": "Botão Primário",
-        "sampleButton2": "Botão Secundário"
+        "sampleButton2": "Botão Secundário",
+        "accentButton": "Destaque",
+        "successButton": "Sucesso",
+        "warningButton": "Aviso",
+        "dangerButton": "Erro",
+        "confirmResetColors": "Deseja restaurar todas as cores para os valores padrão?",
+        "confirmClearSocial": "Deseja limpar todas as redes sociais?",
+        "pagePreview": "Preview de página:",
+        "pagePreviewText": "Este é um exemplo de como o texto ficará com as cores de fundo e texto configuradas."
       },
       "generalFields": {
         "seoSection": "SEO e Meta Tags",
@@ -644,12 +661,31 @@
         "whatsappNumberHelp": "Número completo com código do país (ex: +5511999999999)",
         "addressSection": "Endereço",
         "address": "Endereço",
+        "addressPlaceholder": "Rua Exemplo, 123 - Bairro",
         "city": "Cidade",
+        "cityPlaceholder": "São Paulo",
         "state": "Estado",
+        "statePlaceholder": "SP",
         "zipCode": "CEP",
+        "zipCodePlaceholder": "01234-567",
         "systemSection": "Configurações do Sistema",
         "currency": "Moeda",
-        "timezone": "Fuso Horário"
+        "timezone": "Fuso Horário",
+        "currencies": {
+          "usd": "USD - Dólar Americano",
+          "eur": "EUR - Euro",
+          "gbp": "GBP - Libra Esterlina",
+          "brl": "BRL - Real Brasileiro"
+        },
+        "timezones": {
+          "newYork": "Horário do Leste (EUA)",
+          "chicago": "Horário Central (EUA)",
+          "denver": "Horário da Montanha (EUA)",
+          "losAngeles": "Horário do Pacífico (EUA)",
+          "saoPaulo": "São Paulo (Brasil)",
+          "london": "Londres (Reino Unido)",
+          "paris": "Paris (França)"
+        }
       },
       "pricingFields": {
         "taxRate": "Taxa de Imposto (%)",

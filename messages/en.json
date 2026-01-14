@@ -580,6 +580,9 @@
       "saving": "Saving...",
       "saved": "Saved!",
       "uploading": "Uploading...",
+      "saveError": "Failed to save settings",
+      "uploadError": "Upload error",
+      "uploadFailed": "Upload failed",
       "changeLogo": "Change Logo",
       "changeFavicon": "Change Favicon",
       "aboutSettings": "About Settings",
@@ -608,6 +611,12 @@
         "backgroundColor": "Background Color",
         "textColor": "Text Color",
         "socialMedia": "Social Media",
+        "instagramPlaceholder": "https://instagram.com/your-profile",
+        "facebookPlaceholder": "https://facebook.com/your-page",
+        "twitterPlaceholder": "https://twitter.com/your-profile",
+        "youtubePlaceholder": "https://youtube.com/@your-channel",
+        "linkedinPlaceholder": "https://linkedin.com/company/your-company",
+        "whatsappPlaceholder": "https://wa.me/5511999999999",
         "whatsappHelp": "Use format: https://wa.me/5511999999999",
         "logoLightHelp": "Logo displayed on light backgrounds. Formats: SVG, PNG, JPG (max. 2MB)",
         "logoDarkHelp": "Logo displayed on dark backgrounds. Formats: SVG, PNG, JPG (max. 2MB)",
@@ -618,7 +627,15 @@
         "previewLight": "Light Mode",
         "previewDark": "Dark Mode",
         "sampleButton": "Primary Button",
-        "sampleButton2": "Secondary Button"
+        "sampleButton2": "Secondary Button",
+        "accentButton": "Accent",
+        "successButton": "Success",
+        "warningButton": "Warning",
+        "dangerButton": "Danger",
+        "confirmResetColors": "Do you want to reset all colors to default values?",
+        "confirmClearSocial": "Do you want to clear all social media links?",
+        "pagePreview": "Page preview:",
+        "pagePreviewText": "This is an example of how text will look with the configured background and text colors."
       },
       "generalFields": {
         "seoSection": "SEO & Meta Tags",
@@ -632,12 +649,31 @@
         "whatsappNumberHelp": "Full number with country code (e.g.: +5511999999999)",
         "addressSection": "Address",
         "address": "Address",
+        "addressPlaceholder": "123 Example Street - District",
         "city": "City",
+        "cityPlaceholder": "New York",
         "state": "State",
+        "statePlaceholder": "NY",
         "zipCode": "Zip Code",
+        "zipCodePlaceholder": "12345-678",
         "systemSection": "System Settings",
         "currency": "Currency",
-        "timezone": "Timezone"
+        "timezone": "Timezone",
+        "currencies": {
+          "usd": "USD - US Dollar",
+          "eur": "EUR - Euro",
+          "gbp": "GBP - British Pound",
+          "brl": "BRL - Brazilian Real"
+        },
+        "timezones": {
+          "newYork": "Eastern Time (US)",
+          "chicago": "Central Time (US)",
+          "denver": "Mountain Time (US)",
+          "losAngeles": "Pacific Time (US)",
+          "saoPaulo": "Sao Paulo (Brazil)",
+          "london": "London (UK)",
+          "paris": "Paris (France)"
+        }
       },
       "pricingFields": {
         "taxRate": "Tax Rate (%)",

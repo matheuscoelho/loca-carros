@@ -179,11 +179,11 @@ export default function AdminSettingsPage() {
 				setSaved(true)
 				setTimeout(() => setSaved(false), 3000)
 			} else {
-				alert('Falha ao salvar configurações')
+				alert(t('settings.saveError'))
 			}
 		} catch (err) {
 			console.error('Error saving settings:', err)
-			alert('Falha ao salvar configurações')
+			alert(t('settings.saveError'))
 		} finally {
 			setSaving(false)
 		}
@@ -205,12 +205,12 @@ export default function AdminSettingsPage() {
 				return data.url
 			} else {
 				const error = await response.json()
-				alert(error.error || 'Falha no upload')
+				alert(error.error || t('settings.uploadFailed'))
 				return null
 			}
 		} catch (error) {
 			console.error('Upload error:', error)
-			alert('Erro no upload')
+			alert(t('settings.uploadError'))
 			return null
 		}
 	}
@@ -304,7 +304,7 @@ export default function AdminSettingsPage() {
 
 	// Funções de restaurar padrões
 	const resetColors = () => {
-		if (confirm('Deseja restaurar todas as cores para os valores padrão?')) {
+		if (confirm(t('settings.brandingFields.confirmResetColors'))) {
 			setSettings(prev => ({
 				...prev,
 				branding: {
@@ -323,7 +323,7 @@ export default function AdminSettingsPage() {
 	}
 
 	const resetSocialMedia = () => {
-		if (confirm('Deseja limpar todas as redes sociais?')) {
+		if (confirm(t('settings.brandingFields.confirmClearSocial'))) {
 			setSettings(prev => ({
 				...prev,
 				socialMedia: { ...defaultSettings.socialMedia }
@@ -711,7 +711,7 @@ export default function AdminSettingsPage() {
 									className="form-control"
 									value={settings.socialMedia.instagram}
 									onChange={(e) => updateSocialMedia('instagram', e.target.value)}
-									placeholder="https://instagram.com/seu-perfil"
+									placeholder={t('settings.brandingFields.instagramPlaceholder')}
 								/>
 							</div>
 
@@ -728,7 +728,7 @@ export default function AdminSettingsPage() {
 									className="form-control"
 									value={settings.socialMedia.facebook}
 									onChange={(e) => updateSocialMedia('facebook', e.target.value)}
-									placeholder="https://facebook.com/sua-pagina"
+									placeholder={t('settings.brandingFields.facebookPlaceholder')}
 								/>
 							</div>
 
@@ -745,7 +745,7 @@ export default function AdminSettingsPage() {
 									className="form-control"
 									value={settings.socialMedia.twitter}
 									onChange={(e) => updateSocialMedia('twitter', e.target.value)}
-									placeholder="https://twitter.com/seu-perfil"
+									placeholder={t('settings.brandingFields.twitterPlaceholder')}
 								/>
 							</div>
 
@@ -762,7 +762,7 @@ export default function AdminSettingsPage() {
 									className="form-control"
 									value={settings.socialMedia.youtube}
 									onChange={(e) => updateSocialMedia('youtube', e.target.value)}
-									placeholder="https://youtube.com/@seu-canal"
+									placeholder={t('settings.brandingFields.youtubePlaceholder')}
 								/>
 							</div>
 
@@ -779,7 +779,7 @@ export default function AdminSettingsPage() {
 									className="form-control"
 									value={settings.socialMedia.linkedin}
 									onChange={(e) => updateSocialMedia('linkedin', e.target.value)}
-									placeholder="https://linkedin.com/company/sua-empresa"
+									placeholder={t('settings.brandingFields.linkedinPlaceholder')}
 								/>
 							</div>
 
@@ -796,7 +796,7 @@ export default function AdminSettingsPage() {
 									className="form-control"
 									value={settings.socialMedia.whatsapp}
 									onChange={(e) => updateSocialMedia('whatsapp', e.target.value)}
-									placeholder="https://wa.me/5511999999999"
+									placeholder={t('settings.brandingFields.whatsappPlaceholder')}
 								/>
 								<small className="text-muted">{t('settings.brandingFields.whatsappHelp')}</small>
 							</div>
@@ -891,25 +891,25 @@ export default function AdminSettingsPage() {
 											className="btn btn-sm"
 											style={{ backgroundColor: settings.branding.accentColor, color: '#333' }}
 										>
-											Accent
+											{t('settings.brandingFields.accentButton')}
 										</button>
 										<button
 											className="btn btn-sm"
 											style={{ backgroundColor: settings.branding.successColor, color: '#fff' }}
 										>
-											Success
+											{t('settings.brandingFields.successButton')}
 										</button>
 										<button
 											className="btn btn-sm"
 											style={{ backgroundColor: settings.branding.warningColor, color: '#333' }}
 										>
-											Warning
+											{t('settings.brandingFields.warningButton')}
 										</button>
 										<button
 											className="btn btn-sm"
 											style={{ backgroundColor: settings.branding.dangerColor, color: '#fff' }}
 										>
-											Danger
+											{t('settings.brandingFields.dangerButton')}
 										</button>
 									</div>
 
@@ -923,7 +923,7 @@ export default function AdminSettingsPage() {
 										}}
 									>
 										<p className="mb-0 small">
-											<strong>Preview de página:</strong> Este é um exemplo de como o texto ficará com as cores de fundo e texto configuradas.
+											<strong>{t('settings.brandingFields.pagePreview')}</strong> {t('settings.brandingFields.pagePreviewText')}
 										</p>
 									</div>
 								</div>
@@ -1019,7 +1019,7 @@ export default function AdminSettingsPage() {
 									className="form-control"
 									value={settings.general.address}
 									onChange={(e) => updateGeneral('address', e.target.value)}
-									placeholder="Rua Exemplo, 123 - Bairro"
+									placeholder={t('settings.generalFields.addressPlaceholder')}
 								/>
 							</div>
 
@@ -1030,7 +1030,7 @@ export default function AdminSettingsPage() {
 									className="form-control"
 									value={settings.general.city}
 									onChange={(e) => updateGeneral('city', e.target.value)}
-									placeholder="São Paulo"
+									placeholder={t('settings.generalFields.cityPlaceholder')}
 								/>
 							</div>
 
@@ -1041,7 +1041,7 @@ export default function AdminSettingsPage() {
 									className="form-control"
 									value={settings.general.state}
 									onChange={(e) => updateGeneral('state', e.target.value)}
-									placeholder="SP"
+									placeholder={t('settings.generalFields.statePlaceholder')}
 								/>
 							</div>
 
@@ -1052,7 +1052,7 @@ export default function AdminSettingsPage() {
 									className="form-control"
 									value={settings.general.zipCode}
 									onChange={(e) => updateGeneral('zipCode', e.target.value)}
-									placeholder="01234-567"
+									placeholder={t('settings.generalFields.zipCodePlaceholder')}
 								/>
 							</div>
 
@@ -1069,10 +1069,10 @@ export default function AdminSettingsPage() {
 									value={settings.general.currency}
 									onChange={(e) => updateGeneral('currency', e.target.value)}
 								>
-									<option value="USD">USD - US Dollar</option>
-									<option value="EUR">EUR - Euro</option>
-									<option value="GBP">GBP - British Pound</option>
-									<option value="BRL">BRL - Brazilian Real</option>
+									<option value="USD">{t('settings.generalFields.currencies.usd')}</option>
+									<option value="EUR">{t('settings.generalFields.currencies.eur')}</option>
+									<option value="GBP">{t('settings.generalFields.currencies.gbp')}</option>
+									<option value="BRL">{t('settings.generalFields.currencies.brl')}</option>
 								</select>
 							</div>
 
@@ -1083,13 +1083,13 @@ export default function AdminSettingsPage() {
 									value={settings.general.timezone}
 									onChange={(e) => updateGeneral('timezone', e.target.value)}
 								>
-									<option value="America/New_York">Eastern Time (US)</option>
-									<option value="America/Chicago">Central Time (US)</option>
-									<option value="America/Denver">Mountain Time (US)</option>
-									<option value="America/Los_Angeles">Pacific Time (US)</option>
-									<option value="America/Sao_Paulo">Sao Paulo (Brazil)</option>
-									<option value="Europe/London">London (UK)</option>
-									<option value="Europe/Paris">Paris (France)</option>
+									<option value="America/New_York">{t('settings.generalFields.timezones.newYork')}</option>
+									<option value="America/Chicago">{t('settings.generalFields.timezones.chicago')}</option>
+									<option value="America/Denver">{t('settings.generalFields.timezones.denver')}</option>
+									<option value="America/Los_Angeles">{t('settings.generalFields.timezones.losAngeles')}</option>
+									<option value="America/Sao_Paulo">{t('settings.generalFields.timezones.saoPaulo')}</option>
+									<option value="Europe/London">{t('settings.generalFields.timezones.london')}</option>
+									<option value="Europe/Paris">{t('settings.generalFields.timezones.paris')}</option>
 								</select>
 							</div>
 						</div>
