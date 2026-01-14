@@ -1,11 +1,18 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 
 interface Settings {
-	general: {
+	branding: {
+		logoLight: string
+		logoDark: string
+		favicon: string
 		siteName: string
+		primaryColor: string
+		secondaryColor: string
+	}
+	general: {
 		siteDescription: string
 		contactEmail: string
 		contactPhone: string
@@ -35,8 +42,15 @@ interface Settings {
 }
 
 const defaultSettings: Settings = {
-	general: {
+	branding: {
+		logoLight: '/assets/imgs/template/logo.svg',
+		logoDark: '/assets/imgs/template/logo-white.svg',
+		favicon: '/favicon.ico',
 		siteName: 'Navegar Sistemas',
+		primaryColor: '#70f46d',
+		secondaryColor: '#8acfff',
+	},
+	general: {
 		siteDescription: 'Serviço premium de aluguel de carros',
 		contactEmail: 'contato@navegarsistemas.com.br',
 		contactPhone: '+55 (11) 99999-9999',
@@ -72,34 +86,139 @@ export default function AdminSettingsPage() {
 	const [loading, setLoading] = useState(true)
 	const [saving, setSaving] = useState(false)
 	const [saved, setSaved] = useState(false)
-	const [activeTab, setActiveTab] = useState('general')
+	const [activeTab, setActiveTab] = useState('branding')
+	const [uploadingLogo, setUploadingLogo] = useState<'light' | 'dark' | 'favicon' | null>(null)
+
+	const logoLightRef = useRef<HTMLInputElement>(null)
+	const logoDarkRef = useRef<HTMLInputElement>(null)
+	const faviconRef = useRef<HTMLInputElement>(null)
 
 	useEffect(() => {
-		// Load settings from localStorage
-		const savedSettings = localStorage.getItem('navegar_sistemas_admin_settings')
-		if (savedSettings) {
-			try {
-				setSettings(JSON.parse(savedSettings))
-			} catch {
-				setSettings(defaultSettings)
-			}
-		}
-		setLoading(false)
+		fetchSettings()
 	}, [])
+
+	const fetchSettings = async () => {
+		try {
+			setLoading(true)
+			const response = await fetch('/api/admin/settings')
+			if (response.ok) {
+				const data = await response.json()
+				if (data.settings) {
+					setSettings({
+						branding: { ...defaultSettings.branding, ...data.settings.branding },
+						general: { ...defaultSettings.general, ...data.settings.general },
+						pricing: { ...defaultSettings.pricing, ...data.settings.pricing },
+						notifications: { ...defaultSettings.notifications, ...data.settings.notifications },
+						business: { ...defaultSettings.business, ...data.settings.business },
+					})
+				}
+			}
+		} catch (error) {
+			console.error('Error fetching settings:', error)
+		} finally {
+			setLoading(false)
+		}
+	}
 
 	const handleSave = async () => {
 		setSaving(true)
 		try {
-			// Save to localStorage
-			localStorage.setItem('navegar_sistemas_admin_settings', JSON.stringify(settings))
-			setSaved(true)
-			setTimeout(() => setSaved(false), 3000)
+			const response = await fetch('/api/admin/settings', {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(settings),
+			})
+
+			if (response.ok) {
+				setSaved(true)
+				setTimeout(() => setSaved(false), 3000)
+			} else {
+				alert('Falha ao salvar configurações')
+			}
 		} catch (err) {
 			console.error('Error saving settings:', err)
-			alert('Failed to save settings')
+			alert('Falha ao salvar configurações')
 		} finally {
 			setSaving(false)
 		}
+	}
+
+	const handleFileUpload = async (file: File, type: 'logo' | 'favicon') => {
+		const formData = new FormData()
+		formData.append('file', file)
+		formData.append('category', type)
+
+		try {
+			const response = await fetch('/api/upload', {
+				method: 'POST',
+				body: formData,
+			})
+
+			if (response.ok) {
+				const data = await response.json()
+				return data.url
+			} else {
+				const error = await response.json()
+				alert(error.error || 'Falha no upload')
+				return null
+			}
+		} catch (error) {
+			console.error('Upload error:', error)
+			alert('Erro no upload')
+			return null
+		}
+	}
+
+	const handleLogoLightChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0]
+		if (!file) return
+
+		setUploadingLogo('light')
+		const url = await handleFileUpload(file, 'logo')
+		if (url) {
+			setSettings(prev => ({
+				...prev,
+				branding: { ...prev.branding, logoLight: url }
+			}))
+		}
+		setUploadingLogo(null)
+	}
+
+	const handleLogoDarkChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0]
+		if (!file) return
+
+		setUploadingLogo('dark')
+		const url = await handleFileUpload(file, 'logo')
+		if (url) {
+			setSettings(prev => ({
+				...prev,
+				branding: { ...prev.branding, logoDark: url }
+			}))
+		}
+		setUploadingLogo(null)
+	}
+
+	const handleFaviconChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0]
+		if (!file) return
+
+		setUploadingLogo('favicon')
+		const url = await handleFileUpload(file, 'favicon')
+		if (url) {
+			setSettings(prev => ({
+				...prev,
+				branding: { ...prev.branding, favicon: url }
+			}))
+		}
+		setUploadingLogo(null)
+	}
+
+	const updateBranding = (field: keyof Settings['branding'], value: string) => {
+		setSettings(prev => ({
+			...prev,
+			branding: { ...prev.branding, [field]: value }
+		}))
 	}
 
 	const updateGeneral = (field: keyof Settings['general'], value: string) => {
@@ -152,14 +271,14 @@ export default function AdminSettingsPage() {
 					{saving ? (
 						<>
 							<span className="spinner-border spinner-border-sm me-2" />
-							Saving...
+							{t('settings.saving')}
 						</>
 					) : saved ? (
 						<>
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check-lg me-2" viewBox="0 0 16 16">
 								<path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
 							</svg>
-							Saved!
+							{t('settings.saved')}
 						</>
 					) : (
 						t('settings.save')
@@ -170,6 +289,14 @@ export default function AdminSettingsPage() {
 			<div className="card border-0 shadow-sm">
 				<div className="card-header bg-white border-0">
 					<ul className="nav nav-tabs card-header-tabs">
+						<li className="nav-item">
+							<button
+								className={`nav-link ${activeTab === 'branding' ? 'active' : ''}`}
+								onClick={() => setActiveTab('branding')}
+							>
+								{t('settings.branding')}
+							</button>
+						</li>
 						<li className="nav-item">
 							<button
 								className={`nav-link ${activeTab === 'general' ? 'active' : ''}`}
@@ -199,27 +326,240 @@ export default function AdminSettingsPage() {
 								className={`nav-link ${activeTab === 'business' ? 'active' : ''}`}
 								onClick={() => setActiveTab('business')}
 							>
-								Business Rules
+								{t('settings.businessRules')}
 							</button>
 						</li>
 					</ul>
 				</div>
 
 				<div className="card-body">
+					{/* Branding Settings */}
+					{activeTab === 'branding' && (
+						<div className="row g-4">
+							{/* Logo Light Mode */}
+							<div className="col-md-6">
+								<label className="form-label">{t('settings.brandingFields.logoLight')}</label>
+								<div className="border rounded p-3 text-center bg-light">
+									<img
+										src={settings.branding.logoLight}
+										alt="Logo Light"
+										style={{ maxHeight: '60px', maxWidth: '200px' }}
+										className="mb-3"
+									/>
+									<div>
+										<input
+											type="file"
+											ref={logoLightRef}
+											onChange={handleLogoLightChange}
+											accept="image/svg+xml,image/png,image/jpeg,image/webp"
+											className="d-none"
+										/>
+										<button
+											className="btn btn-sm btn-outline-primary"
+											onClick={() => logoLightRef.current?.click()}
+											disabled={uploadingLogo === 'light'}
+										>
+											{uploadingLogo === 'light' ? (
+												<>
+													<span className="spinner-border spinner-border-sm me-2" />
+													{t('settings.uploading')}
+												</>
+											) : (
+												t('settings.changeLogo')
+											)}
+										</button>
+									</div>
+								</div>
+								<small className="text-muted">{t('settings.brandingFields.logoLightHelp')}</small>
+							</div>
+
+							{/* Logo Dark Mode */}
+							<div className="col-md-6">
+								<label className="form-label">{t('settings.brandingFields.logoDark')}</label>
+								<div className="border rounded p-3 text-center bg-dark">
+									<img
+										src={settings.branding.logoDark}
+										alt="Logo Dark"
+										style={{ maxHeight: '60px', maxWidth: '200px' }}
+										className="mb-3"
+									/>
+									<div>
+										<input
+											type="file"
+											ref={logoDarkRef}
+											onChange={handleLogoDarkChange}
+											accept="image/svg+xml,image/png,image/jpeg,image/webp"
+											className="d-none"
+										/>
+										<button
+											className="btn btn-sm btn-outline-light"
+											onClick={() => logoDarkRef.current?.click()}
+											disabled={uploadingLogo === 'dark'}
+										>
+											{uploadingLogo === 'dark' ? (
+												<>
+													<span className="spinner-border spinner-border-sm me-2" />
+													{t('settings.uploading')}
+												</>
+											) : (
+												t('settings.changeLogo')
+											)}
+										</button>
+									</div>
+								</div>
+								<small className="text-muted">{t('settings.brandingFields.logoDarkHelp')}</small>
+							</div>
+
+							{/* Favicon */}
+							<div className="col-md-6">
+								<label className="form-label">{t('settings.brandingFields.favicon')}</label>
+								<div className="border rounded p-3 text-center bg-light">
+									<img
+										src={settings.branding.favicon}
+										alt="Favicon"
+										style={{ width: '32px', height: '32px' }}
+										className="mb-3"
+									/>
+									<div>
+										<input
+											type="file"
+											ref={faviconRef}
+											onChange={handleFaviconChange}
+											accept="image/x-icon,image/png,image/svg+xml"
+											className="d-none"
+										/>
+										<button
+											className="btn btn-sm btn-outline-primary"
+											onClick={() => faviconRef.current?.click()}
+											disabled={uploadingLogo === 'favicon'}
+										>
+											{uploadingLogo === 'favicon' ? (
+												<>
+													<span className="spinner-border spinner-border-sm me-2" />
+													{t('settings.uploading')}
+												</>
+											) : (
+												t('settings.changeFavicon')
+											)}
+										</button>
+									</div>
+								</div>
+								<small className="text-muted">{t('settings.brandingFields.faviconHelp')}</small>
+							</div>
+
+							{/* Site Name */}
+							<div className="col-md-6">
+								<label className="form-label">{t('settings.brandingFields.siteName')}</label>
+								<input
+									type="text"
+									className="form-control"
+									value={settings.branding.siteName}
+									onChange={(e) => updateBranding('siteName', e.target.value)}
+								/>
+							</div>
+
+							{/* Primary Color */}
+							<div className="col-md-6">
+								<label className="form-label">{t('settings.brandingFields.primaryColor')}</label>
+								<div className="input-group">
+									<input
+										type="color"
+										className="form-control form-control-color"
+										value={settings.branding.primaryColor}
+										onChange={(e) => updateBranding('primaryColor', e.target.value)}
+									/>
+									<input
+										type="text"
+										className="form-control"
+										value={settings.branding.primaryColor}
+										onChange={(e) => updateBranding('primaryColor', e.target.value)}
+										placeholder="#70f46d"
+									/>
+								</div>
+								<small className="text-muted">{t('settings.brandingFields.primaryColorHelp')}</small>
+							</div>
+
+							{/* Secondary Color */}
+							<div className="col-md-6">
+								<label className="form-label">{t('settings.brandingFields.secondaryColor')}</label>
+								<div className="input-group">
+									<input
+										type="color"
+										className="form-control form-control-color"
+										value={settings.branding.secondaryColor}
+										onChange={(e) => updateBranding('secondaryColor', e.target.value)}
+									/>
+									<input
+										type="text"
+										className="form-control"
+										value={settings.branding.secondaryColor}
+										onChange={(e) => updateBranding('secondaryColor', e.target.value)}
+										placeholder="#8acfff"
+									/>
+								</div>
+								<small className="text-muted">{t('settings.brandingFields.secondaryColorHelp')}</small>
+							</div>
+
+							{/* Preview */}
+							<div className="col-12">
+								<label className="form-label">{t('settings.brandingFields.preview')}</label>
+								<div className="border rounded p-4">
+									<div className="row">
+										<div className="col-md-6">
+											<h6>{t('settings.brandingFields.previewLight')}</h6>
+											<div className="bg-light p-3 rounded d-flex align-items-center gap-3">
+												<img
+													src={settings.branding.logoLight}
+													alt="Logo"
+													style={{ maxHeight: '40px' }}
+												/>
+												<button
+													className="btn btn-sm"
+													style={{ backgroundColor: settings.branding.primaryColor }}
+												>
+													{t('settings.brandingFields.sampleButton')}
+												</button>
+												<button
+													className="btn btn-sm"
+													style={{ backgroundColor: settings.branding.secondaryColor }}
+												>
+													{t('settings.brandingFields.sampleButton2')}
+												</button>
+											</div>
+										</div>
+										<div className="col-md-6">
+											<h6>{t('settings.brandingFields.previewDark')}</h6>
+											<div className="bg-dark p-3 rounded d-flex align-items-center gap-3">
+												<img
+													src={settings.branding.logoDark}
+													alt="Logo"
+													style={{ maxHeight: '40px' }}
+												/>
+												<button
+													className="btn btn-sm"
+													style={{ backgroundColor: settings.branding.primaryColor }}
+												>
+													{t('settings.brandingFields.sampleButton')}
+												</button>
+												<button
+													className="btn btn-sm"
+													style={{ backgroundColor: settings.branding.secondaryColor }}
+												>
+													{t('settings.brandingFields.sampleButton2')}
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					)}
+
 					{/* General Settings */}
 					{activeTab === 'general' && (
 						<div className="row g-4">
 							<div className="col-md-6">
-								<label className="form-label">Site Name</label>
-								<input
-									type="text"
-									className="form-control"
-									value={settings.general.siteName}
-									onChange={(e) => updateGeneral('siteName', e.target.value)}
-								/>
-							</div>
-							<div className="col-md-6">
-								<label className="form-label">Site Description</label>
+								<label className="form-label">{t('settings.generalFields.siteDescription')}</label>
 								<input
 									type="text"
 									className="form-control"
@@ -228,7 +568,7 @@ export default function AdminSettingsPage() {
 								/>
 							</div>
 							<div className="col-md-6">
-								<label className="form-label">Contact Email</label>
+								<label className="form-label">{t('settings.generalFields.contactEmail')}</label>
 								<input
 									type="email"
 									className="form-control"
@@ -237,7 +577,7 @@ export default function AdminSettingsPage() {
 								/>
 							</div>
 							<div className="col-md-6">
-								<label className="form-label">Contact Phone</label>
+								<label className="form-label">{t('settings.generalFields.contactPhone')}</label>
 								<input
 									type="text"
 									className="form-control"
@@ -246,7 +586,7 @@ export default function AdminSettingsPage() {
 								/>
 							</div>
 							<div className="col-md-6">
-								<label className="form-label">Currency</label>
+								<label className="form-label">{t('settings.generalFields.currency')}</label>
 								<select
 									className="form-select"
 									value={settings.general.currency}
@@ -259,7 +599,7 @@ export default function AdminSettingsPage() {
 								</select>
 							</div>
 							<div className="col-md-6">
-								<label className="form-label">Timezone</label>
+								<label className="form-label">{t('settings.generalFields.timezone')}</label>
 								<select
 									className="form-select"
 									value={settings.general.timezone}
@@ -281,7 +621,7 @@ export default function AdminSettingsPage() {
 					{activeTab === 'pricing' && (
 						<div className="row g-4">
 							<div className="col-md-6">
-								<label className="form-label">Tax Rate (%)</label>
+								<label className="form-label">{t('settings.pricingFields.taxRate')}</label>
 								<div className="input-group">
 									<input
 										type="number"
@@ -293,10 +633,10 @@ export default function AdminSettingsPage() {
 									/>
 									<span className="input-group-text">%</span>
 								</div>
-								<small className="text-muted">Applied to all rentals</small>
+								<small className="text-muted">{t('settings.pricingFields.taxRateHelp')}</small>
 							</div>
 							<div className="col-md-6">
-								<label className="form-label">Service Fee (%)</label>
+								<label className="form-label">{t('settings.pricingFields.serviceFee')}</label>
 								<div className="input-group">
 									<input
 										type="number"
@@ -308,10 +648,10 @@ export default function AdminSettingsPage() {
 									/>
 									<span className="input-group-text">%</span>
 								</div>
-								<small className="text-muted">Platform service fee</small>
+								<small className="text-muted">{t('settings.pricingFields.serviceFeeHelp')}</small>
 							</div>
 							<div className="col-md-6">
-								<label className="form-label">Cancellation Fee (%)</label>
+								<label className="form-label">{t('settings.pricingFields.cancellationFee')}</label>
 								<div className="input-group">
 									<input
 										type="number"
@@ -323,10 +663,10 @@ export default function AdminSettingsPage() {
 									/>
 									<span className="input-group-text">%</span>
 								</div>
-								<small className="text-muted">Fee charged for cancellations</small>
+								<small className="text-muted">{t('settings.pricingFields.cancellationFeeHelp')}</small>
 							</div>
 							<div className="col-md-6">
-								<label className="form-label">Deposit Percentage (%)</label>
+								<label className="form-label">{t('settings.pricingFields.depositPercentage')}</label>
 								<div className="input-group">
 									<input
 										type="number"
@@ -338,7 +678,7 @@ export default function AdminSettingsPage() {
 									/>
 									<span className="input-group-text">%</span>
 								</div>
-								<small className="text-muted">Security deposit required</small>
+								<small className="text-muted">{t('settings.pricingFields.depositPercentageHelp')}</small>
 							</div>
 						</div>
 					)}
@@ -356,7 +696,7 @@ export default function AdminSettingsPage() {
 										onChange={(e) => updateNotifications('emailNotifications', e.target.checked)}
 									/>
 									<label className="form-check-label" htmlFor="emailNotifications">
-										Enable Email Notifications
+										{t('settings.notificationFields.emailNotifications')}
 									</label>
 								</div>
 							</div>
@@ -370,7 +710,7 @@ export default function AdminSettingsPage() {
 										onChange={(e) => updateNotifications('bookingConfirmation', e.target.checked)}
 									/>
 									<label className="form-check-label" htmlFor="bookingConfirmation">
-										Send Booking Confirmation Emails
+										{t('settings.notificationFields.bookingConfirmation')}
 									</label>
 								</div>
 							</div>
@@ -384,7 +724,7 @@ export default function AdminSettingsPage() {
 										onChange={(e) => updateNotifications('paymentReceived', e.target.checked)}
 									/>
 									<label className="form-check-label" htmlFor="paymentReceived">
-										Send Payment Confirmation Emails
+										{t('settings.notificationFields.paymentReceived')}
 									</label>
 								</div>
 							</div>
@@ -398,12 +738,12 @@ export default function AdminSettingsPage() {
 										onChange={(e) => updateNotifications('reminderBeforePickup', e.target.checked)}
 									/>
 									<label className="form-check-label" htmlFor="reminderBeforePickup">
-										Send Pickup Reminder Emails
+										{t('settings.notificationFields.reminderBeforePickup')}
 									</label>
 								</div>
 							</div>
 							<div className="col-md-6">
-								<label className="form-label">Reminder Hours Before Pickup</label>
+								<label className="form-label">{t('settings.notificationFields.reminderHours')}</label>
 								<input
 									type="number"
 									className="form-control"
@@ -420,7 +760,7 @@ export default function AdminSettingsPage() {
 					{activeTab === 'business' && (
 						<div className="row g-4">
 							<div className="col-md-6">
-								<label className="form-label">Minimum Rental Days</label>
+								<label className="form-label">{t('settings.businessFields.minRentalDays')}</label>
 								<input
 									type="number"
 									className="form-control"
@@ -430,7 +770,7 @@ export default function AdminSettingsPage() {
 								/>
 							</div>
 							<div className="col-md-6">
-								<label className="form-label">Maximum Rental Days</label>
+								<label className="form-label">{t('settings.businessFields.maxRentalDays')}</label>
 								<input
 									type="number"
 									className="form-control"
@@ -440,7 +780,7 @@ export default function AdminSettingsPage() {
 								/>
 							</div>
 							<div className="col-md-6">
-								<label className="form-label">Advance Booking Days</label>
+								<label className="form-label">{t('settings.businessFields.advanceBookingDays')}</label>
 								<input
 									type="number"
 									className="form-control"
@@ -448,11 +788,11 @@ export default function AdminSettingsPage() {
 									onChange={(e) => updateBusiness('advanceBookingDays', parseInt(e.target.value) || 365)}
 									min="1"
 								/>
-								<small className="text-muted">How far in advance can customers book</small>
+								<small className="text-muted">{t('settings.businessFields.advanceBookingDaysHelp')}</small>
 							</div>
 							<div className="col-md-6"></div>
 							<div className="col-md-6">
-								<label className="form-label">Pickup Start Time</label>
+								<label className="form-label">{t('settings.businessFields.pickupStartTime')}</label>
 								<input
 									type="time"
 									className="form-control"
@@ -461,7 +801,7 @@ export default function AdminSettingsPage() {
 								/>
 							</div>
 							<div className="col-md-6">
-								<label className="form-label">Pickup End Time</label>
+								<label className="form-label">{t('settings.businessFields.pickupEndTime')}</label>
 								<input
 									type="time"
 									className="form-control"
@@ -482,12 +822,10 @@ export default function AdminSettingsPage() {
 							<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
 							<path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
 						</svg>
-						About Settings
+						{t('settings.aboutSettings')}
 					</h6>
 					<p className="mb-0 small text-muted">
-						Settings are currently stored in your browser's local storage.
-						Changes are saved per device and will be lost if you clear browser data.
-						For a production environment, these settings should be stored in the database.
+						{t('settings.aboutSettingsDescription')}
 					</p>
 				</div>
 			</div>

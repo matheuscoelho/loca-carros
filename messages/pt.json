@@ -583,10 +583,69 @@
     },
     "settings": {
       "title": "Configurações",
-      "general": "Configurações Gerais",
-      "pricing": "Configurações de Preços",
-      "notifications": "Configurações de Notificações",
-      "save": "Salvar Configurações"
+      "branding": "Identidade Visual",
+      "general": "Geral",
+      "pricing": "Preços",
+      "notifications": "Notificações",
+      "businessRules": "Regras de Negócio",
+      "save": "Salvar Configurações",
+      "saving": "Salvando...",
+      "saved": "Salvo!",
+      "uploading": "Enviando...",
+      "changeLogo": "Alterar Logo",
+      "changeFavicon": "Alterar Favicon",
+      "aboutSettings": "Sobre as Configurações",
+      "aboutSettingsDescription": "As configurações são armazenadas no banco de dados e aplicadas em todo o site automaticamente.",
+      "brandingFields": {
+        "logoLight": "Logo (Modo Claro)",
+        "logoDark": "Logo (Modo Escuro)",
+        "favicon": "Favicon",
+        "siteName": "Nome do Site",
+        "primaryColor": "Cor Primária",
+        "secondaryColor": "Cor Secundária",
+        "logoLightHelp": "Logo exibido em fundos claros. Formatos: SVG, PNG, JPG (máx. 2MB)",
+        "logoDarkHelp": "Logo exibido em fundos escuros. Formatos: SVG, PNG, JPG (máx. 2MB)",
+        "faviconHelp": "Ícone exibido na aba do navegador. Formatos: ICO, PNG (máx. 500KB)",
+        "primaryColorHelp": "Cor principal usada em botões e destaques",
+        "secondaryColorHelp": "Cor secundária para elementos de apoio",
+        "preview": "Pré-visualização",
+        "previewLight": "Modo Claro",
+        "previewDark": "Modo Escuro",
+        "sampleButton": "Botão Primário",
+        "sampleButton2": "Botão Secundário"
+      },
+      "generalFields": {
+        "siteDescription": "Descrição do Site",
+        "contactEmail": "Email de Contato",
+        "contactPhone": "Telefone de Contato",
+        "currency": "Moeda",
+        "timezone": "Fuso Horário"
+      },
+      "pricingFields": {
+        "taxRate": "Taxa de Imposto (%)",
+        "serviceFee": "Taxa de Serviço (%)",
+        "cancellationFee": "Taxa de Cancelamento (%)",
+        "depositPercentage": "Porcentagem de Depósito (%)",
+        "taxRateHelp": "Aplicado a todos os aluguéis",
+        "serviceFeeHelp": "Taxa de serviço da plataforma",
+        "cancellationFeeHelp": "Taxa cobrada por cancelamentos",
+        "depositPercentageHelp": "Depósito de segurança exigido"
+      },
+      "notificationFields": {
+        "emailNotifications": "Habilitar Notificações por Email",
+        "bookingConfirmation": "Enviar Emails de Confirmação de Reserva",
+        "paymentReceived": "Enviar Emails de Confirmação de Pagamento",
+        "reminderBeforePickup": "Enviar Emails de Lembrete de Retirada",
+        "reminderHours": "Horas de Antecedência para Lembrete"
+      },
+      "businessFields": {
+        "minRentalDays": "Mínimo de Dias de Aluguel",
+        "maxRentalDays": "Máximo de Dias de Aluguel",
+        "advanceBookingDays": "Dias de Antecedência para Reserva",
+        "advanceBookingDaysHelp": "Com quantos dias de antecedência os clientes podem reservar",
+        "pickupStartTime": "Horário de Início de Retirada",
+        "pickupEndTime": "Horário de Fim de Retirada"
+      }
     }
   },
   "notifications": {

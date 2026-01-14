@@ -12,6 +12,7 @@ import { useTransition } from 'react'
 import { Locale, locales } from '@/i18n/config'
 import NotificationBell from '@/components/ui/NotificationBell'
 import SearchAutocomplete from '@/components/ui/SearchAutocomplete'
+import { useBranding } from '@/contexts/BrandingContext'
 
 const localeNames: Record<Locale, string> = {
 	en: 'EN',
@@ -30,6 +31,7 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, handle
 	const [isPending, startTransition] = useTransition()
 	const t = useTranslations('navigation')
 	const ta = useTranslations('auth')
+	const { branding } = useBranding()
 
 	const handleLocaleChange = async (newLocale: Locale) => {
 		if (newLocale === locale) return
@@ -93,8 +95,8 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, handle
 						<div className="header-left">
 							<div className="header-logo">
 								<Link className="d-flex" href="/">
-									<img className="light-mode" alt="Navegar Sistemas" src="/assets/imgs/template/logo.svg" />
-									<img className="dark-mode" alt="Navegar Sistemas" src="/assets/imgs/template/logo-white.svg" />
+									<img className="light-mode" alt={branding.siteName} src={branding.logoLight} />
+									<img className="dark-mode" alt={branding.siteName} src={branding.logoDark} />
 								</Link>
 							</div>
 							<div className="header-nav">

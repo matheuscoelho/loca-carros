@@ -1,9 +1,11 @@
 'use client'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
+import { useBranding } from '@/contexts/BrandingContext'
 
 export default function Footer1() {
 	const t = useTranslations('footer')
+	const { branding } = useBranding()
 
 	return (
 		<>
@@ -28,8 +30,8 @@ export default function Footer1() {
 						<div className="col-md-3 col-sm-12 footer-1">
 							<div className="mt-20 mb-20">
 								<Link className="d-flex" href="/">
-									<img className="light-mode" alt="Iuri" src="/assets/imgs/template/logo.svg" />
-									<img className="dark-mode" alt="Iuri" src="/assets/imgs/template/logo.svg" />
+									<img className="light-mode" alt={branding.siteName} src={branding.logoLight} />
+									<img className="dark-mode" alt={branding.siteName} src={branding.logoDark} />
 								</Link>
 								<div className="box-info-contact mt-0">
 									<p className="text-md neutral-400 icon-worktime">{t('hours')}</p>
@@ -78,7 +80,7 @@ export default function Footer1() {
 					<div className="footer-bottom mt-50">
 						<div className="row align-items-center justify-content-center">
 							<div className="col-md-6 text-md-start text-center mb-20">
-								<p className="text-sm color-white">© {new Date().getFullYear()} Navegar Sistemas. {t('allRightsReserved')}</p>
+								<p className="text-sm color-white">© {new Date().getFullYear()} {branding.siteName}. {t('allRightsReserved')}</p>
 							</div>
 							<div className="col-md-6 text-md-end text-center mb-20">
 								<div className="d-flex align-items-center justify-content-center justify-content-md-end">

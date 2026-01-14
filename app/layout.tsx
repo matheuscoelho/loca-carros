@@ -9,6 +9,7 @@ import { FavoritesProvider } from "@/context/FavoritesContext"
 import { CompareProvider } from "@/context/CompareContext"
 import { ToastProvider } from "@/components/ui/Toast"
 import CompareDrawer from "@/components/elements/CompareDrawer"
+import { BrandingProvider } from "@/contexts/BrandingContext"
 
 const urbanist = Urbanist({
 	weight: ['300', '400', '500', '600', '700', '800', '900'],
@@ -35,13 +36,15 @@ export default async function RootLayout({
 			<body className={`${urbanist.variable}`}>
 				<NextIntlClientProvider messages={messages}>
 					<AuthProvider>
-						<FavoritesProvider>
-							<CompareProvider>
-								<ToastProvider />
-								{children}
-								<CompareDrawer />
-							</CompareProvider>
-						</FavoritesProvider>
+						<BrandingProvider>
+							<FavoritesProvider>
+								<CompareProvider>
+									<ToastProvider />
+									{children}
+									<CompareDrawer />
+								</CompareProvider>
+							</FavoritesProvider>
+						</BrandingProvider>
 					</AuthProvider>
 				</NextIntlClientProvider>
 			</body>

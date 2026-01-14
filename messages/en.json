@@ -571,10 +571,69 @@
     },
     "settings": {
       "title": "Settings",
-      "general": "General Settings",
-      "pricing": "Pricing Settings",
-      "notifications": "Notification Settings",
-      "save": "Save Settings"
+      "branding": "Visual Identity",
+      "general": "General",
+      "pricing": "Pricing",
+      "notifications": "Notifications",
+      "businessRules": "Business Rules",
+      "save": "Save Settings",
+      "saving": "Saving...",
+      "saved": "Saved!",
+      "uploading": "Uploading...",
+      "changeLogo": "Change Logo",
+      "changeFavicon": "Change Favicon",
+      "aboutSettings": "About Settings",
+      "aboutSettingsDescription": "Settings are stored in the database and applied automatically across the entire site.",
+      "brandingFields": {
+        "logoLight": "Logo (Light Mode)",
+        "logoDark": "Logo (Dark Mode)",
+        "favicon": "Favicon",
+        "siteName": "Site Name",
+        "primaryColor": "Primary Color",
+        "secondaryColor": "Secondary Color",
+        "logoLightHelp": "Logo displayed on light backgrounds. Formats: SVG, PNG, JPG (max. 2MB)",
+        "logoDarkHelp": "Logo displayed on dark backgrounds. Formats: SVG, PNG, JPG (max. 2MB)",
+        "faviconHelp": "Icon displayed in the browser tab. Formats: ICO, PNG (max. 500KB)",
+        "primaryColorHelp": "Main color used for buttons and highlights",
+        "secondaryColorHelp": "Secondary color for supporting elements",
+        "preview": "Preview",
+        "previewLight": "Light Mode",
+        "previewDark": "Dark Mode",
+        "sampleButton": "Primary Button",
+        "sampleButton2": "Secondary Button"
+      },
+      "generalFields": {
+        "siteDescription": "Site Description",
+        "contactEmail": "Contact Email",
+        "contactPhone": "Contact Phone",
+        "currency": "Currency",
+        "timezone": "Timezone"
+      },
+      "pricingFields": {
+        "taxRate": "Tax Rate (%)",
+        "serviceFee": "Service Fee (%)",
+        "cancellationFee": "Cancellation Fee (%)",
+        "depositPercentage": "Deposit Percentage (%)",
+        "taxRateHelp": "Applied to all rentals",
+        "serviceFeeHelp": "Platform service fee",
+        "cancellationFeeHelp": "Fee charged for cancellations",
+        "depositPercentageHelp": "Security deposit required"
+      },
+      "notificationFields": {
+        "emailNotifications": "Enable Email Notifications",
+        "bookingConfirmation": "Send Booking Confirmation Emails",
+        "paymentReceived": "Send Payment Confirmation Emails",
+        "reminderBeforePickup": "Send Pickup Reminder Emails",
+        "reminderHours": "Reminder Hours Before Pickup"
+      },
+      "businessFields": {
+        "minRentalDays": "Minimum Rental Days",
+        "maxRentalDays": "Maximum Rental Days",
+        "advanceBookingDays": "Advance Booking Days",
+        "advanceBookingDaysHelp": "How far in advance customers can book",
+        "pickupStartTime": "Pickup Start Time",
+        "pickupEndTime": "Pickup End Time"
+      }
     }
   },
   "notifications": {
