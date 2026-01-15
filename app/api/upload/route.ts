@@ -14,9 +14,9 @@ const ALLOWED_TYPES: Record<string, string[]> = {
 
 // Limites de tamanho por categoria (em bytes)
 const SIZE_LIMITS: Record<string, number> = {
-  logo: 2 * 1024 * 1024, // 2MB
-  favicon: 500 * 1024, // 500KB
-  general: 5 * 1024 * 1024, // 5MB
+  logo: 5 * 1024 * 1024, // 5MB
+  favicon: 2 * 1024 * 1024, // 2MB
+  general: 10 * 1024 * 1024, // 10MB
 }
 
 // Diretório base de uploads
