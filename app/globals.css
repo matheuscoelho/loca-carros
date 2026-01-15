@@ -19,6 +19,19 @@
   color: var(--bs-brand-1) !important;
 }
 
+/* Classes de texto inteligentes - adaptam ao fundo */
+.text-on-dark {
+  color: var(--bs-text-on-dark) !important;
+}
+
+.text-on-light {
+  color: var(--bs-text-on-light) !important;
+}
+
+.text-muted-brand {
+  color: var(--bs-text-muted) !important;
+}
+
 /* Botões com cor primária */
 .btn-primary-brand {
   background-color: var(--bs-brand-2) !important;

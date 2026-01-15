@@ -12,6 +12,10 @@ export interface ThemePreset {
 	dangerColor: string
 	backgroundColor: string
 	textColor: string
+	// Cores de texto inteligentes
+	textOnDark: string      // Texto para fundos escuros (header, footer)
+	textOnLight: string     // Texto para fundos claros (cards, seções)
+	textMuted: string       // Texto secundário/placeholder
 }
 
 export const themePresets: ThemePreset[] = [
@@ -28,7 +32,10 @@ export const themePresets: ThemePreset[] = [
 		warningColor: '#eab308',
 		dangerColor: '#ef4444',
 		backgroundColor: '#ffffff',
-		textColor: '#1e293b'
+		textColor: '#1e293b',
+		textOnDark: '#ffffff',
+		textOnLight: '#1e293b',
+		textMuted: '#64748b'
 	},
 	{
 		id: 'modern',
@@ -43,7 +50,10 @@ export const themePresets: ThemePreset[] = [
 		warningColor: '#fbbf24',
 		dangerColor: '#f87171',
 		backgroundColor: '#fafafa',
-		textColor: '#18181b'
+		textColor: '#18181b',
+		textOnDark: '#ffffff',
+		textOnLight: '#18181b',
+		textMuted: '#71717a'
 	},
 	{
 		id: 'dark',
@@ -58,7 +68,10 @@ export const themePresets: ThemePreset[] = [
 		warningColor: '#facc15',
 		dangerColor: '#fb7185',
 		backgroundColor: '#0f172a',
-		textColor: '#f1f5f9'
+		textColor: '#f1f5f9',
+		textOnDark: '#f1f5f9',
+		textOnLight: '#1e293b',
+		textMuted: '#94a3b8'
 	},
 	{
 		id: 'nature',
@@ -73,7 +86,10 @@ export const themePresets: ThemePreset[] = [
 		warningColor: '#eab308',
 		dangerColor: '#dc2626',
 		backgroundColor: '#f0fdf4',
-		textColor: '#14532d'
+		textColor: '#14532d',
+		textOnDark: '#ffffff',
+		textOnLight: '#14532d',
+		textMuted: '#4d7c0f'
 	},
 	{
 		id: 'luxury',
@@ -88,7 +104,10 @@ export const themePresets: ThemePreset[] = [
 		warningColor: '#d97706',
 		dangerColor: '#be123c',
 		backgroundColor: '#1c1917',
-		textColor: '#fafaf9'
+		textColor: '#fafaf9',
+		textOnDark: '#fafaf9',
+		textOnLight: '#1c1917',
+		textMuted: '#a8a29e'
 	},
 	{
 		id: 'ocean',
@@ -103,7 +122,10 @@ export const themePresets: ThemePreset[] = [
 		warningColor: '#f59e0b',
 		dangerColor: '#ef4444',
 		backgroundColor: '#f0f9ff',
-		textColor: '#0c4a6e'
+		textColor: '#0c4a6e',
+		textOnDark: '#ffffff',
+		textOnLight: '#0c4a6e',
+		textMuted: '#0369a1'
 	},
 	{
 		id: 'sunset',
@@ -118,7 +140,10 @@ export const themePresets: ThemePreset[] = [
 		warningColor: '#f59e0b',
 		dangerColor: '#be123c',
 		backgroundColor: '#fff7ed',
-		textColor: '#7c2d12'
+		textColor: '#7c2d12',
+		textOnDark: '#ffffff',
+		textOnLight: '#7c2d12',
+		textMuted: '#c2410c'
 	},
 	{
 		id: 'minimal',
@@ -133,7 +158,10 @@ export const themePresets: ThemePreset[] = [
 		warningColor: '#eab308',
 		dangerColor: '#ef4444',
 		backgroundColor: '#fafafa',
-		textColor: '#171717'
+		textColor: '#171717',
+		textOnDark: '#ffffff',
+		textOnLight: '#171717',
+		textMuted: '#525252'
 	}
 ]
 

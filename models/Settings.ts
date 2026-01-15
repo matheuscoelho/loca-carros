@@ -18,6 +18,10 @@ export interface ISettings {
     backgroundColor: string
     textColor: string
     ogImage: string
+    // Cores de texto inteligentes
+    textOnDark: string
+    textOnLight: string
+    textMuted: string
   }
   socialMedia: {
     instagram: string
@@ -86,6 +90,10 @@ export const defaultSettings: Omit<ISettings, '_id'> = {
     backgroundColor: '#ffffff',
     textColor: '#101010',
     ogImage: '',
+    // Cores de texto inteligentes
+    textOnDark: '#ffffff',
+    textOnLight: '#101010',
+    textMuted: '#6b7280',
   },
   socialMedia: {
     instagram: '',

@@ -26,6 +26,10 @@ interface Settings {
 		backgroundColor: string
 		textColor: string
 		ogImage: string
+		// Cores de texto inteligentes
+		textOnDark: string
+		textOnLight: string
+		textMuted: string
 	}
 	lastModifiedBy?: {
 		id: string
@@ -93,6 +97,10 @@ const defaultSettings: Settings = {
 		backgroundColor: '#ffffff',
 		textColor: '#101010',
 		ogImage: '',
+		// Cores de texto inteligentes
+		textOnDark: '#ffffff',
+		textOnLight: '#101010',
+		textMuted: '#6b7280',
 	},
 	socialMedia: {
 		instagram: '',
@@ -199,6 +207,10 @@ export default function AdminSettingsPage() {
 				dangerColor: preset.dangerColor,
 				backgroundColor: preset.backgroundColor,
 				textColor: preset.textColor,
+				// Cores de texto inteligentes
+				textOnDark: preset.textOnDark,
+				textOnLight: preset.textOnLight,
+				textMuted: preset.textMuted,
 			}
 		}))
 		setSelectedPreset(preset.id)
@@ -794,6 +806,51 @@ export default function AdminSettingsPage() {
 									onChange={(value) => updateBranding('textColor', value)}
 									colorType="texts"
 								/>
+							</div>
+
+							{/* Divider - Smart Text Colors */}
+							<div className="col-12">
+								<hr className="my-2" />
+								<h6 className="text-muted mb-3">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="me-2" viewBox="0 0 16 16">
+										<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+									</svg>
+									{t('settings.brandingFields.smartTextColors')}
+								</h6>
+								<p className="text-muted small mb-3">{t('settings.brandingFields.smartTextColorsDescription')}</p>
+							</div>
+
+							{/* Text On Dark */}
+							<div className="col-md-4">
+								<ColorPicker
+									label={t('settings.brandingFields.textOnDark')}
+									value={settings.branding.textOnDark || '#ffffff'}
+									onChange={(value) => updateBranding('textOnDark', value)}
+									colorType="texts"
+								/>
+								<small className="text-muted">{t('settings.brandingFields.textOnDarkHint')}</small>
+							</div>
+
+							{/* Text On Light */}
+							<div className="col-md-4">
+								<ColorPicker
+									label={t('settings.brandingFields.textOnLight')}
+									value={settings.branding.textOnLight || '#101010'}
+									onChange={(value) => updateBranding('textOnLight', value)}
+									colorType="texts"
+								/>
+								<small className="text-muted">{t('settings.brandingFields.textOnLightHint')}</small>
+							</div>
+
+							{/* Text Muted */}
+							<div className="col-md-4">
+								<ColorPicker
+									label={t('settings.brandingFields.textMuted')}
+									value={settings.branding.textMuted || '#6b7280'}
+									onChange={(value) => updateBranding('textMuted', value)}
+									colorType="texts"
+								/>
+								<small className="text-muted">{t('settings.brandingFields.textMutedHint')}</small>
 							</div>
 
 							{/* Contrast Check */}

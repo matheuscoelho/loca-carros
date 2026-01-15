@@ -18,6 +18,10 @@ export interface Branding {
   backgroundColor: string
   textColor: string
   ogImage: string
+  // Cores de texto inteligentes
+  textOnDark: string      // Texto para fundos escuros (header, footer)
+  textOnLight: string     // Texto para fundos claros (cards, seções)
+  textMuted: string       // Texto secundário/placeholder
 }
 
 export interface SocialMedia {
@@ -64,6 +68,9 @@ const defaultBranding: Branding = {
   backgroundColor: '#ffffff',
   textColor: '#101010',
   ogImage: '',
+  textOnDark: '#ffffff',
+  textOnLight: '#101010',
+  textMuted: '#6b7280',
 }
 
 const defaultSocialMedia: SocialMedia = {
@@ -187,6 +194,11 @@ export function BrandingProvider({ children }: { children: ReactNode }) {
       root.style.setProperty('--bs-text', branding.textColor)
       root.style.setProperty('--bs-neutral-0', branding.backgroundColor)
       root.style.setProperty('--bs-neutral-1000', branding.textColor)
+
+      // Cores de texto inteligentes
+      root.style.setProperty('--bs-text-on-dark', branding.textOnDark || '#ffffff')
+      root.style.setProperty('--bs-text-on-light', branding.textOnLight || branding.textColor)
+      root.style.setProperty('--bs-text-muted', branding.textMuted || '#6b7280')
     }
   }, [settings.branding, isLoading])
 

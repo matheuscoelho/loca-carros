@@ -35,6 +35,10 @@ export async function GET() {
         dangerColor: branding.dangerColor || defaultSettings.branding.dangerColor,
         backgroundColor: branding.backgroundColor || defaultSettings.branding.backgroundColor,
         textColor: branding.textColor || defaultSettings.branding.textColor,
+        // Cores de texto inteligentes
+        textOnDark: branding.textOnDark || defaultSettings.branding.textOnDark,
+        textOnLight: branding.textOnLight || defaultSettings.branding.textOnLight,
+        textMuted: branding.textMuted || defaultSettings.branding.textMuted,
       },
       socialMedia: {
         instagram: socialMedia.instagram || '',
@@ -82,6 +86,10 @@ export async function GET() {
         dangerColor: defaultSettings.branding.dangerColor,
         backgroundColor: defaultSettings.branding.backgroundColor,
         textColor: defaultSettings.branding.textColor,
+        // Cores de texto inteligentes
+        textOnDark: defaultSettings.branding.textOnDark,
+        textOnLight: defaultSettings.branding.textOnLight,
+        textMuted: defaultSettings.branding.textMuted,
       },
       socialMedia: {
         instagram: '',
