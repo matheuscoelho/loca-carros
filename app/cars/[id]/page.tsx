@@ -99,22 +99,21 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 	}, [slider2, slider1])
 
 	useEffect(() => {
+		const fetchCar = async () => {
+			try {
+				setLoading(true)
+				const response = await fetch(`/api/cars/${params.id}`)
+				if (!response.ok) throw new Error('Car not found')
+				const data = await response.json()
+				setCar(data.car)
+			} catch (err) {
+				setError('Veículo não encontrado')
+			} finally {
+				setLoading(false)
+			}
+		}
 		fetchCar()
 	}, [params.id])
-
-	const fetchCar = async () => {
-		try {
-			setLoading(true)
-			const response = await fetch(`/api/cars/${params.id}`)
-			if (!response.ok) throw new Error('Car not found')
-			const data = await response.json()
-			setCar(data.car)
-		} catch (err) {
-			setError('Veículo não encontrado')
-		} finally {
-			setLoading(false)
-		}
-	}
 
 	const settingsMain = {
 		slidesToShow: 1,

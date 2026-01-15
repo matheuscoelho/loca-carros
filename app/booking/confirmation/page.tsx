@@ -62,25 +62,25 @@ export default function ConfirmationPage() {
 	}, [status, router])
 
 	useEffect(() => {
-		if (bookingId && session) {
-			fetchBooking()
-		}
-	}, [bookingId, session])
+		if (!bookingId || !session) return
 
-	const fetchBooking = async () => {
-		try {
-			const response = await fetch(`/api/bookings/${bookingId}`)
-			if (!response.ok) {
-				throw new Error('Booking not found')
+		const fetchBooking = async () => {
+			try {
+				const response = await fetch(`/api/bookings/${bookingId}`)
+				if (!response.ok) {
+					throw new Error('Booking not found')
+				}
+				const data = await response.json()
+				setBooking(data.booking)
+			} catch (err: any) {
+				setError(err.message || 'Error loading booking')
+			} finally {
+				setLoading(false)
 			}
-			const data = await response.json()
-			setBooking(data.booking)
-		} catch (err: any) {
-			setError(err.message || 'Error loading booking')
-		} finally {
-			setLoading(false)
 		}
-	}
+
+		fetchBooking()
+	}, [bookingId, session])
 
 	if (status === 'loading' || loading) {
 		return (

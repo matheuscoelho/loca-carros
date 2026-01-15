@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 
 interface Review {
@@ -48,11 +48,7 @@ export default function AdminReviewsPage() {
 	const [responseModal, setResponseModal] = useState<{ reviewId: string; show: boolean }>({ reviewId: '', show: false })
 	const [responseText, setResponseText] = useState('')
 
-	useEffect(() => {
-		fetchReviews()
-	}, [statusFilter])
-
-	const fetchReviews = async () => {
+	const fetchReviews = useCallback(async () => {
 		try {
 			setLoading(true)
 			const params = new URLSearchParams()
@@ -72,7 +68,11 @@ export default function AdminReviewsPage() {
 		} finally {
 			setLoading(false)
 		}
-	}
+	}, [statusFilter])
+
+	useEffect(() => {
+		fetchReviews()
+	}, [fetchReviews])
 
 	const handleStatusChange = async (reviewId: string, newStatus: string) => {
 		setProcessing(reviewId)

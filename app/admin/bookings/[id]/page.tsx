@@ -61,23 +61,22 @@ export default function BookingDetailPage({ params }: { params: { id: string } }
 	const [saving, setSaving] = useState(false)
 
 	useEffect(() => {
+		const fetchBooking = async () => {
+			try {
+				const response = await fetch(`/api/bookings/${params.id}`)
+				if (!response.ok) {
+					throw new Error('Booking not found')
+				}
+				const data = await response.json()
+				setBooking(data.booking)
+			} catch (err) {
+				setError('Reserva não encontrada')
+			} finally {
+				setLoading(false)
+			}
+		}
 		fetchBooking()
 	}, [params.id])
-
-	const fetchBooking = async () => {
-		try {
-			const response = await fetch(`/api/bookings/${params.id}`)
-			if (!response.ok) {
-				throw new Error('Booking not found')
-			}
-			const data = await response.json()
-			setBooking(data.booking)
-		} catch (err) {
-			setError('Reserva não encontrada')
-		} finally {
-			setLoading(false)
-		}
-	}
 
 	const handleStatusChange = async (newStatus: string) => {
 		if (!booking) return

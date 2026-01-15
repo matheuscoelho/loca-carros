@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
@@ -37,13 +37,8 @@ export default function MyPayments() {
 	const [error, setError] = useState<string | null>(null)
 	const [filter, setFilter] = useState<string>('')
 
-	useEffect(() => {
-		if (session?.user) {
-			fetchPayments()
-		}
-	}, [session, filter])
-
-	const fetchPayments = async () => {
+	const fetchPayments = useCallback(async () => {
+		if (!session?.user) return
 		try {
 			setLoading(true)
 			const params = new URLSearchParams()
@@ -70,7 +65,11 @@ export default function MyPayments() {
 		} finally {
 			setLoading(false)
 		}
-	}
+	}, [session, filter, t])
+
+	useEffect(() => {
+		fetchPayments()
+	}, [fetchPayments])
 
 	const formatDate = (dateString: string) => {
 		return new Date(dateString).toLocaleDateString('pt-BR', {

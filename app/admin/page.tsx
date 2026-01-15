@@ -61,24 +61,23 @@ export default function AdminDashboard() {
 	const [error, setError] = useState<string | null>(null)
 
 	useEffect(() => {
-		fetchStats()
-	}, [])
-
-	const fetchStats = async () => {
-		try {
-			const response = await fetch('/api/admin/dashboard')
-			if (!response.ok) {
-				throw new Error('Failed to fetch stats')
+		const fetchStats = async () => {
+			try {
+				const response = await fetch('/api/admin/dashboard')
+				if (!response.ok) {
+					throw new Error('Failed to fetch stats')
+				}
+				const data = await response.json()
+				setStats(data.stats)
+			} catch (err) {
+				setError(t('dashboard.errorLoadingDashboard'))
+				console.error(err)
+			} finally {
+				setLoading(false)
 			}
-			const data = await response.json()
-			setStats(data.stats)
-		} catch (err) {
-			setError(t('dashboard.errorLoadingDashboard'))
-			console.error(err)
-		} finally {
-			setLoading(false)
 		}
-	}
+		fetchStats()
+	}, [t])
 
 	const getStatusBadge = (status: string) => {
 		const badges: Record<string, string> = {

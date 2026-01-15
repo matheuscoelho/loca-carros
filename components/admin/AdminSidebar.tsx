@@ -118,7 +118,7 @@ export default function AdminSidebar({ isOpen = true, onClose }: AdminSidebarPro
 		if (isMobile && onClose) {
 			onClose()
 		}
-	}, [pathname])
+	}, [pathname, isMobile, onClose])
 
 	const isActive = (href: string) => {
 		if (href === '/admin') {

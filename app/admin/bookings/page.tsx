@@ -47,24 +47,23 @@ export default function AdminBookingsPage() {
 	const [searchTerm, setSearchTerm] = useState('')
 
 	useEffect(() => {
-		fetchBookings()
-	}, [])
-
-	const fetchBookings = async () => {
-		try {
-			const response = await fetch('/api/bookings?limit=100&admin=true')
-			if (!response.ok) {
-				throw new Error('Failed to fetch bookings')
+		const fetchBookings = async () => {
+			try {
+				const response = await fetch('/api/bookings?limit=100&admin=true')
+				if (!response.ok) {
+					throw new Error('Failed to fetch bookings')
+				}
+				const data = await response.json()
+				setBookings(data.bookings)
+			} catch (err) {
+				setError(t('bookings.errorLoading'))
+				console.error(err)
+			} finally {
+				setLoading(false)
 			}
-			const data = await response.json()
-			setBookings(data.bookings)
-		} catch (err) {
-			setError(t('bookings.errorLoading'))
-			console.error(err)
-		} finally {
-			setLoading(false)
 		}
-	}
+		fetchBookings()
+	}, [t])
 
 	const handleStatusChange = async (id: string, newStatus: string) => {
 		try {

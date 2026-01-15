@@ -52,27 +52,26 @@ export default function EditVehiclePage({ params }: { params: { id: string } }) 
 	const [newImageUrl, setNewImageUrl] = useState('')
 
 	useEffect(() => {
+		const fetchCar = async () => {
+			try {
+				const response = await fetch(`/api/cars/${params.id}`)
+				if (!response.ok) {
+					throw new Error('Car not found')
+				}
+				const data = await response.json()
+				setFormData({
+					...data.car,
+					amenities: data.car.amenities || [],
+					images: data.car.images || [],
+				})
+			} catch (err) {
+				setError('Error loading vehicle')
+			} finally {
+				setLoading(false)
+			}
+		}
 		fetchCar()
 	}, [params.id])
-
-	const fetchCar = async () => {
-		try {
-			const response = await fetch(`/api/cars/${params.id}`)
-			if (!response.ok) {
-				throw new Error('Car not found')
-			}
-			const data = await response.json()
-			setFormData({
-				...data.car,
-				amenities: data.car.amenities || [],
-				images: data.car.images || [],
-			})
-		} catch (err) {
-			setError('Error loading vehicle')
-		} finally {
-			setLoading(false)
-		}
-	}
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target

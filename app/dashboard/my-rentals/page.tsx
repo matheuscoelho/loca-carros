@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
@@ -56,13 +56,8 @@ export default function MyRentals() {
 		totalPages: 0
 	})
 
-	useEffect(() => {
-		if (session?.user) {
-			fetchBookings()
-		}
-	}, [session, statusFilter, pagination.page])
-
-	const fetchBookings = async () => {
+	const fetchBookings = useCallback(async () => {
+		if (!session?.user) return
 		try {
 			setLoading(true)
 			setError(null)
@@ -93,7 +88,11 @@ export default function MyRentals() {
 		} finally {
 			setLoading(false)
 		}
-	}
+	}, [session, statusFilter, pagination.page, pagination.limit, t])
+
+	useEffect(() => {
+		fetchBookings()
+	}, [fetchBookings])
 
 	const getStatusBadge = (status: string) => {
 		const colorMap: Record<string, string> = {

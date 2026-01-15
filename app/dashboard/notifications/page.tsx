@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
@@ -32,13 +32,8 @@ export default function Notifications() {
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState<string | null>(null)
 
-	useEffect(() => {
-		if (session?.user) {
-			fetchNotifications()
-		}
-	}, [session])
-
-	const fetchNotifications = async () => {
+	const fetchNotifications = useCallback(async () => {
+		if (!session?.user) return
 		try {
 			setLoading(true)
 			const response = await fetch('/api/notifications')
@@ -53,7 +48,11 @@ export default function Notifications() {
 		} finally {
 			setLoading(false)
 		}
-	}
+	}, [session, t])
+
+	useEffect(() => {
+		fetchNotifications()
+	}, [fetchNotifications])
 
 	const markAsRead = async (id: string) => {
 		try {

@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import CarCard1 from '@/components/elements/carcard/CarCard1'
 import HeroSearch from '@/components/elements/HeroSearch'
 import SortCarsFilter from '@/components/elements/SortCarsFilter'
@@ -14,11 +14,7 @@ export default function CarsList3() {
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState<string | null>(null)
 
-	useEffect(() => {
-		fetchCars()
-	}, [])
-
-	const fetchCars = async () => {
+	const fetchCars = useCallback(async () => {
 		try {
 			setLoading(true)
 			const response = await fetch('/api/cars?limit=100')
@@ -33,7 +29,11 @@ export default function CarsList3() {
 		} finally {
 			setLoading(false)
 		}
-	}
+	}, [])
+
+	useEffect(() => {
+		fetchCars()
+	}, [fetchCars])
 
 	const {
 		filter,

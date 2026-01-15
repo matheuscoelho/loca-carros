@@ -89,43 +89,78 @@ export default function BookingPage({ params }: { params: { carId: string } }) {
 	}, [session])
 
 	useEffect(() => {
+		const fetchCar = async () => {
+			try {
+				const response = await fetch(`/api/cars/${params.carId}`)
+				if (response.ok) {
+					const data = await response.json()
+					setCar(data.car)
+				} else {
+					setError('Car not found')
+				}
+			} catch (err) {
+				setError('Error loading car')
+			} finally {
+				setLoading(false)
+			}
+		}
+
+		const fetchAvailability = async () => {
+			try {
+				const response = await fetch(`/api/cars/${params.carId}/availability`)
+				if (response.ok) {
+					const data = await response.json()
+					setUnavailableDates(data.unavailableDates)
+				}
+			} catch (err) {
+				console.error('Error fetching availability:', err)
+			}
+		}
+
 		fetchCar()
 		fetchAvailability()
 	}, [params.carId])
 
+	// Recalcular preço quando datas ou extras mudam
 	useEffect(() => {
-		if (pickupDate && dropoffDate && car) {
-			calculatePrice()
-		}
-	}, [pickupDate, dropoffDate, selectedExtras])
+		if (!pickupDate || !dropoffDate || !car) return
 
-	const fetchCar = async () => {
-		try {
-			const response = await fetch(`/api/cars/${params.carId}`)
-			if (response.ok) {
-				const data = await response.json()
-				setCar(data.car)
-			} else {
-				setError('Car not found')
-			}
-		} catch (err) {
-			setError('Error loading car')
-		} finally {
-			setLoading(false)
-		}
-	}
+		const calculatePriceEffect = async () => {
+			setCalculating(true)
+			try {
+				const extras = selectedExtras.map(name => {
+					const extra = car?.extras?.find(e => e.name === name)
+					return {
+						name,
+						price: extra?.price || 0,
+						quantity: 1,
+					}
+				})
 
-	const fetchAvailability = async () => {
-		try {
-			const response = await fetch(`/api/cars/${params.carId}/availability`)
-			if (response.ok) {
-				const data = await response.json()
-				setUnavailableDates(data.unavailableDates)
+				const response = await fetch('/api/bookings/calculate', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						carId: params.carId,
+						pickupDate,
+						dropoffDate,
+						extras,
+					}),
+				})
+
+				if (response.ok) {
+					const data = await response.json()
+					setCalculation(data.calculation)
+				}
+			} catch (err) {
+				console.error('Error calculating price:', err)
+			} finally {
+				setCalculating(false)
 			}
-		} catch (err) {
-			console.error('Error fetching availability:', err)
 		}
-	}
+
+		calculatePriceEffect()
+	}, [pickupDate, dropoffDate, selectedExtras, car, params.carId])
 
 	const calculatePrice = async () => {
 		if (!pickupDate || !dropoffDate) return

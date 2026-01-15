@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, Suspense } from 'react'
+import { useState, useEffect, Suspense, useCallback } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import CarCard1 from '@/components/elements/carcard/CarCard1'
@@ -29,11 +29,7 @@ function CarsListContent() {
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState<string | null>(null)
 
-	useEffect(() => {
-		fetchCars()
-	}, [cityParam])
-
-	const fetchCars = async () => {
+	const fetchCars = useCallback(async () => {
 		try {
 			setLoading(true)
 			const params = new URLSearchParams()
@@ -54,7 +50,11 @@ function CarsListContent() {
 		} finally {
 			setLoading(false)
 		}
-	}
+	}, [cityParam])
+
+	useEffect(() => {
+		fetchCars()
+	}, [fetchCars])
 
 	const {
 		filter,

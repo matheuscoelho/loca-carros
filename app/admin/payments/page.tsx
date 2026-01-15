@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 
 interface Payment {
@@ -49,11 +49,7 @@ export default function AdminPaymentsPage() {
 	const [stats, setStats] = useState<Stats>({})
 	const [processingRefund, setProcessingRefund] = useState<string | null>(null)
 
-	useEffect(() => {
-		fetchPayments()
-	}, [statusFilter])
-
-	const fetchPayments = async () => {
+	const fetchPayments = useCallback(async () => {
 		try {
 			setLoading(true)
 			const params = new URLSearchParams()
@@ -72,7 +68,11 @@ export default function AdminPaymentsPage() {
 		} finally {
 			setLoading(false)
 		}
-	}
+	}, [statusFilter])
+
+	useEffect(() => {
+		fetchPayments()
+	}, [fetchPayments])
 
 	const handleRefund = async (paymentId: string, amount: number) => {
 		if (!confirm(`Are you sure you want to refund $${amount.toFixed(2)}?`)) {

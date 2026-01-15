@@ -149,46 +149,46 @@ export default function CheckoutPage() {
 	}, [status, router])
 
 	useEffect(() => {
-		if (bookingId && session) {
-			fetchBookingAndCreatePaymentIntent()
+		if (!bookingId || !session) return
+
+		const fetchBookingAndCreatePaymentIntent = async () => {
+			try {
+				// Fetch booking
+				const bookingResponse = await fetch(`/api/bookings/${bookingId}`)
+				if (!bookingResponse.ok) {
+					throw new Error('Booking not found')
+				}
+				const bookingData = await bookingResponse.json()
+				setBooking(bookingData.booking)
+
+				// Check if already paid
+				if (bookingData.booking.paymentStatus === 'paid') {
+					router.push(`/booking/confirmation?bookingId=${bookingId}`)
+					return
+				}
+
+				// Create payment intent
+				const paymentResponse = await fetch('/api/payments/create-intent', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ bookingId }),
+				})
+
+				if (!paymentResponse.ok) {
+					throw new Error('Failed to create payment')
+				}
+
+				const paymentData = await paymentResponse.json()
+				setClientSecret(paymentData.clientSecret)
+			} catch (err: any) {
+				setError(err.message || 'Error loading checkout')
+			} finally {
+				setLoading(false)
+			}
 		}
-	}, [bookingId, session])
 
-	const fetchBookingAndCreatePaymentIntent = async () => {
-		try {
-			// Fetch booking
-			const bookingResponse = await fetch(`/api/bookings/${bookingId}`)
-			if (!bookingResponse.ok) {
-				throw new Error('Booking not found')
-			}
-			const bookingData = await bookingResponse.json()
-			setBooking(bookingData.booking)
-
-			// Check if already paid
-			if (bookingData.booking.paymentStatus === 'paid') {
-				router.push(`/booking/confirmation?bookingId=${bookingId}`)
-				return
-			}
-
-			// Create payment intent
-			const paymentResponse = await fetch('/api/payments/create-intent', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ bookingId }),
-			})
-
-			if (!paymentResponse.ok) {
-				throw new Error('Failed to create payment')
-			}
-
-			const paymentData = await paymentResponse.json()
-			setClientSecret(paymentData.clientSecret)
-		} catch (err: any) {
-			setError(err.message || 'Error loading checkout')
-		} finally {
-			setLoading(false)
-		}
-	}
+		fetchBookingAndCreatePaymentIntent()
+	}, [bookingId, session, router])
 
 	const handlePaymentSuccess = () => {
 		router.push(`/booking/confirmation?bookingId=${bookingId}`)
