@@ -1,0 +1,211 @@
+/*
+ * Estilos de Branding Dinâmico
+ * Esses estilos usam variáveis CSS que são injetadas pelo BrandingContext
+ */
+
+/* Classes de texto com gradiente usando cor primária */
+.text-linear-3 {
+  background: linear-gradient(90deg, var(--bs-brand-2), var(--bs-brand-1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-primary-brand {
+  color: var(--bs-brand-2) !important;
+}
+
+.text-secondary-brand {
+  color: var(--bs-brand-1) !important;
+}
+
+/* Botões com cor primária */
+.btn-primary-brand {
+  background-color: var(--bs-brand-2) !important;
+  border-color: var(--bs-brand-2) !important;
+  color: #fff !important;
+}
+
+.btn-primary-brand:hover {
+  background-color: var(--bs-brand-2-darken) !important;
+  border-color: var(--bs-brand-2-darken) !important;
+}
+
+/* Background com cor primária */
+.bg-primary-brand {
+  background-color: var(--bs-brand-2) !important;
+}
+
+.bg-secondary-brand {
+  background-color: var(--bs-brand-1) !important;
+}
+
+/* Bordas com cor primária */
+.border-primary-brand {
+  border-color: var(--bs-brand-2) !important;
+}
+
+/* Links com cor primária */
+a.link-primary-brand {
+  color: var(--bs-brand-2) !important;
+}
+
+a.link-primary-brand:hover {
+  color: var(--bs-link-hover-color) !important;
+}
+
+/* Cores de status */
+.text-success-brand {
+  color: var(--bs-success) !important;
+}
+
+.text-warning-brand {
+  color: var(--bs-warning) !important;
+}
+
+.text-danger-brand {
+  color: var(--bs-danger) !important;
+}
+
+.bg-success-brand {
+  background-color: var(--bs-success) !important;
+}
+
+.bg-warning-brand {
+  background-color: var(--bs-warning) !important;
+}
+
+.bg-danger-brand {
+  background-color: var(--bs-danger) !important;
+}
+
+/* Garantir que botões do template usem a cor primária dinâmica */
+.btn.btn-brand-2,
+.btn-brand-2 {
+  background-color: var(--bs-brand-2) !important;
+  border-color: var(--bs-brand-2) !important;
+}
+
+.btn.btn-brand-2:hover,
+.btn-brand-2:hover {
+  background-color: var(--bs-brand-2-darken) !important;
+  border-color: var(--bs-brand-2-darken) !important;
+}
+
+/* Elementos de formulário com foco */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--bs-brand-2) !important;
+  box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25) !important;
+}
+
+/* Links de navegação ativos */
+.nav-link.active,
+.main-menu li a.active {
+  color: var(--bs-brand-2) !important;
+}
+
+/* Checkbox e radio personalizados */
+.form-check-input:checked {
+  background-color: var(--bs-brand-2) !important;
+  border-color: var(--bs-brand-2) !important;
+}
+
+/* Badges e tags */
+.badge-primary-brand {
+  background-color: var(--bs-brand-2) !important;
+  color: #fff !important;
+}
+
+/* Spinner e loading */
+.spinner-border.text-primary-brand {
+  color: var(--bs-brand-2) !important;
+}
+
+/* Ícones SVG com cor primária */
+.icon-primary-brand svg,
+.icon-primary-brand path {
+  fill: var(--bs-brand-2) !important;
+}
+
+.icon-primary-brand-stroke svg,
+.icon-primary-brand-stroke path {
+  stroke: var(--bs-brand-2) !important;
+}
+
+/* Footer títulos */
+.footer h6.text-linear-3 {
+  color: var(--bs-brand-2) !important;
+  background: none !important;
+  -webkit-text-fill-color: var(--bs-brand-2) !important;
+}
+
+/* Header botão signin */
+.btn.btn-signin {
+  background-color: var(--bs-brand-2) !important;
+  border-color: var(--bs-brand-2) !important;
+}
+
+.btn.btn-signin:hover {
+  background-color: var(--bs-brand-2-darken) !important;
+  border-color: var(--bs-brand-2-darken) !important;
+}
+
+/* Cards em destaque */
+.card-highlight {
+  border-color: var(--bs-brand-2) !important;
+}
+
+.card-highlight .card-header {
+  background-color: var(--bs-brand-2) !important;
+}
+
+/* Preços e valores destacados */
+.price-highlight,
+.text-price {
+  color: var(--bs-brand-2) !important;
+}
+
+/* Paginação ativa */
+.pagination .page-item.active .page-link {
+  background-color: var(--bs-brand-2) !important;
+  border-color: var(--bs-brand-2) !important;
+}
+
+/* Tabs ativas */
+.nav-tabs .nav-link.active {
+  color: var(--bs-brand-2) !important;
+  border-bottom-color: var(--bs-brand-2) !important;
+}
+
+/* Progress bar */
+.progress-bar {
+  background-color: var(--bs-brand-2) !important;
+}
+
+/* Alerts com borda de cor primária */
+.alert-primary-brand {
+  border-left: 4px solid var(--bs-brand-2) !important;
+}
+
+/* Tooltip e popover */
+.tooltip-primary .tooltip-inner {
+  background-color: var(--bs-brand-2) !important;
+}
+
+/* Dropdown item ativo */
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: var(--bs-brand-2) !important;
+}
+
+/* Seleção de texto */
+::selection {
+  background-color: var(--bs-brand-2);
+  color: #fff;
+}
+
+::-moz-selection {
+  background-color: var(--bs-brand-2);
+  color: #fff;
+}

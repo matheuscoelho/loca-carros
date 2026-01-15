@@ -1,8 +1,13 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import ColorPicker from '@/components/ui/ColorPicker'
+import ContrastBadge from '@/components/ui/ContrastBadge'
+import HeaderPreview from '@/components/admin/HeaderPreview'
+import FooterPreview from '@/components/admin/FooterPreview'
+import { themePresets, type ThemePreset } from '@/lib/constants/themePresets'
+import { getContrastInfo } from '@/lib/utils/contrast'
 
 interface Settings {
 	branding: {
@@ -20,7 +25,14 @@ interface Settings {
 		dangerColor: string
 		backgroundColor: string
 		textColor: string
+		ogImage: string
 	}
+	lastModifiedBy?: {
+		id: string
+		name: string
+		email: string
+	}
+	updatedAt?: string
 	socialMedia: {
 		instagram: string
 		facebook: string
@@ -80,6 +92,7 @@ const defaultSettings: Settings = {
 		dangerColor: '#ff2e00',
 		backgroundColor: '#ffffff',
 		textColor: '#101010',
+		ogImage: '',
 	},
 	socialMedia: {
 		instagram: '',
@@ -127,16 +140,20 @@ const defaultSettings: Settings = {
 export default function AdminSettingsPage() {
 	const t = useTranslations('admin')
 	const tCommon = useTranslations('common')
+	const locale = useLocale()
 	const [settings, setSettings] = useState<Settings>(defaultSettings)
 	const [loading, setLoading] = useState(true)
 	const [saving, setSaving] = useState(false)
 	const [saved, setSaved] = useState(false)
 	const [activeTab, setActiveTab] = useState('branding')
-	const [uploadingLogo, setUploadingLogo] = useState<'light' | 'dark' | 'favicon' | null>(null)
+	const [uploadingLogo, setUploadingLogo] = useState<'light' | 'dark' | 'favicon' | 'ogImage' | null>(null)
+	const [selectedPreset, setSelectedPreset] = useState<string>('custom')
+	const [previewDarkMode, setPreviewDarkMode] = useState(false)
 
 	const logoLightRef = useRef<HTMLInputElement>(null)
 	const logoDarkRef = useRef<HTMLInputElement>(null)
 	const faviconRef = useRef<HTMLInputElement>(null)
+	const ogImageRef = useRef<HTMLInputElement>(null)
 
 	useEffect(() => {
 		fetchSettings()
@@ -156,6 +173,8 @@ export default function AdminSettingsPage() {
 						pricing: { ...defaultSettings.pricing, ...data.settings.pricing },
 						notifications: { ...defaultSettings.notifications, ...data.settings.notifications },
 						business: { ...defaultSettings.business, ...data.settings.business },
+						lastModifiedBy: data.settings.lastModifiedBy,
+						updatedAt: data.settings.updatedAt,
 					})
 				}
 			}
@@ -164,6 +183,41 @@ export default function AdminSettingsPage() {
 		} finally {
 			setLoading(false)
 		}
+	}
+
+	// Aplicar preset de tema
+	const applyThemePreset = (preset: ThemePreset) => {
+		setSettings(prev => ({
+			...prev,
+			branding: {
+				...prev.branding,
+				primaryColor: preset.primaryColor,
+				secondaryColor: preset.secondaryColor,
+				accentColor: preset.accentColor,
+				successColor: preset.successColor,
+				warningColor: preset.warningColor,
+				dangerColor: preset.dangerColor,
+				backgroundColor: preset.backgroundColor,
+				textColor: preset.textColor,
+			}
+		}))
+		setSelectedPreset(preset.id)
+	}
+
+	// Upload de OG Image
+	const handleOgImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0]
+		if (!file) return
+
+		setUploadingLogo('ogImage')
+		const url = await handleFileUpload(file, 'logo')
+		if (url) {
+			setSettings(prev => ({
+				...prev,
+				branding: { ...prev.branding, ogImage: url }
+			}))
+		}
+		setUploadingLogo(null)
 	}
 
 	const handleSave = async () => {
@@ -418,6 +472,61 @@ export default function AdminSettingsPage() {
 					{/* Branding Settings */}
 					{activeTab === 'branding' && (
 						<div className="row g-4">
+							{/* Theme Presets */}
+							<div className="col-12">
+								<div className="card bg-light border-0">
+									<div className="card-body">
+										<h6 className="mb-3">
+											<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="me-2" viewBox="0 0 16 16">
+												<path d="M8 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm4 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM5.5 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm.5 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+												<path d="M16 8c0 3.15-1.866 2.585-3.567 2.07C11.42 9.763 10.465 9.473 10 10c-.603.683-.475 1.819-.351 2.92C9.826 14.495 9.996 16 8 16a8 8 0 1 1 8-8zm-8 7c.611 0 .654-.171.655-.176.078-.146.124-.464.07-1.119-.014-.168-.037-.37-.061-.591-.052-.464-.112-1.005-.118-1.462-.01-.707.083-1.61.704-2.314.369-.417.845-.578 1.272-.618.404-.038.812.026 1.16.104.343.077.702.186 1.025.284l.028.008c.346.105.658.199.953.266.653.148.904.083.991.024C14.717 9.38 15 9.161 15 8a7 7 0 1 0-7 7z"/>
+											</svg>
+											{t('settings.brandingFields.themePresets')}
+										</h6>
+										<p className="text-muted small mb-3">{t('settings.brandingFields.selectPreset')}</p>
+										<div className="row g-2">
+											{/* Custom option */}
+											<div className="col-6 col-md-4 col-lg-3">
+												<div
+													className={`card h-100 cursor-pointer ${selectedPreset === 'custom' ? 'border-primary border-2' : 'border'}`}
+													style={{ cursor: 'pointer' }}
+													onClick={() => setSelectedPreset('custom')}
+												>
+													<div className="card-body p-2 text-center">
+														<div className="d-flex gap-1 justify-content-center mb-2">
+															<div style={{ width: 20, height: 20, borderRadius: 4, backgroundColor: settings.branding.primaryColor, border: '1px solid rgba(0,0,0,0.1)' }} />
+															<div style={{ width: 20, height: 20, borderRadius: 4, backgroundColor: settings.branding.secondaryColor, border: '1px solid rgba(0,0,0,0.1)' }} />
+															<div style={{ width: 20, height: 20, borderRadius: 4, backgroundColor: settings.branding.accentColor, border: '1px solid rgba(0,0,0,0.1)' }} />
+														</div>
+														<small className="fw-medium">{t('settings.brandingFields.customTheme')}</small>
+													</div>
+												</div>
+											</div>
+											{/* Preset options */}
+											{themePresets.map((preset) => (
+												<div key={preset.id} className="col-6 col-md-4 col-lg-3">
+													<div
+														className={`card h-100 ${selectedPreset === preset.id ? 'border-primary border-2' : 'border'}`}
+														style={{ cursor: 'pointer' }}
+														onClick={() => applyThemePreset(preset)}
+													>
+														<div className="card-body p-2 text-center">
+															<div className="d-flex gap-1 justify-content-center mb-2">
+																<div style={{ width: 20, height: 20, borderRadius: 4, backgroundColor: preset.primaryColor, border: '1px solid rgba(0,0,0,0.1)' }} />
+																<div style={{ width: 20, height: 20, borderRadius: 4, backgroundColor: preset.secondaryColor, border: '1px solid rgba(0,0,0,0.1)' }} />
+																<div style={{ width: 20, height: 20, borderRadius: 4, backgroundColor: preset.accentColor, border: '1px solid rgba(0,0,0,0.1)' }} />
+															</div>
+															<small className="fw-medium">{locale === 'pt' ? preset.name : preset.nameEn}</small>
+															<div className="text-muted" style={{ fontSize: '10px' }}>{locale === 'pt' ? preset.description : preset.descriptionEn}</div>
+														</div>
+													</div>
+												</div>
+											))}
+										</div>
+									</div>
+								</div>
+							</div>
+
 							{/* Logo Light Mode */}
 							<div className="col-md-6">
 								<label className="form-label">{t('settings.brandingFields.logoLight')}</label>
@@ -599,6 +708,7 @@ export default function AdminSettingsPage() {
 									value={settings.branding.primaryColor}
 									onChange={(value) => updateBranding('primaryColor', value)}
 									helpText={t('settings.brandingFields.primaryColorHelp')}
+									colorType="primary"
 								/>
 							</div>
 
@@ -609,6 +719,7 @@ export default function AdminSettingsPage() {
 									value={settings.branding.secondaryColor}
 									onChange={(value) => updateBranding('secondaryColor', value)}
 									helpText={t('settings.brandingFields.secondaryColorHelp')}
+									colorType="secondary"
 								/>
 							</div>
 
@@ -619,6 +730,7 @@ export default function AdminSettingsPage() {
 									value={settings.branding.accentColor}
 									onChange={(value) => updateBranding('accentColor', value)}
 									helpText={t('settings.brandingFields.accentColorHelp')}
+									colorType="accent"
 								/>
 							</div>
 
@@ -634,6 +746,7 @@ export default function AdminSettingsPage() {
 									label={t('settings.brandingFields.successColor')}
 									value={settings.branding.successColor}
 									onChange={(value) => updateBranding('successColor', value)}
+									colorType="success"
 								/>
 							</div>
 
@@ -643,6 +756,7 @@ export default function AdminSettingsPage() {
 									label={t('settings.brandingFields.warningColor')}
 									value={settings.branding.warningColor}
 									onChange={(value) => updateBranding('warningColor', value)}
+									colorType="warning"
 								/>
 							</div>
 
@@ -652,6 +766,7 @@ export default function AdminSettingsPage() {
 									label={t('settings.brandingFields.dangerColor')}
 									value={settings.branding.dangerColor}
 									onChange={(value) => updateBranding('dangerColor', value)}
+									colorType="danger"
 								/>
 							</div>
 
@@ -667,6 +782,7 @@ export default function AdminSettingsPage() {
 									label={t('settings.brandingFields.backgroundColor')}
 									value={settings.branding.backgroundColor}
 									onChange={(value) => updateBranding('backgroundColor', value)}
+									colorType="backgrounds"
 								/>
 							</div>
 
@@ -676,7 +792,170 @@ export default function AdminSettingsPage() {
 									label={t('settings.brandingFields.textColor')}
 									value={settings.branding.textColor}
 									onChange={(value) => updateBranding('textColor', value)}
+									colorType="texts"
 								/>
+							</div>
+
+							{/* Contrast Check */}
+							<div className="col-12">
+								<hr className="my-2" />
+								<h6 className="text-muted mb-3">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="me-2" viewBox="0 0 16 16">
+										<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM1 8a7 7 0 0 0 7 7V1a7 7 0 0 0-7 7z"/>
+									</svg>
+									{t('settings.brandingFields.contrastCheck')}
+								</h6>
+								<div className="row g-3">
+									<div className="col-md-6">
+										<div className="card">
+											<div className="card-body p-3">
+												<div className="d-flex justify-content-between align-items-center mb-2">
+													<small className="text-muted">{t('settings.brandingFields.textBackgroundContrast')}</small>
+													<ContrastBadge
+														foreground={settings.branding.textColor}
+														background={settings.branding.backgroundColor}
+													/>
+												</div>
+												<div
+													className="rounded p-2"
+													style={{
+														backgroundColor: settings.branding.backgroundColor,
+														color: settings.branding.textColor,
+														border: '1px solid #dee2e6'
+													}}
+												>
+													<span style={{ fontWeight: 500 }}>Texto de exemplo</span>
+												</div>
+												{!getContrastInfo(settings.branding.textColor, settings.branding.backgroundColor).passes && (
+													<small className="text-danger d-block mt-2">
+														{t('settings.brandingFields.contrastWarning')}
+													</small>
+												)}
+											</div>
+										</div>
+									</div>
+									<div className="col-md-6">
+										<div className="card">
+											<div className="card-body p-3">
+												<div className="d-flex justify-content-between align-items-center mb-2">
+													<small className="text-muted">{t('settings.brandingFields.primaryButtonContrast')}</small>
+													<ContrastBadge
+														foreground="#ffffff"
+														background={settings.branding.primaryColor}
+													/>
+												</div>
+												<button
+													className="btn w-100"
+													style={{
+														backgroundColor: settings.branding.primaryColor,
+														color: '#ffffff'
+													}}
+												>
+													{t('settings.brandingFields.sampleButton')}
+												</button>
+												{!getContrastInfo('#ffffff', settings.branding.primaryColor).passes && (
+													<small className="text-danger d-block mt-2">
+														{t('settings.brandingFields.contrastWarning')}
+													</small>
+												)}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							{/* OG Image */}
+							<div className="col-12">
+								<hr className="my-2" />
+								<h6 className="text-muted mb-3">{t('settings.brandingFields.ogImage')}</h6>
+								<div className="row">
+									<div className="col-md-6">
+										<div className="border rounded p-3 text-center bg-light">
+											{settings.branding.ogImage ? (
+												<img
+													src={settings.branding.ogImage}
+													alt="OG Image"
+													style={{ maxHeight: '120px', maxWidth: '100%', objectFit: 'contain' }}
+													className="mb-3"
+												/>
+											) : (
+												<div
+													className="d-flex align-items-center justify-content-center mb-3"
+													style={{ height: '120px', backgroundColor: '#e9ecef', borderRadius: '8px' }}
+												>
+													<span className="text-muted">1200 x 630</span>
+												</div>
+											)}
+											<div>
+												<input
+													type="file"
+													ref={ogImageRef}
+													onChange={handleOgImageChange}
+													accept="image/png,image/jpeg,image/webp"
+													className="d-none"
+												/>
+												<button
+													className="btn btn-sm btn-outline-primary"
+													onClick={() => ogImageRef.current?.click()}
+													disabled={uploadingLogo === 'ogImage'}
+												>
+													{uploadingLogo === 'ogImage' ? (
+														<>
+															<span className="spinner-border spinner-border-sm me-2" />
+															{t('settings.uploading')}
+														</>
+													) : (
+														t('settings.brandingFields.changeOgImage')
+													)}
+												</button>
+												{settings.branding.ogImage && (
+													<button
+														className="btn btn-sm btn-outline-danger ms-2"
+														onClick={() => updateBranding('ogImage', '')}
+													>
+														<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+															<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+															<path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+														</svg>
+													</button>
+												)}
+											</div>
+										</div>
+										<small className="text-muted">{t('settings.brandingFields.ogImageHelp')}</small>
+									</div>
+									<div className="col-md-6">
+										<label className="form-label">{t('settings.brandingFields.ogImagePreview')}</label>
+										<div className="border rounded p-3" style={{ backgroundColor: '#f0f2f5' }}>
+											<div className="card" style={{ maxWidth: '400px', margin: '0 auto' }}>
+												{settings.branding.ogImage ? (
+													<img
+														src={settings.branding.ogImage}
+														alt="Preview"
+														className="card-img-top"
+														style={{ height: '150px', objectFit: 'cover' }}
+													/>
+												) : (
+													<div
+														className="card-img-top d-flex align-items-center justify-content-center"
+														style={{ height: '150px', backgroundColor: '#e9ecef' }}
+													>
+														<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#adb5bd" viewBox="0 0 16 16">
+															<path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+															<path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
+														</svg>
+													</div>
+												)}
+												<div className="card-body p-2">
+													<small className="text-muted d-block" style={{ fontSize: '10px' }}>navegarsistemas.com.br</small>
+													<strong style={{ fontSize: '13px' }}>{settings.general.siteTitle || settings.branding.siteName}</strong>
+													<p className="text-muted mb-0" style={{ fontSize: '11px' }}>
+														{settings.general.siteDescription?.substring(0, 80)}...
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 
 							{/* Divider - Social Media */}
@@ -801,11 +1080,67 @@ export default function AdminSettingsPage() {
 								<small className="text-muted">{t('settings.brandingFields.whatsappHelp')}</small>
 							</div>
 
-							{/* Preview */}
+							{/* Preview Realista */}
 							<div className="col-12">
 								<hr className="my-2" />
-								<h6 className="text-muted mb-3">{t('settings.brandingFields.preview')}</h6>
+								<div className="d-flex justify-content-between align-items-center mb-3">
+									<h6 className="text-muted mb-0">{t('settings.brandingFields.preview')}</h6>
+									<div className="btn-group btn-group-sm">
+										<button
+											type="button"
+											className={`btn ${!previewDarkMode ? 'btn-primary' : 'btn-outline-secondary'}`}
+											onClick={() => setPreviewDarkMode(false)}
+										>
+											<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" className="me-1" viewBox="0 0 16 16">
+												<path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+											</svg>
+											{t('settings.brandingFields.lightMode')}
+										</button>
+										<button
+											type="button"
+											className={`btn ${previewDarkMode ? 'btn-primary' : 'btn-outline-secondary'}`}
+											onClick={() => setPreviewDarkMode(true)}
+										>
+											<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" className="me-1" viewBox="0 0 16 16">
+												<path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+											</svg>
+											{t('settings.brandingFields.darkMode')}
+										</button>
+									</div>
+								</div>
+
 								<div className="border rounded p-4">
+									{/* Header Preview */}
+									<div className="mb-4">
+										<small className="text-muted d-block mb-2">{t('settings.brandingFields.headerPreview')}</small>
+										<HeaderPreview
+											logo={previewDarkMode ? settings.branding.logoDark : settings.branding.logoLight}
+											siteName={settings.branding.siteName}
+											logoWidth={settings.branding.logoWidth}
+											logoHeight={settings.branding.logoHeight}
+											primaryColor={settings.branding.primaryColor}
+											secondaryColor={settings.branding.secondaryColor}
+											contactPhone={settings.general.contactPhone}
+											contactEmail={settings.general.contactEmail}
+											darkMode={previewDarkMode}
+										/>
+									</div>
+
+									{/* Footer Preview */}
+									<div className="mb-4">
+										<small className="text-muted d-block mb-2">{t('settings.brandingFields.footerPreview')}</small>
+										<FooterPreview
+											logo={settings.branding.logoDark}
+											siteName={settings.branding.siteName}
+											logoWidth={settings.branding.logoWidth}
+											logoHeight={settings.branding.logoHeight}
+											primaryColor={settings.branding.primaryColor}
+											contactEmail={settings.general.contactEmail}
+											contactPhone={settings.general.contactPhone}
+											socialMedia={settings.socialMedia}
+										/>
+									</div>
+
 									{/* Logo Preview */}
 									<div className="row mb-4">
 										<div className="col-md-6">
@@ -1305,6 +1640,18 @@ export default function AdminSettingsPage() {
 					<p className="mb-0 small text-muted">
 						{t('settings.aboutSettingsDescription')}
 					</p>
+					{settings.updatedAt && (
+						<p className="mb-0 small text-muted mt-2">
+							<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" className="me-1" viewBox="0 0 16 16">
+								<path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+								<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+							</svg>
+							{t('settings.brandingFields.lastModified')}: {new Date(settings.updatedAt).toLocaleString(locale)}
+							{settings.lastModifiedBy && (
+								<> {t('settings.brandingFields.modifiedBy')} <strong>{settings.lastModifiedBy.name}</strong></>
+							)}
+						</p>
+					)}
 				</div>
 			</div>
 		</div>

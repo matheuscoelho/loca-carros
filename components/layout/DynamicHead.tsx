@@ -48,6 +48,14 @@ export default function DynamicHead() {
 		updateOgMeta('og:title', general.siteTitle || branding.siteName)
 		updateOgMeta('og:description', general.siteDescription || '')
 		updateOgMeta('og:site_name', branding.siteName)
+		updateOgMeta('og:type', 'website')
+
+		// Update OG Image if available
+		if (branding.ogImage) {
+			updateOgMeta('og:image', branding.ogImage)
+			updateOgMeta('og:image:width', '1200')
+			updateOgMeta('og:image:height', '630')
+		}
 
 		// Update Twitter meta tags
 		const updateTwitterMeta = (name: string, content: string) => {
@@ -62,6 +70,12 @@ export default function DynamicHead() {
 
 		updateTwitterMeta('twitter:title', general.siteTitle || branding.siteName)
 		updateTwitterMeta('twitter:description', general.siteDescription || '')
+		updateTwitterMeta('twitter:card', branding.ogImage ? 'summary_large_image' : 'summary')
+
+		// Update Twitter Image if available
+		if (branding.ogImage) {
+			updateTwitterMeta('twitter:image', branding.ogImage)
+		}
 
 	}, [branding, general, isLoading])
 

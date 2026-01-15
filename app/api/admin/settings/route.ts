@@ -76,6 +76,11 @@ export async function PUT(request: NextRequest) {
     // Construir objeto de atualização
     const updateData: Record<string, unknown> = {
       updatedAt: new Date(),
+      lastModifiedBy: {
+        id: session.user.id || '',
+        name: session.user.name || '',
+        email: session.user.email || '',
+      },
     }
 
     // Atualizar campos de branding
@@ -83,6 +88,14 @@ export async function PUT(request: NextRequest) {
       updateData.branding = {
         ...currentSettings.branding,
         ...body.branding,
+      }
+    }
+
+    // Atualizar campos de redes sociais
+    if (body.socialMedia) {
+      updateData.socialMedia = {
+        ...currentSettings.socialMedia,
+        ...body.socialMedia,
       }
     }
 

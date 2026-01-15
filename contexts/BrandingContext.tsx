@@ -17,6 +17,7 @@ export interface Branding {
   dangerColor: string
   backgroundColor: string
   textColor: string
+  ogImage: string
 }
 
 export interface SocialMedia {
@@ -62,6 +63,7 @@ const defaultBranding: Branding = {
   dangerColor: '#ff2e00',
   backgroundColor: '#ffffff',
   textColor: '#101010',
+  ogImage: '',
 }
 
 const defaultSocialMedia: SocialMedia = {
@@ -132,18 +134,48 @@ export function BrandingProvider({ children }: { children: ReactNode }) {
     fetchBranding()
   }, [])
 
+  // Converter HEX para RGB
+  const hexToRgb = (hex: string): string => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+    if (!result) return '112, 244, 109'
+    return `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
+  }
+
+  // Escurecer cor HEX
+  const darkenColor = (hex: string, percent: number): string => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+    if (!result) return hex
+    const r = Math.max(0, parseInt(result[1], 16) - Math.round(255 * percent / 100))
+    const g = Math.max(0, parseInt(result[2], 16) - Math.round(255 * percent / 100))
+    const b = Math.max(0, parseInt(result[3], 16) - Math.round(255 * percent / 100))
+    return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`
+  }
+
   // Injetar CSS dinâmico para cores
   useEffect(() => {
     if (!isLoading) {
       const root = document.documentElement
       const { branding } = settings
 
-      // Cores principais
+      // Cor primária e variações
+      const primaryDarken = darkenColor(branding.primaryColor, 10)
+      const primaryLight = darkenColor(branding.primaryColor, 30)
+      const primaryHover = darkenColor(branding.primaryColor, 20)
+      const primaryRgb = hexToRgb(branding.primaryColor)
+
       root.style.setProperty('--bs-brand-2', branding.primaryColor)
       root.style.setProperty('--bs-brand-2-dark', branding.primaryColor)
+      root.style.setProperty('--bs-brand-2-darken', primaryDarken)
+      root.style.setProperty('--bs-brand-2-light', primaryLight)
       root.style.setProperty('--bs-button-bg', branding.primaryColor)
+      root.style.setProperty('--bs-link-hover-color', primaryHover)
+      root.style.setProperty('--bs-primary-rgb', primaryRgb)
+
+      // Cor secundária
       root.style.setProperty('--bs-brand-1', branding.secondaryColor)
-      root.style.setProperty('--bs-accent', branding.accentColor)
+
+      // Accent - usar como cor de destaque
+      root.style.setProperty('--bs-color-2', branding.accentColor)
 
       // Cores de feedback
       root.style.setProperty('--bs-success', branding.successColor)
@@ -153,6 +185,8 @@ export function BrandingProvider({ children }: { children: ReactNode }) {
       // Cores de fundo e texto
       root.style.setProperty('--bs-background', branding.backgroundColor)
       root.style.setProperty('--bs-text', branding.textColor)
+      root.style.setProperty('--bs-neutral-0', branding.backgroundColor)
+      root.style.setProperty('--bs-neutral-1000', branding.textColor)
     }
   }, [settings.branding, isLoading])
 

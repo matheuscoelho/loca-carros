@@ -17,6 +17,7 @@ export interface ISettings {
     dangerColor: string
     backgroundColor: string
     textColor: string
+    ogImage: string
   }
   socialMedia: {
     instagram: string
@@ -61,6 +62,11 @@ export interface ISettings {
   }
   createdAt: Date
   updatedAt: Date
+  lastModifiedBy?: {
+    id: string
+    name: string
+    email: string
+  }
 }
 
 export const defaultSettings: Omit<ISettings, '_id'> = {
@@ -79,6 +85,7 @@ export const defaultSettings: Omit<ISettings, '_id'> = {
     dangerColor: '#ff2e00',
     backgroundColor: '#ffffff',
     textColor: '#101010',
+    ogImage: '',
   },
   socialMedia: {
     instagram: '',

@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
 import "@/node_modules/react-modal-video/css/modal-video.css"
 import "/public/assets/css/main.css"
+import "@/app/globals.css"
 import AuthProvider from "@/context/AuthProvider"
 import { FavoritesProvider } from "@/context/FavoritesContext"
 import { CompareProvider } from "@/context/CompareContext"
