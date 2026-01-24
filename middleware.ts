@@ -30,7 +30,9 @@ async function validateTenant(hostname: string, origin: string): Promise<{ valid
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 5000)
 
-    const response = await fetch(`${origin}/api/tenant/validate?hostname=${encodeURIComponent(hostname)}`, {
+    // Usar NEXTAUTH_URL como base para evitar self-fetch loop
+    const baseUrl = process.env.NEXTAUTH_URL || origin
+    const response = await fetch(`${baseUrl}/api/tenant/validate?hostname=${encodeURIComponent(hostname)}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
       signal: controller.signal,
