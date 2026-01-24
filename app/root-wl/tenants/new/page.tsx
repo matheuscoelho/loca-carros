@@ -43,7 +43,7 @@ export default function NewTenantPage() {
     setError(null)
 
     try {
-      const response = await fetch('/api/super-admin/tenants', {
+      const response = await fetch('/api/root-wl/tenants', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -55,7 +55,7 @@ export default function NewTenantPage() {
         throw new Error(data.error || 'Erro ao criar tenant')
       }
 
-      router.push('/super-admin/tenants')
+      router.push('/root-wl/tenants')
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Erro ao criar tenant')
     } finally {
@@ -66,7 +66,7 @@ export default function NewTenantPage() {
   return (
     <div>
       <div className="d-flex align-items-center gap-3 mb-4">
-        <Link href="/super-admin/tenants" className="btn btn-outline-light btn-sm">
+        <Link href="/root-wl/tenants" className="btn btn-outline-light btn-sm">
           <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
@@ -201,7 +201,7 @@ export default function NewTenantPage() {
                       'Criar Tenant'
                     )}
                   </button>
-                  <Link href="/super-admin/tenants" className="btn btn-outline-secondary">
+                  <Link href="/root-wl/tenants" className="btn btn-outline-secondary">
                     Cancelar
                   </Link>
                 </div>

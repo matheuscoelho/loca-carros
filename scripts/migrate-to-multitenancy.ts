@@ -183,7 +183,7 @@ async function migrateToMultitenancy() {
     console.log('Próximos passos:')
     console.log('1. Adicione BASE_DOMAIN ao seu .env (ex: BASE_DOMAIN=seusite.com)')
     console.log('2. Reinicie a aplicação')
-    console.log('3. Acesse /super-admin para gerenciar tenants')
+    console.log('3. Acesse /root-wl para gerenciar tenants')
     console.log('')
   } catch (error) {
     console.error('❌ Erro na migração:', error)

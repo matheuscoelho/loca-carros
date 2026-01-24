@@ -31,7 +31,7 @@ export default function SuperAdminDashboard() {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('/api/super-admin/stats')
+      const response = await fetch('/api/root-wl/stats')
       if (!response.ok) throw new Error('Erro ao carregar estatísticas')
       const data = await response.json()
       setStats(data)
@@ -60,7 +60,7 @@ export default function SuperAdminDashboard() {
           <h2 className="mb-1">Dashboard</h2>
           <p className="text-white-50 mb-0">Visão geral do sistema multi-tenant</p>
         </div>
-        <Link href="/super-admin/tenants/new" className="btn btn-primary">
+        <Link href="/root-wl/tenants/new" className="btn btn-primary">
           + Novo Tenant
         </Link>
       </div>
@@ -160,7 +160,7 @@ export default function SuperAdminDashboard() {
       <div className="card bg-dark border-secondary">
         <div className="card-header bg-transparent border-secondary d-flex justify-content-between align-items-center">
           <h5 className="mb-0 text-white">Tenants Recentes</h5>
-          <Link href="/super-admin/tenants" className="btn btn-sm btn-outline-light">
+          <Link href="/root-wl/tenants" className="btn btn-sm btn-outline-light">
             Ver Todos
           </Link>
         </div>
@@ -182,7 +182,7 @@ export default function SuperAdminDashboard() {
                   <tr>
                     <td colSpan={6} className="text-center text-white-50 py-4">
                       Nenhum tenant cadastrado.{' '}
-                      <Link href="/super-admin/tenants/new" className="text-primary">
+                      <Link href="/root-wl/tenants/new" className="text-primary">
                         Criar primeiro tenant
                       </Link>
                     </td>
@@ -191,7 +191,7 @@ export default function SuperAdminDashboard() {
                   stats?.recentTenants?.map((tenant) => (
                     <tr key={tenant._id}>
                       <td>
-                        <Link href={`/super-admin/tenants/${tenant._id}`} className="text-white text-decoration-none">
+                        <Link href={`/root-wl/tenants/${tenant._id}`} className="text-white text-decoration-none">
                           {tenant.name}
                         </Link>
                       </td>

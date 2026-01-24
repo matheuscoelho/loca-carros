@@ -28,14 +28,14 @@ export default function SuperAdminLogin() {
 			const result = await signIn('credentials', {
 				email: data.email,
 				password: data.password,
-				hostname: 'super-admin-login',
+				hostname: 'root-wl-login',
 				redirect: false,
 			})
 
 			if (result?.error) {
 				setError('Credenciais inválidas ou acesso não autorizado')
 			} else {
-				router.push('/super-admin')
+				router.push('/root-wl')
 				router.refresh()
 			}
 		} catch (err) {

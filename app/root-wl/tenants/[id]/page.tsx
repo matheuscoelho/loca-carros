@@ -58,7 +58,7 @@ export default function TenantDetailPage() {
   const fetchTenant = useCallback(async () => {
     try {
       setLoading(true)
-      const response = await fetch(`/api/super-admin/tenants/${tenantId}`)
+      const response = await fetch(`/api/root-wl/tenants/${tenantId}`)
       if (!response.ok) throw new Error('Erro ao carregar tenant')
       const data = await response.json()
       setTenant(data.tenant)
@@ -94,7 +94,7 @@ export default function TenantDetailPage() {
         .map(d => d.trim())
         .filter(d => d.length > 0)
 
-      const response = await fetch(`/api/super-admin/tenants/${tenantId}`, {
+      const response = await fetch(`/api/root-wl/tenants/${tenantId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -129,13 +129,13 @@ export default function TenantDetailPage() {
     }
 
     try {
-      const response = await fetch(`/api/super-admin/tenants/${tenantId}`, {
+      const response = await fetch(`/api/root-wl/tenants/${tenantId}`, {
         method: 'DELETE',
       })
 
       if (!response.ok) throw new Error('Erro ao deletar')
 
-      router.push('/super-admin/tenants')
+      router.push('/root-wl/tenants')
     } catch (err) {
       setError('Erro ao desativar tenant')
       console.error(err)
@@ -181,7 +181,7 @@ export default function TenantDetailPage() {
     return (
       <div className="text-center py-5">
         <p className="text-white-50">Tenant não encontrado</p>
-        <Link href="/super-admin/tenants" className="btn btn-primary">
+        <Link href="/root-wl/tenants" className="btn btn-primary">
           Voltar para lista
         </Link>
       </div>
@@ -191,7 +191,7 @@ export default function TenantDetailPage() {
   return (
     <div>
       <div className="d-flex align-items-center gap-3 mb-4">
-        <Link href="/super-admin/tenants" className="btn btn-outline-light btn-sm">
+        <Link href="/root-wl/tenants" className="btn btn-outline-light btn-sm">
           <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>

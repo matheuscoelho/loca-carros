@@ -436,7 +436,7 @@ export async function POST(request: NextRequest) {
 					superAdmin: {
 						email: 'super@admin.com',
 						password: 'super123',
-						description: 'Super Admin - acessa /super-admin para gerenciar tenants/DNS',
+						description: 'Super Admin - acessa /root-wl para gerenciar tenants/DNS',
 					}
 				}
 			})
@@ -465,7 +465,7 @@ export async function POST(request: NextRequest) {
 				superAdmin: {
 					email: 'super@admin.com',
 					password: 'super123',
-					description: 'Super Admin - acessa /super-admin para gerenciar tenants/DNS',
+					description: 'Super Admin - acessa /root-wl para gerenciar tenants/DNS',
 				}
 			}
 		})

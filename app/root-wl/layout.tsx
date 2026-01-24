@@ -8,7 +8,7 @@ import Link from 'next/link'
 const menuItems = [
   {
     name: 'Dashboard',
-    href: '/super-admin',
+    href: '/root-wl',
     icon: (
       <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <rect x="3" y="3" width="7" height="9" rx="1" />
@@ -20,7 +20,7 @@ const menuItems = [
   },
   {
     name: 'Tenants',
-    href: '/super-admin/tenants',
+    href: '/root-wl/tenants',
     icon: (
       <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M3 21h18" />
@@ -46,15 +46,15 @@ export default function SuperAdminLayout({
   const pathname = usePathname()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  // Verificar se está na página de login do super-admin
-  const isLoginPage = pathname === '/super-admin/login'
+  // Verificar se está na página de login do root-wl
+  const isLoginPage = pathname === '/root-wl/login'
 
   useEffect(() => {
     // Não redirecionar se estiver na página de login
     if (isLoginPage) return
 
     if (status === 'unauthenticated') {
-      router.push('/super-admin/login')
+      router.push('/root-wl/login')
     } else if (status === 'authenticated' && session?.user?.role !== 'super_admin') {
       router.push('/dashboard')
     }
@@ -187,7 +187,7 @@ export default function SuperAdminLayout({
       </main>
 
       <style jsx global>{`
-        .super-admin-layout .nav-link:hover {
+        .root-wl-layout .nav-link:hover {
           background-color: rgba(255, 255, 255, 0.1);
         }
       `}</style>

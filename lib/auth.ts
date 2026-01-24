@@ -70,7 +70,7 @@ export const authOptions: NextAuthOptions = {
         const hostname = credentials.hostname || 'localhost'
 
         // SEGURANÇA: Login separado para super_admin
-        const isSuperAdminLogin = hostname === 'super-admin-login'
+        const isSuperAdminLogin = hostname === 'root-wl-login'
 
         if (isSuperAdminLogin) {
           // Login exclusivo para super_admin - não aceita outros roles

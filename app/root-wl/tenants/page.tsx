@@ -37,7 +37,7 @@ export default function TenantsListPage() {
       const params = new URLSearchParams()
       if (statusFilter !== 'all') params.set('status', statusFilter)
 
-      const response = await fetch(`/api/super-admin/tenants?${params}`)
+      const response = await fetch(`/api/root-wl/tenants?${params}`)
       if (!response.ok) throw new Error('Erro ao carregar tenants')
       const data = await response.json()
       setTenants(data.tenants)
@@ -59,7 +59,7 @@ export default function TenantsListPage() {
     }
 
     try {
-      const response = await fetch(`/api/super-admin/tenants/${tenantId}`, {
+      const response = await fetch(`/api/root-wl/tenants/${tenantId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
@@ -87,7 +87,7 @@ export default function TenantsListPage() {
           <h2 className="mb-1">Tenants</h2>
           <p className="text-white-50 mb-0">Gerencie todos os tenants do sistema</p>
         </div>
-        <Link href="/super-admin/tenants/new" className="btn btn-primary">
+        <Link href="/root-wl/tenants/new" className="btn btn-primary">
           + Novo Tenant
         </Link>
       </div>
@@ -127,7 +127,7 @@ export default function TenantsListPage() {
           ) : tenants.length === 0 ? (
             <div className="text-center py-5 text-white-50">
               <p className="mb-3">Nenhum tenant encontrado</p>
-              <Link href="/super-admin/tenants/new" className="btn btn-primary">
+              <Link href="/root-wl/tenants/new" className="btn btn-primary">
                 Criar Primeiro Tenant
               </Link>
             </div>
@@ -151,7 +151,7 @@ export default function TenantsListPage() {
                       <td>
                         <div>
                           <Link
-                            href={`/super-admin/tenants/${tenant._id}`}
+                            href={`/root-wl/tenants/${tenant._id}`}
                             className="text-white text-decoration-none fw-bold"
                           >
                             {tenant.name}
@@ -209,7 +209,7 @@ export default function TenantsListPage() {
                       <td>
                         <div className="btn-group btn-group-sm">
                           <Link
-                            href={`/super-admin/tenants/${tenant._id}`}
+                            href={`/root-wl/tenants/${tenant._id}`}
                             className="btn btn-outline-light"
                           >
                             Editar

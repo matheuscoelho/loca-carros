@@ -125,25 +125,25 @@ export default withAuth(
       }
     }
 
-    // Rotas de super-admin - só acessível do domínio principal
-    if (pathname.startsWith('/super-admin')) {
+    // Rotas de root-wl - só acessível do domínio principal
+    if (pathname.startsWith('/root-wl')) {
       // Só permitir acesso do domínio principal
       if (!isMain) {
         return NextResponse.redirect(new URL('/', req.url))
       }
 
-      // Página de login do super-admin é pública
-      if (pathname === '/super-admin/login') {
+      // Página de login do root-wl é pública
+      if (pathname === '/root-wl/login') {
         // Se já está logado como super_admin, redirecionar para o painel
         if (token?.role === 'super_admin') {
-          return NextResponse.redirect(new URL('/super-admin', req.url))
+          return NextResponse.redirect(new URL('/root-wl', req.url))
         }
         return response
       }
 
-      // Demais páginas do super-admin requerem role super_admin
+      // Demais páginas do root-wl requerem role super_admin
       if (token?.role !== 'super_admin') {
-        return NextResponse.redirect(new URL('/super-admin/login', req.url))
+        return NextResponse.redirect(new URL('/root-wl/login', req.url))
       }
 
       return response
@@ -210,8 +210,8 @@ export default withAuth(
           return true
         }
 
-        // SEGURANÇA: Login do super-admin é uma rota separada (mas protegida pelo middleware)
-        if (pathname === '/super-admin/login') {
+        // SEGURANÇA: Login do root-wl é uma rota separada (mas protegida pelo middleware)
+        if (pathname === '/root-wl/login') {
           return true
         }
 

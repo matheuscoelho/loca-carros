@@ -8,7 +8,7 @@ import { ObjectId } from 'mongodb'
 import { clearTenantCache } from '@/lib/tenant/resolver'
 
 /**
- * GET /api/super-admin/tenants/[id]
+ * GET /api/root-wl/tenants/[id]
  * Busca um tenant específico
  */
 export async function GET(
@@ -84,7 +84,7 @@ export async function GET(
 }
 
 /**
- * PUT /api/super-admin/tenants/[id]
+ * PUT /api/root-wl/tenants/[id]
  * Atualiza um tenant
  */
 export async function PUT(
@@ -151,7 +151,7 @@ export async function PUT(
 }
 
 /**
- * DELETE /api/super-admin/tenants/[id]
+ * DELETE /api/root-wl/tenants/[id]
  * Deleta um tenant (soft delete)
  */
 export async function DELETE(

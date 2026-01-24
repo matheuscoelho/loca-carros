@@ -10,7 +10,7 @@ import { createTenantDefaults, isValidSlug, planLimits, TenantPlan } from '@/mod
 import { defaultSettings } from '@/models/Settings'
 
 /**
- * GET /api/super-admin/tenants
+ * GET /api/root-wl/tenants
  * Lista todos os tenants
  */
 export async function GET(request: NextRequest) {
@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
 }
 
 /**
- * POST /api/super-admin/tenants
+ * POST /api/root-wl/tenants
  * Cria um novo tenant
  */
 export async function POST(request: NextRequest) {
