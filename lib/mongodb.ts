@@ -3,6 +3,8 @@ import { MongoClient, Db } from 'mongodb'
 declare global {
   // eslint-disable-next-line no-var
   var _mongoClientPromise: Promise<MongoClient> | undefined
+  // eslint-disable-next-line no-var
+  var _migrationsRan: boolean | undefined
 }
 
 // Função para obter a conexão de forma lazy
@@ -52,5 +54,16 @@ export default clientPromise
 
 export async function getDatabase(dbName?: string): Promise<Db> {
   const client = await clientPromise
-  return client.db(dbName || process.env.MONGODB_DB || 'test')
+  const db = client.db(dbName || process.env.MONGODB_DB || 'test')
+
+  // Executar migrations apenas uma vez por instância
+  if (!global._migrationsRan) {
+    global._migrationsRan = true
+    // Importar e executar migrations de forma assíncrona
+    import('@/lib/migrations').then(({ runMigrations }) => {
+      runMigrations().catch(console.error)
+    }).catch(console.error)
+  }
+
+  return db
 }
