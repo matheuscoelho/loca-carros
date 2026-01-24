@@ -42,20 +42,12 @@ export async function GET(request: NextRequest) {
     }
 
     const db = await getDatabase()
-    const baseDomain = process.env.BASE_DOMAIN || 'localhost'
 
-    // Extrair possível slug do subdomínio
-    let slug: string | null = null
-    if (cleanHostname.endsWith(`.${baseDomain}`)) {
-      slug = cleanHostname.replace(`.${baseDomain}`, '')
-    }
-
-    // Buscar tenant por domínio ou slug
+    // Buscar tenant por domínio (primary ou custom)
     const tenant = await db.collection<ITenant>('tenants').findOne({
       $or: [
         { 'domains.primary': cleanHostname },
         { 'domains.custom': cleanHostname },
-        ...(slug ? [{ slug }] : []),
       ],
     })
 
