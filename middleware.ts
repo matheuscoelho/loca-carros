@@ -113,7 +113,18 @@ export default withAuth(
 
     // VALIDAÇÃO DE TENANT: Se não é domínio principal, validar se tenant existe
     if (!isMain) {
-      const validation = await validateTenant(hostname, origin)
+      response.headers.set('x-debug-step', '1-before-validate')
+
+      let validation: { valid: boolean; status: string; cached?: boolean }
+      try {
+        validation = await validateTenant(hostname, origin)
+        response.headers.set('x-debug-step', '2-after-validate')
+      } catch (err) {
+        response.headers.set('x-debug-step', '2-validate-error')
+        response.headers.set('x-debug-error', String(err))
+        // Em caso de erro, bloquear
+        return NextResponse.redirect(new URL('/tenant-not-found', req.url))
+      }
 
       // Header de debug para verificar validação
       response.headers.set('x-tenant-valid', String(validation.valid))
