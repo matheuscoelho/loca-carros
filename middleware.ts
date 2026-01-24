@@ -37,13 +37,13 @@ function extractTenantSlug(hostname: string): string | null {
 /**
  * Valida tenant chamando a API de validação
  */
-async function validateTenant(hostname: string, origin: string): Promise<{ valid: boolean; status: string }> {
+async function validateTenant(hostname: string, origin: string): Promise<{ valid: boolean; status: string; cached?: boolean }> {
   const cleanHostname = hostname.split(':')[0].toLowerCase()
 
   // Verificar cache
   const cached = tenantValidationCache.get(cleanHostname)
   if (cached && cached.expires > Date.now()) {
-    return { valid: cached.valid, status: cached.status }
+    return { valid: cached.valid, status: cached.status, cached: true }
   }
 
   try {
@@ -66,7 +66,7 @@ async function validateTenant(hostname: string, origin: string): Promise<{ valid
       expires: Date.now() + CACHE_TTL,
     })
 
-    return { valid: data.valid, status: data.status }
+    return { valid: data.valid, status: data.status, cached: false }
   } catch (error) {
     console.error('Erro ao validar tenant no middleware:', error)
     // Em caso de erro, bloquear acesso - tenant não validado
@@ -114,6 +114,11 @@ export default withAuth(
     // VALIDAÇÃO DE TENANT: Se não é domínio principal, validar se tenant existe
     if (!isMain) {
       const validation = await validateTenant(hostname, origin)
+
+      // Header de debug para verificar validação
+      response.headers.set('x-tenant-valid', String(validation.valid))
+      response.headers.set('x-tenant-status', validation.status)
+      response.headers.set('x-tenant-cached', String(validation.cached || false))
 
       if (!validation.valid) {
         if (validation.status === 'not_found') {
