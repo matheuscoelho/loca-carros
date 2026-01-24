@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
 export default function TenantInactivePage() {
@@ -11,14 +10,38 @@ export default function TenantInactivePage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8 text-center">
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 16
+    }}>
+      <div style={{
+        maxWidth: 420,
+        width: '100%',
+        backgroundColor: '#fff',
+        borderRadius: 16,
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+        padding: 32,
+        textAlign: 'center'
+      }}>
         {/* Icon */}
-        <div className="w-20 h-20 mx-auto mb-6 bg-yellow-100 rounded-full flex items-center justify-center">
+        <div style={{
+          width: 72,
+          height: 72,
+          margin: '0 auto 20px',
+          backgroundColor: '#FEF3C7',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
           <svg
-            className="w-10 h-10 text-yellow-500"
+            style={{ width: 36, height: 36 }}
             fill="none"
-            stroke="currentColor"
+            stroke="#F59E0B"
             viewBox="0 0 24 24"
           >
             <path
@@ -31,52 +54,87 @@ export default function TenantInactivePage() {
         </div>
 
         {/* Title */}
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
+        <h1 style={{
+          fontSize: 24,
+          fontWeight: 700,
+          color: '#111827',
+          marginBottom: 8
+        }}>
           Locadora Temporariamente Indisponivel
         </h1>
 
         {/* Message */}
-        <p className="text-gray-600 mb-6">
-          A locadora em <span className="font-semibold text-gray-800">{hostname}</span> esta
+        <p style={{ color: '#6B7280', marginBottom: 24 }}>
+          A locadora em <span style={{ fontWeight: 600, color: '#374151' }}>{hostname}</span> esta
           temporariamente fora do ar.
         </p>
 
         {/* Details */}
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6 text-left">
-          <p className="text-sm text-yellow-800">
+        <div style={{
+          backgroundColor: '#FFFBEB',
+          border: '1px solid #FDE68A',
+          borderRadius: 8,
+          padding: 16,
+          marginBottom: 24,
+          textAlign: 'left'
+        }}>
+          <p style={{ fontSize: 14, color: '#92400E', marginBottom: 8 }}>
             <strong>O que pode ter acontecido:</strong>
           </p>
-          <ul className="text-sm text-yellow-700 mt-2 space-y-1 list-disc list-inside">
-            <li>Manutencao programada</li>
-            <li>Conta suspensa temporariamente</li>
+          <ul style={{ fontSize: 14, color: '#B45309', paddingLeft: 20, margin: 0 }}>
+            <li style={{ marginBottom: 4 }}>Manutencao programada</li>
+            <li style={{ marginBottom: 4 }}>Conta suspensa temporariamente</li>
             <li>Problemas tecnicos</li>
           </ul>
         </div>
 
         {/* Actions */}
-        <div className="space-y-3">
-          <p className="text-sm text-gray-500">
+        <div>
+          <p style={{ fontSize: 14, color: '#9CA3AF', marginBottom: 12 }}>
             Por favor, tente novamente mais tarde ou entre em contato com a locadora
             diretamente.
           </p>
 
           <button
             onClick={() => window.location.reload()}
-            className="inline-block w-full py-3 px-4 bg-gray-800 text-white rounded-lg font-medium hover:bg-gray-700 transition-colors"
+            style={{
+              display: 'block',
+              width: '100%',
+              padding: '12px 16px',
+              backgroundColor: '#374151',
+              color: '#fff',
+              borderRadius: 8,
+              fontWeight: 500,
+              border: 'none',
+              cursor: 'pointer',
+              marginBottom: 12,
+              boxSizing: 'border-box'
+            }}
           >
             Tentar Novamente
           </button>
 
-          <Link
+          <a
             href="https://navegarsistemas.com.br"
-            className="inline-block w-full py-3 px-4 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+            style={{
+              display: 'block',
+              width: '100%',
+              padding: '12px 16px',
+              backgroundColor: 'transparent',
+              color: '#374151',
+              borderRadius: 8,
+              fontWeight: 500,
+              textDecoration: 'none',
+              border: '1px solid #D1D5DB',
+              boxSizing: 'border-box'
+            }}
           >
-            Ir para o Site Principal
-          </Link>
+            Ir para o Site do Desenvolvedor
+          </a>
         </div>
 
         {/* Footer */}
-        <p className="mt-6 text-xs text-gray-400">
+        <p style={{ marginTop: 24, fontSize: 12, color: '#9CA3AF' }}>
           Navegar Sistemas - Plataforma de Aluguel de Veiculos
         </p>
       </div>
