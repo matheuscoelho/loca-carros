@@ -61,9 +61,8 @@ async function validateTenant(hostname: string, origin: string): Promise<{ valid
       error: error instanceof Error ? error.message : String(error)
     })
 
-    // Fallback: permitir acesso e deixar a validação real ser feita na página/API
-    console.log('Fallback: permitindo acesso temporário para:', cleanHostname)
-    return { valid: true, status: 'fallback' }
+    // Em caso de erro, bloquear acesso
+    return { valid: false, status: 'not_found' }
   }
 }
 
