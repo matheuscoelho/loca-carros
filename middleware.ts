@@ -37,13 +37,13 @@ function extractTenantSlug(hostname: string): string | null {
 /**
  * Valida tenant chamando a API de validação
  */
-async function validateTenant(hostname: string, origin: string): Promise<{ valid: boolean; status: string; cached?: boolean }> {
+async function validateTenant(hostname: string, origin: string): Promise<{ valid: boolean; status: string }> {
   const cleanHostname = hostname.split(':')[0].toLowerCase()
 
   // Verificar cache
   const cached = tenantValidationCache.get(cleanHostname)
   if (cached && cached.expires > Date.now()) {
-    return { valid: cached.valid, status: cached.status, cached: true }
+    return { valid: cached.valid, status: cached.status }
   }
 
   try {
@@ -66,7 +66,7 @@ async function validateTenant(hostname: string, origin: string): Promise<{ valid
       expires: Date.now() + CACHE_TTL,
     })
 
-    return { valid: data.valid, status: data.status, cached: false }
+    return { valid: data.valid, status: data.status }
   } catch (error) {
     console.error('Erro ao validar tenant no middleware:', error)
     // Em caso de erro, bloquear acesso - tenant não validado
@@ -113,31 +113,21 @@ export default withAuth(
 
     // VALIDAÇÃO DE TENANT: Se não é domínio principal, validar se tenant existe
     if (!isMain) {
-      response.headers.set('x-debug-step', '1-before-validate')
-
-      let validation: { valid: boolean; status: string; cached?: boolean }
       try {
-        validation = await validateTenant(hostname, origin)
-        response.headers.set('x-debug-step', '2-after-validate')
-      } catch (err) {
-        response.headers.set('x-debug-step', '2-validate-error')
-        response.headers.set('x-debug-error', String(err))
-        // Em caso de erro, bloquear
+        const validation = await validateTenant(hostname, origin)
+
+        if (!validation.valid) {
+          if (validation.status === 'not_found') {
+            return NextResponse.redirect(new URL('/tenant-not-found', req.url))
+          }
+          if (validation.status === 'inactive') {
+            return NextResponse.redirect(new URL('/tenant-inactive', req.url))
+          }
+        }
+      } catch (error) {
+        console.error('Erro na validação de tenant:', error)
+        // Em caso de erro, bloquear acesso
         return NextResponse.redirect(new URL('/tenant-not-found', req.url))
-      }
-
-      // Header de debug para verificar validação
-      response.headers.set('x-tenant-valid', String(validation.valid))
-      response.headers.set('x-tenant-status', validation.status)
-      response.headers.set('x-tenant-cached', String(validation.cached || false))
-
-      if (!validation.valid) {
-        if (validation.status === 'not_found') {
-          return NextResponse.redirect(new URL('/tenant-not-found', req.url))
-        }
-        if (validation.status === 'inactive') {
-          return NextResponse.redirect(new URL('/tenant-inactive', req.url))
-        }
       }
     }
 
