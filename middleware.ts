@@ -1,37 +1,16 @@
 import { withAuth } from 'next-auth/middleware'
 import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
 
 // Cache em memória para validação de tenant no middleware
 const tenantValidationCache = new Map<string, { valid: boolean; status: string; expires: number }>()
 const CACHE_TTL = 5 * 60 * 1000 // 5 minutos
 
 /**
- * Verifica se o hostname é o domínio principal (para super_admin)
+ * Verifica se é ambiente de desenvolvimento (localhost)
  */
-function isMainDomain(hostname: string): boolean {
-  const baseDomain = process.env.BASE_DOMAIN || 'localhost'
+function isLocalhost(hostname: string): boolean {
   const cleanHostname = hostname.split(':')[0].toLowerCase()
-
-  return (
-    cleanHostname === baseDomain ||
-    cleanHostname === `www.${baseDomain}` ||
-    cleanHostname === 'localhost' ||
-    cleanHostname.startsWith('localhost')
-  )
-}
-
-/**
- * Extrai o slug do subdomínio
- */
-function extractTenantSlug(hostname: string): string | null {
-  const baseDomain = process.env.BASE_DOMAIN || 'localhost'
-  const cleanHostname = hostname.split(':')[0].toLowerCase()
-
-  if (cleanHostname.endsWith(`.${baseDomain}`)) {
-    return cleanHostname.replace(`.${baseDomain}`, '')
-  }
-  return null
+  return cleanHostname === 'localhost' || cleanHostname.startsWith('localhost')
 }
 
 /**
@@ -82,16 +61,9 @@ async function validateTenant(hostname: string, origin: string): Promise<{ valid
       error: error instanceof Error ? error.message : String(error)
     })
 
-    // Se for subdomínio do BASE_DOMAIN, permitir acesso como fallback
-    // A validação real será feita na página/API
-    const baseDomain = process.env.BASE_DOMAIN || 'navegarsistemas.com.br'
-    if (cleanHostname.endsWith(`.${baseDomain}`)) {
-      console.log('Fallback: permitindo subdomínio do BASE_DOMAIN:', cleanHostname)
-      return { valid: true, status: 'fallback' }
-    }
-
-    // Para domínios customizados, bloquear
-    return { valid: false, status: 'not_found' }
+    // Fallback: permitir acesso e deixar a validação real ser feita na página/API
+    console.log('Fallback: permitindo acesso temporário para:', cleanHostname)
+    return { valid: true, status: 'fallback' }
   }
 }
 
@@ -118,22 +90,12 @@ export default withAuth(
       return NextResponse.next()
     }
 
-    // Extrair informações do tenant
-    const tenantSlug = extractTenantSlug(hostname)
-    const isMain = isMainDomain(hostname)
-
     // Criar response base
     const response = NextResponse.next()
-
-    // Injetar headers de tenant para uso em API routes e páginas
-    if (tenantSlug) {
-      response.headers.set('x-tenant-slug', tenantSlug)
-    }
     response.headers.set('x-hostname', hostname)
-    response.headers.set('x-is-main-domain', isMain ? 'true' : 'false')
 
-    // VALIDAÇÃO DE TENANT: Se não é domínio principal, validar se tenant existe
-    if (!isMain) {
+    // VALIDAÇÃO DE TENANT: Se não é localhost, validar se tenant existe no banco
+    if (!isLocalhost(hostname)) {
       try {
         const validation = await validateTenant(hostname, origin)
 
@@ -152,10 +114,13 @@ export default withAuth(
       }
     }
 
-    // Rotas de root-wl - só acessível do domínio principal
+    // Rotas de root-wl - só acessível do domínio configurado em ROOT_DOMAIN ou localhost
     if (pathname.startsWith('/root-wl')) {
-      // Só permitir acesso do domínio principal
-      if (!isMain) {
+      const rootDomain = process.env.ROOT_DOMAIN
+      const cleanHostname = hostname.split(':')[0].toLowerCase()
+      const isAllowedHost = (rootDomain && cleanHostname === rootDomain) || isLocalhost(hostname)
+
+      if (!isAllowedHost) {
         return NextResponse.redirect(new URL('/', req.url))
       }
 
