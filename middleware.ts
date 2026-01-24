@@ -47,13 +47,20 @@ async function validateTenant(hostname: string, origin: string): Promise<{ valid
   }
 
   try {
+    // Usar fetch com timeout para evitar hang
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 5000)
+
     const response = await fetch(`${origin}/api/tenant/validate?hostname=${encodeURIComponent(hostname)}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
+      signal: controller.signal,
     })
 
+    clearTimeout(timeoutId)
+
     if (!response.ok) {
-      // Em caso de erro, bloquear acesso - tenant não validado
+      // Em caso de erro HTTP, bloquear acesso
       return { valid: false, status: 'not_found' }
     }
 
@@ -68,8 +75,22 @@ async function validateTenant(hostname: string, origin: string): Promise<{ valid
 
     return { valid: data.valid, status: data.status }
   } catch (error) {
-    console.error('Erro ao validar tenant no middleware:', error)
-    // Em caso de erro, bloquear acesso - tenant não validado
+    // Log detalhado do erro
+    console.error('Erro ao validar tenant no middleware:', {
+      hostname,
+      origin,
+      error: error instanceof Error ? error.message : String(error)
+    })
+
+    // Se for subdomínio do BASE_DOMAIN, permitir acesso como fallback
+    // A validação real será feita na página/API
+    const baseDomain = process.env.BASE_DOMAIN || 'navegarsistemas.com.br'
+    if (cleanHostname.endsWith(`.${baseDomain}`)) {
+      console.log('Fallback: permitindo subdomínio do BASE_DOMAIN:', cleanHostname)
+      return { valid: true, status: 'fallback' }
+    }
+
+    // Para domínios customizados, bloquear
     return { valid: false, status: 'not_found' }
   }
 }
