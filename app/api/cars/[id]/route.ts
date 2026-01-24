@@ -1,33 +1,42 @@
 export const dynamic = 'force-dynamic'
 
 import { NextRequest, NextResponse } from 'next/server'
-import clientPromise from '@/lib/mongodb'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 import { ObjectId } from 'mongodb'
+import { ICar } from '@/models/Car'
+import { resolveTenantFromRequest } from '@/lib/tenant/resolver'
+import { getTenantCollectionById } from '@/lib/tenant/query'
 
 export async function GET(
 	request: NextRequest,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
 	try {
-		const { id } = params
+		const { id } = await params
 
 		if (!id) {
 			return NextResponse.json({ error: 'Car ID is required' }, { status: 400 })
 		}
 
-		const client = await clientPromise
-		const db = client.db(process.env.MONGODB_DB)
+		// Resolve tenant from request
+		const tenantContext = await resolveTenantFromRequest(request)
+		if (!tenantContext.tenantId) {
+			return NextResponse.json({ error: 'Tenant not found' }, { status: 404 })
+		}
 
-		let car
+		const carsQuery = await getTenantCollectionById<ICar>('cars', tenantContext.tenantId)
+
+		let car = null
 
 		// Try to find by ObjectId first
 		if (ObjectId.isValid(id)) {
-			car = await db.collection('cars').findOne({ _id: new ObjectId(id) })
+			car = await carsQuery.findOne({ _id: new ObjectId(id) })
 		}
 
-		// If not found, try by string ID (in case the ID format is different)
+		// If not found, try by string ID
 		if (!car) {
-			car = await db.collection('cars').findOne({ id: id })
+			car = await carsQuery.findOne({ id: id })
 		}
 
 		if (!car) {
@@ -43,20 +52,30 @@ export async function GET(
 
 export async function PUT(
 	request: NextRequest,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
 	try {
-		const { id } = params
+		// Require admin authentication
+		const session = await getServerSession(authOptions)
+		if (!session || session.user?.role !== 'admin') {
+			return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+		}
+
+		const tenantId = session.user.tenantId
+		if (!tenantId) {
+			return NextResponse.json({ error: 'Tenant not found' }, { status: 404 })
+		}
+
+		const { id } = await params
 		const data = await request.json()
 
 		if (!id || !ObjectId.isValid(id)) {
 			return NextResponse.json({ error: 'Valid car ID is required' }, { status: 400 })
 		}
 
-		const client = await clientPromise
-		const db = client.db(process.env.MONGODB_DB)
+		const carsQuery = await getTenantCollectionById<ICar>('cars', tenantId)
 
-		const result = await db.collection('cars').updateOne(
+		const result = await carsQuery.updateOne(
 			{ _id: new ObjectId(id) },
 			{
 				$set: {
@@ -79,19 +98,29 @@ export async function PUT(
 
 export async function DELETE(
 	request: NextRequest,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
 	try {
-		const { id } = params
+		// Require admin authentication
+		const session = await getServerSession(authOptions)
+		if (!session || session.user?.role !== 'admin') {
+			return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+		}
+
+		const tenantId = session.user.tenantId
+		if (!tenantId) {
+			return NextResponse.json({ error: 'Tenant not found' }, { status: 404 })
+		}
+
+		const { id } = await params
 
 		if (!id || !ObjectId.isValid(id)) {
 			return NextResponse.json({ error: 'Valid car ID is required' }, { status: 400 })
 		}
 
-		const client = await clientPromise
-		const db = client.db(process.env.MONGODB_DB)
+		const carsQuery = await getTenantCollectionById<ICar>('cars', tenantId)
 
-		const result = await db.collection('cars').deleteOne({ _id: new ObjectId(id) })
+		const result = await carsQuery.deleteOne({ _id: new ObjectId(id) })
 
 		if (result.deletedCount === 0) {
 			return NextResponse.json({ error: 'Car not found' }, { status: 404 })

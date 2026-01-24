@@ -2,13 +2,26 @@ export const dynamic = 'force-dynamic'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { hash } from 'bcryptjs'
+import { ObjectId } from 'mongodb'
 import { getDatabase } from '@/lib/mongodb'
 import { registerSchema } from '@/lib/validations/auth'
 import { IUser } from '@/types'
+import { resolveTenantFromRequest } from '@/lib/tenant/resolver'
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
+
+    // Resolve tenant from request
+    const tenantContext = await resolveTenantFromRequest(request)
+    if (!tenantContext.tenantId) {
+      return NextResponse.json(
+        { error: 'Tenant não encontrado' },
+        { status: 404 }
+      )
+    }
+
+    const tenantObjectId = new ObjectId(tenantContext.tenantId)
 
     // Validar dados
     const validatedData = registerSchema.safeParse(body)
@@ -24,9 +37,10 @@ export async function POST(request: NextRequest) {
 
     const db = await getDatabase()
 
-    // Verificar se email já existe
+    // Verificar se email já existe no mesmo tenant
     const existingUser = await db.collection('users').findOne({
-      email: email.toLowerCase()
+      email: email.toLowerCase(),
+      tenantId: tenantObjectId,
     })
 
     if (existingUser) {
@@ -39,8 +53,9 @@ export async function POST(request: NextRequest) {
     // Hash da senha
     const hashedPassword = await hash(password, 12)
 
-    // Criar usuário
+    // Criar usuário com tenantId
     const newUser: Omit<IUser, '_id'> = {
+      tenantId: tenantObjectId,
       email: email.toLowerCase(),
       password: hashedPassword,
       name,

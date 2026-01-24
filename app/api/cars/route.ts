@@ -1,12 +1,21 @@
 export const dynamic = 'force-dynamic'
 
 import { NextRequest, NextResponse } from 'next/server'
-import clientPromise from '@/lib/mongodb'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 import { ICar } from '@/models/Car'
+import { resolveTenantFromRequest } from '@/lib/tenant/resolver'
+import { getTenantCollectionById } from '@/lib/tenant/query'
 
 export async function GET(request: NextRequest) {
 	try {
 		const { searchParams } = new URL(request.url)
+
+		// Resolve tenant from request
+		const tenantContext = await resolveTenantFromRequest(request)
+		if (!tenantContext.tenantId) {
+			return NextResponse.json({ error: 'Tenant not found' }, { status: 404 })
+		}
 
 		// Pagination
 		const page = parseInt(searchParams.get('page') || '1')
@@ -24,7 +33,7 @@ export async function GET(request: NextRequest) {
 		const search = searchParams.get('search')
 
 		// Build query
-		const query: Record<string, any> = {
+		const query: Record<string, unknown> = {
 			status: 'active',
 			'availability.isAvailable': true,
 		}
@@ -36,9 +45,10 @@ export async function GET(request: NextRequest) {
 		if (city) query['location.city'] = { $regex: city, $options: 'i' }
 
 		if (minPrice || maxPrice) {
-			query['pricing.dailyRate'] = {}
-			if (minPrice) query['pricing.dailyRate'].$gte = parseFloat(minPrice)
-			if (maxPrice) query['pricing.dailyRate'].$lte = parseFloat(maxPrice)
+			const priceFilter: Record<string, number> = {}
+			if (minPrice) priceFilter.$gte = parseFloat(minPrice)
+			if (maxPrice) priceFilter.$lte = parseFloat(maxPrice)
+			query['pricing.dailyRate'] = priceFilter
 		}
 
 		if (search) {
@@ -49,19 +59,19 @@ export async function GET(request: NextRequest) {
 			]
 		}
 
-		const client = await clientPromise
-		const db = client.db(process.env.MONGODB_DB)
+		// Get tenant-aware collection
+		const carsQuery = await getTenantCollectionById<ICar>('cars', tenantContext.tenantId)
 
 		// Get total count
-		const total = await db.collection('cars').countDocuments(query)
+		const total = await carsQuery.countDocuments(query)
 
-		// Get cars
-		const cars = await db.collection('cars')
-			.find(query)
-			.sort({ createdAt: -1 })
-			.skip(skip)
-			.limit(limit)
-			.toArray()
+		// Get cars using aggregate for pagination
+		const cars = await carsQuery.aggregate([
+			{ $match: query },
+			{ $sort: { createdAt: -1 } },
+			{ $skip: skip },
+			{ $limit: limit },
+		]).toArray()
 
 		return NextResponse.json({
 			cars,
@@ -80,11 +90,20 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
 	try {
-		// This would typically require admin authentication
+		// Require admin authentication
+		const session = await getServerSession(authOptions)
+		if (!session || session.user?.role !== 'admin') {
+			return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+		}
+
+		const tenantId = session.user.tenantId
+		if (!tenantId) {
+			return NextResponse.json({ error: 'Tenant not found' }, { status: 404 })
+		}
+
 		const data = await request.json()
 
-		const client = await clientPromise
-		const db = client.db(process.env.MONGODB_DB)
+		const carsQuery = await getTenantCollectionById<ICar>('cars', tenantId)
 
 		const car: Partial<ICar> = {
 			...data,
@@ -100,7 +119,7 @@ export async function POST(request: NextRequest) {
 			updatedAt: new Date(),
 		}
 
-		const result = await db.collection('cars').insertOne(car)
+		const result = await carsQuery.insertOne(car as ICar)
 
 		return NextResponse.json({
 			message: 'Car created successfully',

@@ -31,9 +31,13 @@ export default function Login() {
 		setError(null)
 
 		try {
+			// Multi-tenancy: enviar hostname para resolver o tenant correto
+			const hostname = typeof window !== 'undefined' ? window.location.host : ''
+
 			const result = await signIn('credentials', {
 				email: data.email,
 				password: data.password,
+				hostname, // Multi-tenancy
 				redirect: false,
 			})
 

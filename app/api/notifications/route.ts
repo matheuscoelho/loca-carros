@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic'
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import clientPromise from '@/lib/mongodb'
+import { getDatabase } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 
 export async function GET(request: NextRequest) {
@@ -14,14 +14,21 @@ export async function GET(request: NextRequest) {
 			return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 		}
 
+		const tenantId = session.user.tenantId
+		if (!tenantId) {
+			return NextResponse.json({ error: 'Tenant not found' }, { status: 404 })
+		}
+
+		const tenantObjectId = new ObjectId(tenantId)
+
 		const { searchParams } = new URL(request.url)
 		const unreadOnly = searchParams.get('unreadOnly') === 'true'
 		const limit = parseInt(searchParams.get('limit') || '50')
 
-		const client = await clientPromise
-		const db = client.db(process.env.MONGODB_DB)
+		const db = await getDatabase()
 
-		const query: Record<string, any> = {
+		const query: Record<string, unknown> = {
+			tenantId: tenantObjectId,
 			userId: new ObjectId(session.user.id)
 		}
 
@@ -36,6 +43,7 @@ export async function GET(request: NextRequest) {
 			.toArray()
 
 		const unreadCount = await db.collection('notifications').countDocuments({
+			tenantId: tenantObjectId,
 			userId: new ObjectId(session.user.id),
 			read: false
 		})

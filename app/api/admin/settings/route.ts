@@ -3,7 +3,8 @@ export const dynamic = 'force-dynamic'
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import clientPromise from '@/lib/mongodb'
+import { getDatabase } from '@/lib/mongodb'
+import { ObjectId } from 'mongodb'
 import { defaultSettings } from '@/models/Settings'
 
 // GET - Obter configurações
@@ -18,14 +19,20 @@ export async function GET() {
       )
     }
 
-    const client = await clientPromise
-    const db = client.db(process.env.MONGODB_DB)
+    const tenantId = session.user.tenantId
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Tenant not found' }, { status: 404 })
+    }
 
-    const existingSettings = await db.collection('settings').findOne({})
+    const tenantObjectId = new ObjectId(tenantId)
+    const db = await getDatabase()
+
+    const existingSettings = await db.collection('settings').findOne({ tenantId: tenantObjectId })
 
     // Se não existir, criar com valores padrão
     if (!existingSettings) {
       const newSettings = {
+        tenantId: tenantObjectId,
         ...defaultSettings,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -58,16 +65,22 @@ export async function PUT(request: NextRequest) {
       )
     }
 
+    const tenantId = session.user.tenantId
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Tenant not found' }, { status: 404 })
+    }
+
+    const tenantObjectId = new ObjectId(tenantId)
     const body = await request.json()
 
-    const client = await clientPromise
-    const db = client.db(process.env.MONGODB_DB)
+    const db = await getDatabase()
 
     // Buscar configurações existentes
-    const existingSettings = await db.collection('settings').findOne({})
+    const existingSettings = await db.collection('settings').findOne({ tenantId: tenantObjectId })
 
     // Usar valores existentes ou padrão
     const currentSettings = existingSettings || {
+      tenantId: tenantObjectId,
       ...defaultSettings,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -132,17 +145,17 @@ export async function PUT(request: NextRequest) {
     }
 
     // Upsert - atualizar ou criar
-    const result = await db.collection('settings').updateOne(
-      {},
+    await db.collection('settings').updateOne(
+      { tenantId: tenantObjectId },
       {
         $set: updateData,
-        $setOnInsert: { createdAt: new Date() }
+        $setOnInsert: { tenantId: tenantObjectId, createdAt: new Date() }
       },
       { upsert: true }
     )
 
     // Buscar documento atualizado
-    const updatedSettings = await db.collection('settings').findOne({})
+    const updatedSettings = await db.collection('settings').findOne({ tenantId: tenantObjectId })
 
     return NextResponse.json({
       success: true,

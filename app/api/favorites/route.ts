@@ -3,8 +3,8 @@ export const dynamic = 'force-dynamic'
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import clientPromise from '@/lib/mongodb'
-import { ObjectId } from 'mongodb'
+import { getDatabase } from '@/lib/mongodb'
+import { ObjectId, Document } from 'mongodb'
 
 // GET - List user's favorites
 export async function GET(request: NextRequest) {
@@ -15,12 +15,18 @@ export async function GET(request: NextRequest) {
 			return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 		}
 
-		const client = await clientPromise
-		const db = client.db(process.env.MONGODB_DB)
+		const tenantId = session.user.tenantId
+		if (!tenantId) {
+			return NextResponse.json({ error: 'Tenant not found' }, { status: 404 })
+		}
+
+		const tenantObjectId = new ObjectId(tenantId)
+		const db = await getDatabase()
 
 		// Get user with favorites
 		const user = await db.collection('users').findOne({
 			_id: new ObjectId(session.user.id),
+			tenantId: tenantObjectId,
 		})
 
 		const favoriteIds = user?.favorites || []
@@ -29,10 +35,11 @@ export async function GET(request: NextRequest) {
 			return NextResponse.json({ favorites: [], cars: [] })
 		}
 
-		// Get car details for favorites
+		// Get car details for favorites (filtered by tenant)
 		const cars = await db.collection('cars')
 			.find({
 				_id: { $in: favoriteIds.map((id: string) => new ObjectId(id)) },
+				tenantId: tenantObjectId,
 				status: 'active',
 			})
 			.toArray()
@@ -56,18 +63,25 @@ export async function POST(request: NextRequest) {
 			return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 		}
 
+		const tenantId = session.user.tenantId
+		if (!tenantId) {
+			return NextResponse.json({ error: 'Tenant not found' }, { status: 404 })
+		}
+
+		const tenantObjectId = new ObjectId(tenantId)
+
 		const { carId } = await request.json()
 
 		if (!carId || !ObjectId.isValid(carId)) {
 			return NextResponse.json({ error: 'Invalid car ID' }, { status: 400 })
 		}
 
-		const client = await clientPromise
-		const db = client.db(process.env.MONGODB_DB)
+		const db = await getDatabase()
 
-		// Check if car exists
+		// Check if car exists in the same tenant
 		const car = await db.collection('cars').findOne({
 			_id: new ObjectId(carId),
+			tenantId: tenantObjectId,
 			status: 'active',
 		})
 
@@ -77,7 +91,7 @@ export async function POST(request: NextRequest) {
 
 		// Add to favorites (using $addToSet to avoid duplicates)
 		await db.collection('users').updateOne(
-			{ _id: new ObjectId(session.user.id) },
+			{ _id: new ObjectId(session.user.id), tenantId: tenantObjectId },
 			{
 				$addToSet: { favorites: carId },
 				$set: { updatedAt: new Date() },
@@ -103,6 +117,13 @@ export async function DELETE(request: NextRequest) {
 			return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 		}
 
+		const tenantId = session.user.tenantId
+		if (!tenantId) {
+			return NextResponse.json({ error: 'Tenant not found' }, { status: 404 })
+		}
+
+		const tenantObjectId = new ObjectId(tenantId)
+
 		const { searchParams } = new URL(request.url)
 		const carId = searchParams.get('carId')
 
@@ -110,16 +131,12 @@ export async function DELETE(request: NextRequest) {
 			return NextResponse.json({ error: 'Invalid car ID' }, { status: 400 })
 		}
 
-		const client = await clientPromise
-		const db = client.db(process.env.MONGODB_DB)
+		const db = await getDatabase()
 
 		// Remove from favorites
 		await db.collection('users').updateOne(
-			{ _id: new ObjectId(session.user.id) },
-			{
-				$pull: { favorites: carId } as any,
-				$set: { updatedAt: new Date() },
-			}
+			{ _id: new ObjectId(session.user.id), tenantId: tenantObjectId },
+			{ $pull: { favorites: carId }, $set: { updatedAt: new Date() } } as unknown as Document
 		)
 
 		return NextResponse.json({

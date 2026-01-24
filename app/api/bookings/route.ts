@@ -3,7 +3,6 @@ export const dynamic = 'force-dynamic'
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import clientPromise from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import {
 	generateBookingNumber,
@@ -11,6 +10,8 @@ import {
 	calculateBookingPrice,
 	IBooking,
 } from '@/models/Booking'
+import { ICar } from '@/models/Car'
+import { getTenantCollectionById } from '@/lib/tenant/query'
 
 export async function GET(request: NextRequest) {
 	try {
@@ -20,17 +21,19 @@ export async function GET(request: NextRequest) {
 			return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 		}
 
+		const tenantId = session.user.tenantId
+		if (!tenantId) {
+			return NextResponse.json({ error: 'Tenant not found' }, { status: 404 })
+		}
+
 		const { searchParams } = new URL(request.url)
 		const status = searchParams.get('status')
 		const page = parseInt(searchParams.get('page') || '1')
 		const limit = parseInt(searchParams.get('limit') || '10')
 		const skip = (page - 1) * limit
 
-		const client = await clientPromise
-		const db = client.db(process.env.MONGODB_DB)
-
 		// Build query based on user role
-		const query: Record<string, any> = {}
+		const query: Record<string, unknown> = {}
 
 		if (session.user.role !== 'admin') {
 			query.userId = new ObjectId(session.user.id)
@@ -40,25 +43,36 @@ export async function GET(request: NextRequest) {
 			query.status = status
 		}
 
-		const total = await db.collection('bookings').countDocuments(query)
+		const bookingsQuery = await getTenantCollectionById<IBooking>('bookings', tenantId)
 
-		const bookings = await db.collection('bookings')
-			.aggregate([
-				{ $match: query },
-				{ $sort: { createdAt: -1 } },
-				{ $skip: skip },
-				{ $limit: limit },
-				{
-					$lookup: {
-						from: 'cars',
-						localField: 'carId',
-						foreignField: '_id',
-						as: 'car',
-					}
-				},
-				{ $unwind: { path: '$car', preserveNullAndEmptyArrays: true } },
-			])
-			.toArray()
+		const total = await bookingsQuery.countDocuments(query)
+
+		const bookings = await bookingsQuery.aggregate([
+			{ $match: query },
+			{ $sort: { createdAt: -1 } },
+			{ $skip: skip },
+			{ $limit: limit },
+			{
+				$lookup: {
+					from: 'cars',
+					let: { carId: '$carId', tenantId: '$tenantId' },
+					pipeline: [
+						{
+							$match: {
+								$expr: {
+									$and: [
+										{ $eq: ['$_id', '$$carId'] },
+										{ $eq: ['$tenantId', '$$tenantId'] }
+									]
+								}
+							}
+						}
+					],
+					as: 'car',
+				}
+			},
+			{ $unwind: { path: '$car', preserveNullAndEmptyArrays: true } },
+		]).toArray()
 
 		return NextResponse.json({
 			bookings,
@@ -83,6 +97,11 @@ export async function POST(request: NextRequest) {
 			return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 		}
 
+		const tenantId = session.user.tenantId
+		if (!tenantId) {
+			return NextResponse.json({ error: 'Tenant not found' }, { status: 404 })
+		}
+
 		const data = await request.json()
 		const {
 			carId,
@@ -101,11 +120,11 @@ export async function POST(request: NextRequest) {
 			}, { status: 400 })
 		}
 
-		const client = await clientPromise
-		const db = client.db(process.env.MONGODB_DB)
+		const carsQuery = await getTenantCollectionById<ICar>('cars', tenantId)
+		const bookingsQuery = await getTenantCollectionById<IBooking>('bookings', tenantId)
 
 		// Get car details
-		const car = await db.collection('cars').findOne({
+		const car = await carsQuery.findOne({
 			_id: new ObjectId(carId),
 			status: 'active',
 		})
@@ -125,7 +144,7 @@ export async function POST(request: NextRequest) {
 		}
 
 		// Check for conflicting bookings
-		const conflictingBooking = await db.collection('bookings').findOne({
+		const conflictingBooking = await bookingsQuery.findOne({
 			carId: new ObjectId(carId),
 			status: { $nin: ['cancelled'] },
 			$or: [
@@ -146,7 +165,7 @@ export async function POST(request: NextRequest) {
 		const totalDays = calculateTotalDays(pickup, dropoff)
 		const dailyRate = car.pricing.dailyRate
 
-		const extrasWithQuantity = extras.map((extra: any) => ({
+		const extrasWithQuantity = extras.map((extra: { name: string; price: number; quantity?: number }) => ({
 			name: extra.name,
 			price: extra.price,
 			quantity: extra.quantity || 1,
@@ -188,10 +207,10 @@ export async function POST(request: NextRequest) {
 			updatedAt: new Date(),
 		}
 
-		const result = await db.collection('bookings').insertOne(booking)
+		const result = await bookingsQuery.insertOne(booking as IBooking)
 
 		// Update car total bookings
-		await db.collection('cars').updateOne(
+		await carsQuery.updateOne(
 			{ _id: new ObjectId(carId) },
 			{ $inc: { totalBookings: 1 } }
 		)

@@ -3,7 +3,8 @@ export const dynamic = 'force-dynamic'
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import clientPromise from '@/lib/mongodb'
+import { getDatabase } from '@/lib/mongodb'
+import { ObjectId } from 'mongodb'
 
 export async function GET(request: NextRequest) {
 	try {
@@ -13,8 +14,14 @@ export async function GET(request: NextRequest) {
 			return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 		}
 
-		const client = await clientPromise
-		const db = client.db(process.env.MONGODB_DB)
+		const tenantId = session.user.tenantId
+		if (!tenantId) {
+			return NextResponse.json({ error: 'Tenant not found' }, { status: 404 })
+		}
+
+		const tenantObjectId = new ObjectId(tenantId)
+
+		const db = await getDatabase()
 
 		// Get current date info
 		const now = new Date()
@@ -22,7 +29,7 @@ export async function GET(request: NextRequest) {
 		const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
 		const startOfYear = new Date(now.getFullYear(), 0, 1)
 
-		// Run all queries in parallel
+		// Run all queries in parallel - all filtered by tenantId
 		const [
 			totalUsers,
 			totalCars,
@@ -40,48 +47,73 @@ export async function GET(request: NextRequest) {
 			pendingPayments,
 		] = await Promise.all([
 			// Users count
-			db.collection('users').countDocuments(),
+			db.collection('users').countDocuments({ tenantId: tenantObjectId }),
 			// Total cars
-			db.collection('cars').countDocuments(),
+			db.collection('cars').countDocuments({ tenantId: tenantObjectId }),
 			// Active cars
-			db.collection('cars').countDocuments({ status: 'active' }),
+			db.collection('cars').countDocuments({ tenantId: tenantObjectId, status: 'active' }),
 			// Total bookings
-			db.collection('bookings').countDocuments(),
+			db.collection('bookings').countDocuments({ tenantId: tenantObjectId }),
 			// Pending bookings
-			db.collection('bookings').countDocuments({ status: 'pending' }),
+			db.collection('bookings').countDocuments({ tenantId: tenantObjectId, status: 'pending' }),
 			// Confirmed bookings
-			db.collection('bookings').countDocuments({ status: 'confirmed' }),
+			db.collection('bookings').countDocuments({ tenantId: tenantObjectId, status: 'confirmed' }),
 			// In progress bookings
-			db.collection('bookings').countDocuments({ status: 'in_progress' }),
+			db.collection('bookings').countDocuments({ tenantId: tenantObjectId, status: 'in_progress' }),
 			// Completed bookings
-			db.collection('bookings').countDocuments({ status: 'completed' }),
+			db.collection('bookings').countDocuments({ tenantId: tenantObjectId, status: 'completed' }),
 			// Cancelled bookings
-			db.collection('bookings').countDocuments({ status: 'cancelled' }),
+			db.collection('bookings').countDocuments({ tenantId: tenantObjectId, status: 'cancelled' }),
 			// Today's bookings
 			db.collection('bookings').countDocuments({
+				tenantId: tenantObjectId,
 				createdAt: { $gte: startOfToday }
 			}),
 			// Month bookings
 			db.collection('bookings').countDocuments({
+				tenantId: tenantObjectId,
 				createdAt: { $gte: startOfMonth }
 			}),
 			// Recent bookings with car info
 			db.collection('bookings').aggregate([
+				{ $match: { tenantId: tenantObjectId } },
 				{ $sort: { createdAt: -1 } },
 				{ $limit: 10 },
 				{
 					$lookup: {
 						from: 'cars',
-						localField: 'carId',
-						foreignField: '_id',
+						let: { carId: '$carId', tenantId: '$tenantId' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$and: [
+											{ $eq: ['$_id', '$$carId'] },
+											{ $eq: ['$tenantId', '$$tenantId'] }
+										]
+									}
+								}
+							}
+						],
 						as: 'car'
 					}
 				},
 				{
 					$lookup: {
 						from: 'users',
-						localField: 'userId',
-						foreignField: '_id',
+						let: { userId: '$userId', tenantId: '$tenantId' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$and: [
+											{ $eq: ['$_id', '$$userId'] },
+											{ $eq: ['$tenantId', '$$tenantId'] }
+										]
+									}
+								}
+							}
+						],
 						as: 'user'
 					}
 				},
@@ -106,6 +138,7 @@ export async function GET(request: NextRequest) {
 			db.collection('bookings').aggregate([
 				{
 					$match: {
+						tenantId: tenantObjectId,
 						paymentStatus: 'paid',
 						createdAt: { $gte: startOfYear }
 					}
@@ -119,13 +152,14 @@ export async function GET(request: NextRequest) {
 				}
 			]).toArray(),
 			// Pending payments
-			db.collection('bookings').countDocuments({ paymentStatus: 'pending' }),
+			db.collection('bookings').countDocuments({ tenantId: tenantObjectId, paymentStatus: 'pending' }),
 		])
 
 		// Monthly revenue breakdown
 		const monthlyRevenue = await db.collection('bookings').aggregate([
 			{
 				$match: {
+					tenantId: tenantObjectId,
 					paymentStatus: 'paid',
 					createdAt: { $gte: startOfYear }
 				}

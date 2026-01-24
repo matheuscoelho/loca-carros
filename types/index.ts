@@ -3,12 +3,13 @@ import { ObjectId } from 'mongodb'
 // User Types
 export interface IUser {
   _id?: ObjectId
+  tenantId?: ObjectId // Multi-tenancy: ID do tenant (null para super_admin)
   email: string
   password: string
   name: string
   phone?: string
   avatar?: string
-  role: 'cliente' | 'admin'
+  role: 'cliente' | 'admin' | 'super_admin'
   emailVerified?: boolean
   address?: {
     street: string
@@ -39,12 +40,13 @@ export interface IUser {
   lastLogin?: Date
 }
 
-export type UserRole = 'cliente' | 'admin'
+export type UserRole = 'cliente' | 'admin' | 'super_admin'
 export type UserStatus = 'active' | 'inactive' | 'suspended'
 
 // Car Types
 export interface ICar {
   _id?: ObjectId
+  tenantId: ObjectId // Multi-tenancy: ID do tenant
   name: string
   brand: string
   model: string
@@ -113,6 +115,7 @@ export type FuelType = 'Gasoline/Petrol' | 'Diesel' | 'Electric Vehicle (EV)' | 
 // Booking Types
 export interface IBooking {
   _id?: ObjectId
+  tenantId: ObjectId // Multi-tenancy: ID do tenant
   bookingNumber: string
   userId: ObjectId
   carId: ObjectId
@@ -166,6 +169,7 @@ export type PaymentStatus = 'pending' | 'paid' | 'partially_paid' | 'refunded'
 // Payment Types
 export interface IPayment {
   _id?: ObjectId
+  tenantId: ObjectId // Multi-tenancy: ID do tenant
   transactionId: string
   userId: ObjectId
   bookingId: ObjectId
@@ -199,6 +203,7 @@ export interface IPayment {
 // Review Types
 export interface IReview {
   _id?: ObjectId
+  tenantId: ObjectId // Multi-tenancy: ID do tenant
   userId: ObjectId
   carId: ObjectId
   bookingId: ObjectId
@@ -225,6 +230,7 @@ export interface IReview {
 // Notification Types
 export interface INotification {
   _id?: ObjectId
+  tenantId: ObjectId // Multi-tenancy: ID do tenant
   userId: ObjectId
   type: NotificationType
   title: string
@@ -277,6 +283,7 @@ declare module 'next-auth' {
       name: string
       role: UserRole
       image?: string
+      tenantId: string | null // Multi-tenancy: null para super_admin
     }
   }
 
@@ -285,6 +292,7 @@ declare module 'next-auth' {
     email: string
     name: string
     role: UserRole
+    tenantId: string | null // Multi-tenancy: null para super_admin
   }
 }
 
@@ -292,5 +300,6 @@ declare module 'next-auth/jwt' {
   interface JWT {
     id: string
     role: UserRole
+    tenantId: string | null // Multi-tenancy: null para super_admin
   }
 }

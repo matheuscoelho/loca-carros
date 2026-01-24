@@ -1,17 +1,67 @@
 export const dynamic = 'force-dynamic'
 
-import { NextResponse } from 'next/server'
-import clientPromise from '@/lib/mongodb'
+import { NextRequest, NextResponse } from 'next/server'
+import { ObjectId } from 'mongodb'
+import { getDatabase } from '@/lib/mongodb'
 import { defaultSettings } from '@/models/Settings'
+import { resolveTenantFromRequest } from '@/lib/tenant/resolver'
 
 // GET - Obter configurações públicas (branding)
 // Esta rota é pública e não requer autenticação
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const client = await clientPromise
-    const db = client.db(process.env.MONGODB_DB)
+    // Resolve tenant from request headers
+    const tenantContext = await resolveTenantFromRequest(request)
 
-    const settings = await db.collection('settings').findOne({})
+    if (!tenantContext.tenantId) {
+      // Return default settings if no tenant found
+      return NextResponse.json({
+        branding: {
+          logoLight: defaultSettings.branding.logoLight,
+          logoDark: defaultSettings.branding.logoDark,
+          logoWidth: defaultSettings.branding.logoWidth,
+          logoHeight: defaultSettings.branding.logoHeight,
+          favicon: defaultSettings.branding.favicon,
+          siteName: defaultSettings.branding.siteName,
+          primaryColor: defaultSettings.branding.primaryColor,
+          secondaryColor: defaultSettings.branding.secondaryColor,
+          accentColor: defaultSettings.branding.accentColor,
+          successColor: defaultSettings.branding.successColor,
+          warningColor: defaultSettings.branding.warningColor,
+          dangerColor: defaultSettings.branding.dangerColor,
+          backgroundColor: defaultSettings.branding.backgroundColor,
+          textColor: defaultSettings.branding.textColor,
+          textOnDark: defaultSettings.branding.textOnDark,
+          textOnLight: defaultSettings.branding.textOnLight,
+          textMuted: defaultSettings.branding.textMuted,
+        },
+        socialMedia: {
+          instagram: '',
+          facebook: '',
+          twitter: '',
+          youtube: '',
+          linkedin: '',
+          whatsapp: '',
+        },
+        general: {
+          siteName: defaultSettings.branding.siteName,
+          siteTitle: defaultSettings.general.siteTitle,
+          siteDescription: defaultSettings.general.siteDescription,
+          contactEmail: defaultSettings.general.contactEmail,
+          contactPhone: defaultSettings.general.contactPhone,
+          whatsappNumber: defaultSettings.general.whatsappNumber,
+          address: '',
+          city: '',
+          state: '',
+          zipCode: '',
+        },
+      })
+    }
+
+    const db = await getDatabase()
+    const tenantObjectId = new ObjectId(tenantContext.tenantId)
+
+    const settings = await db.collection('settings').findOne({ tenantId: tenantObjectId })
 
     // Usar settings do banco ou valores padrão
     const branding = settings?.branding || defaultSettings.branding
