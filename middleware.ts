@@ -53,8 +53,8 @@ async function validateTenant(hostname: string, origin: string): Promise<{ valid
     })
 
     if (!response.ok) {
-      // Em caso de erro, assumir que é válido para não bloquear indevidamente
-      return { valid: true, status: 'unknown' }
+      // Em caso de erro, bloquear acesso - tenant não validado
+      return { valid: false, status: 'not_found' }
     }
 
     const data = await response.json()
@@ -69,8 +69,8 @@ async function validateTenant(hostname: string, origin: string): Promise<{ valid
     return { valid: data.valid, status: data.status }
   } catch (error) {
     console.error('Erro ao validar tenant no middleware:', error)
-    // Em caso de erro, assumir que é válido para não bloquear indevidamente
-    return { valid: true, status: 'unknown' }
+    // Em caso de erro, bloquear acesso - tenant não validado
+    return { valid: false, status: 'not_found' }
   }
 }
 
