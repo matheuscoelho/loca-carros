@@ -43,6 +43,7 @@ export interface ISettings {
     zipCode: string
     currency: string
     timezone: string
+    showDemoBanner: boolean
   }
   pricing: {
     taxRate: number
@@ -115,6 +116,7 @@ export const defaultSettings: Omit<ISettings, '_id'> = {
     zipCode: '',
     currency: 'BRL',
     timezone: 'America/Sao_Paulo',
+    showDemoBanner: true,
   },
   pricing: {
     taxRate: 10,

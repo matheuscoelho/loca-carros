@@ -1,5 +1,10 @@
 import { withAuth } from 'next-auth/middleware'
 import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+// Cache em memória para validação de tenant no middleware
+const tenantValidationCache = new Map<string, { valid: boolean; status: string; expires: number }>()
+const CACHE_TTL = 5 * 60 * 1000 // 5 minutos
 
 /**
  * Verifica se o hostname é o domínio principal (para super_admin)
@@ -29,11 +34,68 @@ function extractTenantSlug(hostname: string): string | null {
   return null
 }
 
+/**
+ * Valida tenant chamando a API de validação
+ */
+async function validateTenant(hostname: string, origin: string): Promise<{ valid: boolean; status: string }> {
+  const cleanHostname = hostname.split(':')[0].toLowerCase()
+
+  // Verificar cache
+  const cached = tenantValidationCache.get(cleanHostname)
+  if (cached && cached.expires > Date.now()) {
+    return { valid: cached.valid, status: cached.status }
+  }
+
+  try {
+    const response = await fetch(`${origin}/api/tenant/validate?hostname=${encodeURIComponent(hostname)}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    })
+
+    if (!response.ok) {
+      // Em caso de erro, assumir que é válido para não bloquear indevidamente
+      return { valid: true, status: 'unknown' }
+    }
+
+    const data = await response.json()
+
+    // Atualizar cache
+    tenantValidationCache.set(cleanHostname, {
+      valid: data.valid,
+      status: data.status,
+      expires: Date.now() + CACHE_TTL,
+    })
+
+    return { valid: data.valid, status: data.status }
+  } catch (error) {
+    console.error('Erro ao validar tenant no middleware:', error)
+    // Em caso de erro, assumir que é válido para não bloquear indevidamente
+    return { valid: true, status: 'unknown' }
+  }
+}
+
 export default withAuth(
-  function middleware(req) {
+  async function middleware(req) {
     const { pathname } = req.nextUrl
     const token = req.nextauth.token
     const hostname = req.headers.get('host') || ''
+    const origin = req.nextUrl.origin
+
+    // Rotas de erro de tenant - sempre permitir
+    if (pathname === '/tenant-not-found' || pathname === '/tenant-inactive') {
+      return NextResponse.next()
+    }
+
+    // API de validação de tenant - sempre permitir
+    if (pathname === '/api/tenant/validate') {
+      return NextResponse.next()
+    }
+
+    // Rotas de API - não redirecionar, deixar as APIs tratarem o erro
+    // As APIs retornam 404 JSON quando tenant não existe
+    if (pathname.startsWith('/api/')) {
+      return NextResponse.next()
+    }
 
     // Extrair informações do tenant
     const tenantSlug = extractTenantSlug(hostname)
@@ -48,6 +110,20 @@ export default withAuth(
     }
     response.headers.set('x-hostname', hostname)
     response.headers.set('x-is-main-domain', isMain ? 'true' : 'false')
+
+    // VALIDAÇÃO DE TENANT: Se não é domínio principal, validar se tenant existe
+    if (!isMain) {
+      const validation = await validateTenant(hostname, origin)
+
+      if (!validation.valid) {
+        if (validation.status === 'not_found') {
+          return NextResponse.redirect(new URL('/tenant-not-found', req.url))
+        }
+        if (validation.status === 'inactive') {
+          return NextResponse.redirect(new URL('/tenant-inactive', req.url))
+        }
+      }
+    }
 
     // Rotas de super-admin - só acessível do domínio principal
     if (pathname.startsWith('/super-admin')) {
@@ -125,6 +201,8 @@ export default withAuth(
           '/index-2',
           '/index-3',
           '/cars',
+          '/tenant-not-found',
+          '/tenant-inactive',
         ]
 
         // Verificar se é rota pública
@@ -142,8 +220,12 @@ export default withAuth(
           return true
         }
 
-        // API pública de settings e carros
-        if (pathname.startsWith('/api/settings/public') || pathname.startsWith('/api/cars')) {
+        // API pública de settings, carros e validação de tenant
+        if (
+          pathname.startsWith('/api/settings/public') ||
+          pathname.startsWith('/api/cars') ||
+          pathname.startsWith('/api/tenant/validate')
+        ) {
           return true
         }
 
@@ -159,15 +241,14 @@ export default withAuth(
 
 export const config = {
   matcher: [
-    // Proteger dashboard, admin e super-admin
-    '/dashboard/:path*',
-    '/admin/:path*',
-    '/super-admin/:path*', // Multi-tenancy: painel super admin
-    '/my-rentals/:path*',
-    '/my-payments/:path*',
-    '/favorites/:path*',
-    '/notifications/:path*',
-    '/profile/:path*',
-    '/booking/:path*',
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - assets (public assets)
+     * - images (public images)
+     */
+    '/((?!_next/static|_next/image|favicon.ico|assets|images|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
   ]
 }

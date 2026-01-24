@@ -14,48 +14,11 @@ export async function GET(request: NextRequest) {
     const tenantContext = await resolveTenantFromRequest(request)
 
     if (!tenantContext.tenantId) {
-      // Return default settings if no tenant found
-      return NextResponse.json({
-        branding: {
-          logoLight: defaultSettings.branding.logoLight,
-          logoDark: defaultSettings.branding.logoDark,
-          logoWidth: defaultSettings.branding.logoWidth,
-          logoHeight: defaultSettings.branding.logoHeight,
-          favicon: defaultSettings.branding.favicon,
-          siteName: defaultSettings.branding.siteName,
-          primaryColor: defaultSettings.branding.primaryColor,
-          secondaryColor: defaultSettings.branding.secondaryColor,
-          accentColor: defaultSettings.branding.accentColor,
-          successColor: defaultSettings.branding.successColor,
-          warningColor: defaultSettings.branding.warningColor,
-          dangerColor: defaultSettings.branding.dangerColor,
-          backgroundColor: defaultSettings.branding.backgroundColor,
-          textColor: defaultSettings.branding.textColor,
-          textOnDark: defaultSettings.branding.textOnDark,
-          textOnLight: defaultSettings.branding.textOnLight,
-          textMuted: defaultSettings.branding.textMuted,
-        },
-        socialMedia: {
-          instagram: '',
-          facebook: '',
-          twitter: '',
-          youtube: '',
-          linkedin: '',
-          whatsapp: '',
-        },
-        general: {
-          siteName: defaultSettings.branding.siteName,
-          siteTitle: defaultSettings.general.siteTitle,
-          siteDescription: defaultSettings.general.siteDescription,
-          contactEmail: defaultSettings.general.contactEmail,
-          contactPhone: defaultSettings.general.contactPhone,
-          whatsappNumber: defaultSettings.general.whatsappNumber,
-          address: '',
-          city: '',
-          state: '',
-          zipCode: '',
-        },
-      })
+      // Tenant não encontrado - retornar 404
+      return NextResponse.json(
+        { error: 'Tenant não encontrado' },
+        { status: 404 }
+      )
     }
 
     const db = await getDatabase()
@@ -109,6 +72,7 @@ export async function GET(request: NextRequest) {
         city: general.city || '',
         state: general.state || '',
         zipCode: general.zipCode || '',
+        showDemoBanner: general.showDemoBanner ?? defaultSettings.general.showDemoBanner,
       },
     }, {
       headers: {
@@ -119,48 +83,10 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Erro ao buscar configurações públicas:', error)
 
-    // Retornar valores padrão em caso de erro
-    return NextResponse.json({
-      branding: {
-        logoLight: defaultSettings.branding.logoLight,
-        logoDark: defaultSettings.branding.logoDark,
-        logoWidth: defaultSettings.branding.logoWidth,
-        logoHeight: defaultSettings.branding.logoHeight,
-        favicon: defaultSettings.branding.favicon,
-        siteName: defaultSettings.branding.siteName,
-        primaryColor: defaultSettings.branding.primaryColor,
-        secondaryColor: defaultSettings.branding.secondaryColor,
-        accentColor: defaultSettings.branding.accentColor,
-        successColor: defaultSettings.branding.successColor,
-        warningColor: defaultSettings.branding.warningColor,
-        dangerColor: defaultSettings.branding.dangerColor,
-        backgroundColor: defaultSettings.branding.backgroundColor,
-        textColor: defaultSettings.branding.textColor,
-        // Cores de texto inteligentes
-        textOnDark: defaultSettings.branding.textOnDark,
-        textOnLight: defaultSettings.branding.textOnLight,
-        textMuted: defaultSettings.branding.textMuted,
-      },
-      socialMedia: {
-        instagram: '',
-        facebook: '',
-        twitter: '',
-        youtube: '',
-        linkedin: '',
-        whatsapp: '',
-      },
-      general: {
-        siteName: defaultSettings.branding.siteName,
-        siteTitle: defaultSettings.general.siteTitle,
-        siteDescription: defaultSettings.general.siteDescription,
-        contactEmail: defaultSettings.general.contactEmail,
-        contactPhone: defaultSettings.general.contactPhone,
-        whatsappNumber: defaultSettings.general.whatsappNumber,
-        address: '',
-        city: '',
-        state: '',
-        zipCode: '',
-      },
-    })
+    // Retornar erro interno
+    return NextResponse.json(
+      { error: 'Erro interno do servidor' },
+      { status: 500 }
+    )
   }
 }

@@ -1,22 +1,49 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 
 export default function DemoBanner() {
 	const t = useTranslations('demoBanner')
-	const showBanner = process.env.NEXT_PUBLIC_SHOW_DEMO_BANNER === 'true'
+	const [showBanner, setShowBanner] = useState<boolean | null>(null)
+
+	useEffect(() => {
+		// Buscar configuração do settings
+		const fetchBannerConfig = async () => {
+			try {
+				const response = await fetch('/api/settings/public')
+				if (response.ok) {
+					const data = await response.json()
+					// Usar configuração do settings, ou fallback para variável de ambiente
+					const show = data.general?.showDemoBanner ??
+						(process.env.NEXT_PUBLIC_SHOW_DEMO_BANNER === 'true')
+					setShowBanner(show)
+				} else {
+					// Fallback para variável de ambiente
+					setShowBanner(process.env.NEXT_PUBLIC_SHOW_DEMO_BANNER === 'true')
+				}
+			} catch {
+				// Fallback para variável de ambiente
+				setShowBanner(process.env.NEXT_PUBLIC_SHOW_DEMO_BANNER === 'true')
+			}
+		}
+
+		fetchBannerConfig()
+	}, [])
 
 	useEffect(() => {
 		if (showBanner) {
 			document.body.classList.add('has-demo-banner')
+		} else {
+			document.body.classList.remove('has-demo-banner')
 		}
 		return () => {
 			document.body.classList.remove('has-demo-banner')
 		}
 	}, [showBanner])
 
-	if (!showBanner) return null
+	// Não renderizar enquanto carrega ou se não deve mostrar
+	if (showBanner === null || !showBanner) return null
 
 	return (
 		<div className="demo-banner">
