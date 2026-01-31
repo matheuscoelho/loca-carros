@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import AdminSidebar from '@/components/admin/AdminSidebar'
 import DemoBanner from '@/components/layout/DemoBanner'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
+import { useBranding } from '@/contexts/BrandingContext'
 
 export default function AdminLayout({
 	children,
@@ -14,6 +15,7 @@ export default function AdminLayout({
 }) {
 	const { data: session, status } = useSession()
 	const router = useRouter()
+	const { branding } = useBranding()
 	const [sidebarOpen, setSidebarOpen] = useState(false)
 	const [isMobile, setIsMobile] = useState(false)
 
@@ -86,7 +88,15 @@ export default function AdminLayout({
 						)}
 						{isMobile && (
 							<>
-								<span className="fw-bold">Navegar Sistemas</span>
+								<img
+									src={branding.logoLight}
+									alt={branding.siteName}
+									style={{
+										maxWidth: '120px',
+										maxHeight: '32px',
+										objectFit: 'contain'
+									}}
+								/>
 								<span className="badge bg-primary ms-2">Admin</span>
 							</>
 						)}

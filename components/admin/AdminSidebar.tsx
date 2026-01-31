@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import { useBranding } from '@/contexts/BrandingContext'
 
 const menuItems = [
 	{
@@ -100,6 +101,7 @@ interface AdminSidebarProps {
 export default function AdminSidebar({ isOpen = true, onClose }: AdminSidebarProps) {
 	const pathname = usePathname()
 	const t = useTranslations('admin')
+	const { branding } = useBranding()
 	const [isMobile, setIsMobile] = useState(false)
 	const showBanner = process.env.NEXT_PUBLIC_SHOW_DEMO_BANNER === 'true'
 	const bannerHeight = showBanner ? '40px' : '0px'
@@ -171,7 +173,15 @@ export default function AdminSidebar({ isOpen = true, onClose }: AdminSidebarPro
 				{/* Header */}
 				<div className="p-4 border-bottom border-secondary d-flex justify-content-between align-items-center">
 					<Link href="/admin" className="d-flex align-items-center text-white text-decoration-none" onClick={handleLinkClick}>
-						<span className="h4 mb-0 fw-bold">Navegar Sistemas</span>
+						<img
+							src={branding.logoDark}
+							alt={branding.siteName}
+							style={{
+								maxWidth: '150px',
+								maxHeight: '40px',
+								objectFit: 'contain'
+							}}
+						/>
 						<span className="badge bg-primary ms-2">Admin</span>
 					</Link>
 					{isMobile && (
