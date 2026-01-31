@@ -157,6 +157,8 @@ a.link-primary-brand:hover {
 .btn.btn-signin {
   background-color: var(--bs-brand-2) !important;
   border-color: var(--bs-brand-2) !important;
+  vertical-align: middle !important;
+  margin-top: 0 !important;
 }
 
 .btn.btn-signin:hover {
