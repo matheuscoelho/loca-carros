@@ -6,6 +6,7 @@ import { authOptions } from '@/lib/auth'
 import { getDatabase } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { clearTenantCache } from '@/lib/tenant/resolver'
+import { hash } from 'bcryptjs'
 
 /**
  * GET /api/root-wl/tenants/[id]
@@ -105,7 +106,7 @@ export async function PUT(
     }
 
     const body = await request.json()
-    const { name, status, subscription, limits, domains } = body
+    const { name, status, subscription, limits, domains, adminPassword } = body
 
     const db = await getDatabase()
 
@@ -138,6 +139,15 @@ export async function PUT(
       { _id: new ObjectId(id) },
       { $set: updateData }
     )
+
+    // Atualizar senha do admin se fornecida
+    if (adminPassword && adminPassword.length >= 6) {
+      const hashedPassword = await hash(adminPassword, 12)
+      await db.collection('users').updateOne(
+        { tenantId: new ObjectId(id), role: 'admin' },
+        { $set: { password: hashedPassword, updatedAt: new Date() } }
+      )
+    }
 
     // Limpar cache do tenant
     clearTenantCache(existingTenant.domains.primary)

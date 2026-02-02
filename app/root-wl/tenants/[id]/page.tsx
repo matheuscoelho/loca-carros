@@ -54,6 +54,8 @@ export default function TenantDetailPage() {
   })
 
   const [newDomain, setNewDomain] = useState('')
+  const [adminPassword, setAdminPassword] = useState('')
+  const [savingPassword, setSavingPassword] = useState(false)
 
   const fetchTenant = useCallback(async () => {
     try {
@@ -139,6 +141,37 @@ export default function TenantDetailPage() {
     } catch (err) {
       setError('Erro ao desativar tenant')
       console.error(err)
+    }
+  }
+
+  const handleResetPassword = async () => {
+    if (!adminPassword || adminPassword.length < 6) {
+      setError('A senha deve ter no mínimo 6 caracteres')
+      return
+    }
+
+    setSavingPassword(true)
+    setError(null)
+    setSuccess(null)
+
+    try {
+      const response = await fetch(`/api/root-wl/tenants/${tenantId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ adminPassword }),
+      })
+
+      if (!response.ok) {
+        const data = await response.json()
+        throw new Error(data.error || 'Erro ao alterar senha')
+      }
+
+      setSuccess('Senha do administrador alterada com sucesso!')
+      setAdminPassword('')
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Erro ao alterar senha')
+    } finally {
+      setSavingPassword(false)
     }
   }
 
@@ -422,7 +455,29 @@ export default function TenantDetailPage() {
             </div>
             <div className="card-body">
               <p className="mb-1 text-white">{tenant.owner.name}</p>
-              <p className="mb-0 text-white-50 small">{tenant.owner.email}</p>
+              <p className="mb-3 text-white-50 small">{tenant.owner.email}</p>
+
+              <hr className="border-secondary" />
+
+              <label className="form-label text-white small">Nova Senha</label>
+              <div className="input-group input-group-sm mb-2">
+                <input
+                  type="password"
+                  className="form-control bg-dark text-white border-secondary"
+                  placeholder="Mínimo 6 caracteres"
+                  value={adminPassword}
+                  onChange={(e) => setAdminPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className="btn btn-outline-warning"
+                  onClick={handleResetPassword}
+                  disabled={savingPassword}
+                >
+                  {savingPassword ? '...' : 'Alterar'}
+                </button>
+              </div>
+              <small className="text-white-50">Alterar senha do admin</small>
             </div>
           </div>
 
