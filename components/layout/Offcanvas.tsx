@@ -11,11 +11,11 @@ export default function Offcanvas({ isOffcanvas, handleOffcanvas }: any) {
 		<>
 			<div className={`sidebar-canvas-wrapper perfect-scrollbar button-bg-2 ${isOffcanvas ? "sidebar-canvas-visible" : ""}`}>
 				<div className="sidebar-canvas-container">
-					<div className="sidebar-canvas-head">
-						<div className="sidebar-canvas-logo">
-							<Link className="d-flex" href="/">
-								<img className="light-mode" alt={branding.siteName} src={branding.logoLight} style={{ width: branding.logoWidth, height: branding.logoHeight, objectFit: 'contain' }} />
-								<img className="dark-mode" alt={branding.siteName} src={branding.logoDark} style={{ width: branding.logoWidth, height: branding.logoHeight, objectFit: 'contain' }} />
+					<div className="sidebar-canvas-head d-flex justify-content-between align-items-center">
+						<div className="sidebar-canvas-logo flex-grow-1 text-center">
+							<Link className="d-inline-block" href="/">
+								<img className="light-mode" alt={branding.siteName} src={branding.logoLight} style={{ maxWidth: '120px', maxHeight: '35px', objectFit: 'contain' }} />
+								<img className="dark-mode" alt={branding.siteName} src={branding.logoDark} style={{ maxWidth: '120px', maxHeight: '35px', objectFit: 'contain' }} />
 							</Link>
 						</div>
 						<div className="sidebar-canvas-lang">

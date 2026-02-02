@@ -12,11 +12,13 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
 		<>
 			<div className={`mobile-header-active mobile-header-wrapper-style perfect-scrollbar button-bg-2 ${isMobileMenu ? 'sidebar-visible' : ''}`}>
 				<PerfectScrollbar className="mobile-header-wrapper-inner">
-					<div className="mobile-header-logo">
-						<Link className="d-flex" href="/">
-							<img className="light-mode" alt={branding.siteName} src={branding.logoLight} style={{ maxWidth: '150px', maxHeight: '40px', objectFit: 'contain' }} />
-							<img className="dark-mode" alt={branding.siteName} src={branding.logoDark} style={{ maxWidth: '150px', maxHeight: '40px', objectFit: 'contain' }} />
-						</Link>
+					<div className="mobile-header-logo d-flex justify-content-between align-items-center">
+						<div className="flex-grow-1 text-center">
+							<Link className="d-inline-block" href="/">
+								<img className="light-mode" alt={branding.siteName} src={branding.logoLight} style={{ maxWidth: '120px', maxHeight: '35px', objectFit: 'contain' }} />
+								<img className="dark-mode" alt={branding.siteName} src={branding.logoDark} style={{ maxWidth: '120px', maxHeight: '35px', objectFit: 'contain' }} />
+							</Link>
+						</div>
 						<div className="burger-icon burger-icon-white" onClick={handleMobileMenu} />
 					</div>
 					<div className="mobile-header-content-area">
