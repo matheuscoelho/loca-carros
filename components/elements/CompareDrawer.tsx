@@ -1,9 +1,11 @@
 'use client'
 
 import { useCompare } from '@/context/CompareContext'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 export default function CompareDrawer() {
+  const t = useTranslations('compare')
   const { compareCars, removeFromCompare, clearCompare, showDrawer, setShowDrawer } = useCompare()
 
   if (compareCars.length === 0) {
@@ -67,7 +69,7 @@ export default function CompareDrawer() {
           style={{ borderBottom: '1px solid #e5e7eb' }}
         >
           <div className="d-flex align-items-center gap-2">
-            <h6 className="mb-0">Comparar Veículos</h6>
+            <h6 className="mb-0">{t('title')}</h6>
             <span className="badge bg-primary">{compareCars.length}/3</span>
           </div>
           <div className="d-flex gap-2">
@@ -75,7 +77,7 @@ export default function CompareDrawer() {
               className="btn btn-sm btn-outline-danger"
               onClick={clearCompare}
             >
-              Limpar
+              {t('clear')}
             </button>
             <button
               className="btn btn-sm btn-outline-secondary"
@@ -170,7 +172,7 @@ export default function CompareDrawer() {
                   <circle cx="12" cy="12" r="10" />
                   <path d="M12 8v8M8 12h8" />
                 </svg>
-                <span style={{ fontSize: '13px', marginTop: '8px' }}>Adicionar veículo</span>
+                <span style={{ fontSize: '13px', marginTop: '8px' }}>{t('addVehicle')}</span>
               </Link>
             )}
           </div>
@@ -189,14 +191,14 @@ export default function CompareDrawer() {
               opacity: compareCars.length < 2 ? 0.5 : 1
             }}
           >
-            Comparar {compareCars.length} veículos
+            {t('compareCount', { count: compareCars.length })}
             <svg className="ms-2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </Link>
           {compareCars.length < 2 && (
             <p className="text-center text-muted small mt-2 mb-0">
-              Selecione pelo menos 2 veículos
+              {t('selectAtLeast2')}
             </p>
           )}
         </div>

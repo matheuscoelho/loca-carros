@@ -1,8 +1,11 @@
+'use client'
 
+import { useTranslations } from 'next-intl'
 import CounterUp from '@/components/elements/CounterUp'
 import Layout from "@/components/layout/Layout"
 import Link from "next/link"
 export default function DealerListing() {
+	const t = useTranslations('dealer')
 
 	return (
 		<>
@@ -15,8 +18,8 @@ export default function DealerListing() {
 								<img className="w-100 h-100 img-banner" src="/assets/imgs/page-header/banner7.png" alt="Iuri" />
 							</div>
 							<div className="container position-absolute z-1 top-50 start-50 translate-middle">
-								<h2 className="text-white">Dealer Listing</h2>
-								<span className="text-white text-xl-medium">Professional car rental people</span>
+								<h2 className="text-white">{t('title')}</h2>
+								<span className="text-white text-xl-medium">{t('subtitle')}</span>
 							</div>
 							<div className="background-body position-absolute z-1 top-100 start-50 translate-middle px-3 py-2 rounded-12 border d-flex gap-3 d-none">
 								<Link href="/" className="neutral-700 text-md-medium">Home</Link>
@@ -32,13 +35,13 @@ export default function DealerListing() {
 						<div className="container">
 							<div className="row align-items-end">
 								<div className="col-md-8">
-									<h4 className="neutral-1000">Our Vehicle Fleet</h4>
-									<p className="text-lg-medium neutral-500">Turning dreams into reality with versatile vehicles.</p>
+									<h4 className="neutral-1000">{t('ourFleet')}</h4>
+									<p className="text-lg-medium neutral-500">{t('subtitle')}</p>
 								</div>
 								<div className="col-md-4">
 									<div className="d-flex justify-content-end mt-md-0 mt-4">
 										<Link className="btn btn-primary rounded-3" href="/cars-list-1">
-											Become a renter
+											{t('becomeRenter')}
 											<svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<path d="M8 15L15 8L8 1M15 8L1 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 											</svg>
@@ -389,8 +392,8 @@ export default function DealerListing() {
 							<div className="container">
 								<div className="row align-items-center">
 									<div className="col-lg-5">
-										<Link className="btn btn-signin bg-2 text-dark mb-4" href="#">Our Mission</Link>
-										<h4 className="mb-4 neutral-1000">Sell your car at a fair price. <br />Get started with us today.</h4>
+										<Link className="btn btn-signin bg-2 text-dark mb-4" href="#">{t('ourMission')}</Link>
+										<h4 className="mb-4 neutral-1000">{t('missionText')}</h4>
 										<p className="text-lg-medium neutral-500 mb-4">Our mission is to make car rental easy, accessible, and affordable for everyone. We believe that renting a car should be a hassle-free experience, and we're dedicated to ensuring that every customer finds the perfect vehicle for their journey.</p>
 										<div className="row">
 											<div className="col">
@@ -402,7 +405,7 @@ export default function DealerListing() {
 											</div>
 										</div>
 										<Link className="btn btn-primary mt-2" href="#">
-											Get Started Now
+											{t('getStarted')}
 											<svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<path d="M8 15L15 8L8 1M15 8L1 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 											</svg>

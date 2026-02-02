@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
 import CarCard1 from '@/components/elements/carcard/CarCard1'
 import HeroSearch from '@/components/elements/HeroSearch'
 import SortCarsFilter from '@/components/elements/SortCarsFilter'
@@ -10,6 +11,7 @@ import Link from "next/link"
 import Marquee from 'react-fast-marquee'
 
 export default function CarsList2() {
+	const t = useTranslations('vehicles')
 	const [cars, setCars] = useState<MongoDBCar[]>([])
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState<string | null>(null)
@@ -25,7 +27,7 @@ export default function CarsList2() {
 			setCars(data.cars || [])
 		} catch (err) {
 			console.error('Error fetching cars:', err)
-			setError('Erro ao carregar veículos')
+			setError(t('loadError'))
 		} finally {
 			setLoading(false)
 		}
@@ -126,19 +128,19 @@ export default function CarsList2() {
 												<div className="spinner-border text-primary" role="status">
 													<span className="visually-hidden">Loading...</span>
 												</div>
-												<p className="mt-3">Carregando veículos...</p>
+												<p className="mt-3">{t('loading')}</p>
 											</div>
 										) : error ? (
 											<div className="alert alert-danger text-center">
 												{error}
 												<button className="btn btn-sm btn-primary ms-3" onClick={fetchCars}>
-													Tentar novamente
+													{t('tryAgain')}
 												</button>
 											</div>
 										) : paginatedCars.length === 0 ? (
 											<div className="text-center py-5">
-												<h5>Nenhum veículo encontrado</h5>
-												<p className="text-muted">Tente ajustar os filtros</p>
+												<h5>{t('noVehiclesFound')}</h5>
+												<p className="text-muted">{t('tryAdjustFilters')}</p>
 											</div>
 										) : (
 											<div className="row">

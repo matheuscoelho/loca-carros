@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl'
 
 export default function ComparePage() {
   const { compareCars, removeFromCompare, clearCompare } = useCompare()
-  const t = useTranslations('vehicles')
+  const t = useTranslations('compare')
 
   if (compareCars.length === 0) {
     return (
@@ -15,12 +15,12 @@ export default function ComparePage() {
         <div className="container pt-140 pb-170">
           <div className="text-center">
             <div style={{ fontSize: '80px', marginBottom: '20px' }}>🔍</div>
-            <h3>Nenhum veículo para comparar</h3>
+            <h3>{t('noVehicles')}</h3>
             <p className="text-muted mb-4">
-              Adicione veículos à lista de comparação para ver as diferenças lado a lado.
+              {t('noVehiclesDescription')}
             </p>
             <Link href="/cars-list-1" className="btn btn-primary">
-              Ver Veículos
+              {t('viewVehicles')}
             </Link>
           </div>
         </div>
@@ -29,18 +29,18 @@ export default function ComparePage() {
   }
 
   const specs = [
-    { key: 'brand', label: 'Marca', getValue: (car: any) => car.brand },
-    { key: 'model', label: 'Modelo', getValue: (car: any) => car.model },
-    { key: 'year', label: 'Ano', getValue: (car: any) => car.year },
-    { key: 'carType', label: 'Tipo', getValue: (car: any) => car.carType },
-    { key: 'transmission', label: 'Transmissão', getValue: (car: any) => car.transmission },
-    { key: 'fuelType', label: 'Combustível', getValue: (car: any) => car.fuelType },
-    { key: 'seats', label: 'Assentos', getValue: (car: any) => car.specs?.seats },
-    { key: 'doors', label: 'Portas', getValue: (car: any) => car.specs?.doors },
-    { key: 'bags', label: 'Bagagens', getValue: (car: any) => car.specs?.bags },
-    { key: 'mileage', label: 'Quilometragem', getValue: (car: any) => car.specs?.mileage ? `${car.specs.mileage.toLocaleString()} km` : '-' },
-    { key: 'rating', label: 'Avaliação', getValue: (car: any) => car.rating ? `⭐ ${car.rating.toFixed(1)}` : '-' },
-    { key: 'price', label: 'Preço/dia', getValue: (car: any) => `$${car.pricing?.dailyRate}` },
+    { key: 'brand', label: t('specs.brand'), getValue: (car: any) => car.brand },
+    { key: 'model', label: t('specs.model'), getValue: (car: any) => car.model },
+    { key: 'year', label: t('specs.year'), getValue: (car: any) => car.year },
+    { key: 'carType', label: t('specs.type'), getValue: (car: any) => car.carType },
+    { key: 'transmission', label: t('specs.transmission'), getValue: (car: any) => car.transmission },
+    { key: 'fuelType', label: t('specs.fuel'), getValue: (car: any) => car.fuelType },
+    { key: 'seats', label: t('specs.seats'), getValue: (car: any) => car.specs?.seats },
+    { key: 'doors', label: t('specs.doors'), getValue: (car: any) => car.specs?.doors },
+    { key: 'bags', label: t('specs.bags'), getValue: (car: any) => car.specs?.bags },
+    { key: 'mileage', label: t('specs.mileage'), getValue: (car: any) => car.specs?.mileage ? `${car.specs.mileage.toLocaleString()} km` : '-' },
+    { key: 'rating', label: t('specs.rating'), getValue: (car: any) => car.rating ? `⭐ ${car.rating.toFixed(1)}` : '-' },
+    { key: 'price', label: t('specs.pricePerDay'), getValue: (car: any) => `$${car.pricing?.dailyRate}` },
   ]
 
   return (
@@ -49,17 +49,17 @@ export default function ComparePage() {
         {/* Header */}
         <div className="d-flex justify-content-between align-items-center mb-4">
           <div>
-            <h2 className="mb-1">Comparar Veículos</h2>
+            <h2 className="mb-1">{t('title')}</h2>
             <p className="text-muted mb-0">
-              Comparando {compareCars.length} veículo{compareCars.length > 1 ? 's' : ''}
+              {t('comparingCount', { count: compareCars.length })}
             </p>
           </div>
           <div className="d-flex gap-2">
             <button className="btn btn-outline-danger" onClick={clearCompare}>
-              Limpar Comparação
+              {t('clearComparison')}
             </button>
             <Link href="/cars-list-1" className="btn btn-outline-primary">
-              + Adicionar Mais
+              {t('addMore')}
             </Link>
           </div>
         </div>
@@ -100,7 +100,7 @@ export default function ComparePage() {
                           href={`/booking/${car._id}`}
                           className="btn btn-primary btn-sm w-100"
                         >
-                          {t('bookNow')}
+                          {t('book')}
                         </Link>
                       </div>
                     </th>
@@ -117,7 +117,7 @@ export default function ComparePage() {
                           <circle cx="12" cy="12" r="10" />
                           <path d="M12 8v8M8 12h8" />
                         </svg>
-                        <span className="mt-3">Adicionar veículo</span>
+                        <span className="mt-3">{t('addVehicle')}</span>
                       </Link>
                     </th>
                   ))}
@@ -140,7 +140,7 @@ export default function ComparePage() {
                         >
                           {value || '-'}
                           {isBestPrice && compareCars.length > 1 && (
-                            <span className="badge bg-success ms-2">Melhor</span>
+                            <span className="badge bg-success ms-2">{t('best')}</span>
                           )}
                         </td>
                       )
@@ -158,8 +158,8 @@ export default function ComparePage() {
 
         {/* Legend */}
         <div className="mt-4 text-center">
-          <span className="badge bg-success me-2">Melhor preço</span>
-          <span className="text-muted small">= Melhor valor entre os comparados</span>
+          <span className="badge bg-success me-2">{t('bestPrice')}</span>
+          <span className="text-muted small">= {t('bestValueDescription')}</span>
         </div>
       </div>
     </Layout>

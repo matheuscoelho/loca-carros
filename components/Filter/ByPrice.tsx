@@ -1,4 +1,10 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
+
 export default function ByPrice({ handlePriceRangeChange, filter }: any) {
+	const t = useTranslations('filter')
+
 	const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const newMin = parseInt(e.target.value)
 		// Garante que min não ultrapasse max
@@ -19,7 +25,7 @@ export default function ByPrice({ handlePriceRangeChange, filter }: any) {
 		<>
 			<div className="box-collapse scrollFilter">
 				<div className="mb-2">
-					<label className="text-xs-medium neutral-500 d-block mb-1">Mínimo</label>
+					<label className="text-xs-medium neutral-500 d-block mb-1">{t('minimum')}</label>
 					<input
 						type="range"
 						min="0"
@@ -30,7 +36,7 @@ export default function ByPrice({ handlePriceRangeChange, filter }: any) {
 					/>
 				</div>
 				<div className="mb-2">
-					<label className="text-xs-medium neutral-500 d-block mb-1">Máximo</label>
+					<label className="text-xs-medium neutral-500 d-block mb-1">{t('maximum')}</label>
 					<input
 						type="range"
 						min="0"

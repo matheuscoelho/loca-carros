@@ -78,7 +78,7 @@ export default function BookingTimeline({
 	cancelledDate,
 	variant = 'horizontal'
 }: BookingTimelineProps) {
-	const t = useTranslations('booking')
+	const t = useTranslations('timeline')
 
 	const formatDate = (dateString?: string) => {
 		if (!dateString) return null
@@ -113,7 +113,7 @@ export default function BookingTimeline({
 		? [
 			{
 				status: 'pending',
-				label: t('timeline.booked'),
+				label: t('booked'),
 				...getStepDate('pending'),
 				isActive: false,
 				isCompleted: true,
@@ -121,7 +121,7 @@ export default function BookingTimeline({
 			},
 			{
 				status: 'cancelled',
-				label: t('timeline.cancelled'),
+				label: t('cancelled'),
 				...getStepDate('cancelled'),
 				isActive: true,
 				isCompleted: false,
@@ -130,7 +130,7 @@ export default function BookingTimeline({
 		]
 		: statusOrder.map((status, index) => ({
 			status,
-			label: t(`timeline.${status}`),
+			label: t(status),
 			...getStepDate(status),
 			isActive: index === currentIndex,
 			isCompleted: index < currentIndex,
@@ -202,7 +202,7 @@ export default function BookingTimeline({
 											fontSize: '11px'
 										}}
 									>
-										Status atual
+										{t('currentStatus')}
 									</span>
 								)}
 							</div>

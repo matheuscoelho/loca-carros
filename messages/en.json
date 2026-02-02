@@ -257,7 +257,12 @@
     "seats": "seats",
     "reviews": "reviews",
     "from": "From",
-    "noVehiclesAvailable": "No vehicles available"
+    "noVehiclesAvailable": "No vehicles available",
+    "loadError": "Error loading vehicles",
+    "loading": "Loading vehicles...",
+    "tryAgain": "Try again",
+    "noVehiclesFound": "No vehicles found",
+    "tryAdjustFilters": "Try adjusting the filters"
   },
   "booking": {
     "title": "Booking",
@@ -804,6 +809,79 @@
     "bookNow": "Book Now",
     "km": "km",
     "seats": "seats"
+  },
+  "filter": {
+    "minimum": "Minimum",
+    "maximum": "Maximum"
+  },
+  "compare": {
+    "title": "Compare Vehicles",
+    "clear": "Clear",
+    "clearComparison": "Clear Comparison",
+    "addVehicle": "Add vehicle",
+    "addMore": "+ Add More",
+    "selectAtLeast": "Select at least 2 vehicles",
+    "selectAtLeast2": "Select at least 2 vehicles",
+    "removedFromCompare": "Removed from comparison",
+    "maxVehicles": "Maximum of 3 vehicles to compare",
+    "addedToCompare": "Added to compare",
+    "removeFromCompare": "Remove from comparison",
+    "addToCompare": "Add to compare",
+    "comparing": "Comparing",
+    "compare": "Compare",
+    "compareCount": "Compare {count} vehicles",
+    "noVehicles": "No vehicles to compare",
+    "noVehiclesDescription": "Add vehicles to the comparison list to see differences side by side.",
+    "viewVehicles": "View Vehicles",
+    "comparingCount": "Comparing {count} vehicle(s)",
+    "book": "Book Now",
+    "best": "Best",
+    "bestPrice": "Best price",
+    "bestValueDescription": "Best value among compared",
+    "perDay": "/day",
+    "specs": {
+      "brand": "Brand",
+      "model": "Model",
+      "year": "Year",
+      "type": "Type",
+      "transmission": "Transmission",
+      "fuel": "Fuel",
+      "seats": "Seats",
+      "doors": "Doors",
+      "bags": "Bags",
+      "mileage": "Mileage",
+      "rating": "Rating",
+      "pricePerDay": "Price/day"
+    }
+  },
+  "search": {
+    "placeholder": "Search by brand, model...",
+    "recentSearches": "Recent searches",
+    "clear": "Clear",
+    "noResults": "No vehicles found",
+    "noVehiclesFound": "No vehicles found",
+    "trySearching": "Try searching by brand, model or type",
+    "viewAllResults": "View all results",
+    "perDay": "/day"
+  },
+  "timeline": {
+    "currentStatus": "Current status",
+    "booked": "Booked",
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "in_progress": "In Use",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  },
+  "dealer": {
+    "title": "Dealer Listing",
+    "subtitle": "Professional car rental people",
+    "ourFleet": "Our Vehicle Fleet",
+    "becomeRenter": "Become a renter",
+    "vehicles": "Vehicles",
+    "ourMission": "Our Mission",
+    "missionText": "Sell your car at a fair price. Get started with us today.",
+    "getStarted": "Get Started Now"
   },
   "carDetails": {
     "breadcrumb": {

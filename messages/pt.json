@@ -269,7 +269,12 @@
     "seats": "assentos",
     "reviews": "avaliações",
     "from": "A partir de",
-    "noVehiclesAvailable": "Nenhum veículo disponível"
+    "noVehiclesAvailable": "Nenhum veículo disponível",
+    "loadError": "Erro ao carregar veículos",
+    "loading": "Carregando veículos...",
+    "tryAgain": "Tentar novamente",
+    "noVehiclesFound": "Nenhum veículo encontrado",
+    "tryAdjustFilters": "Tente ajustar os filtros"
   },
   "booking": {
     "title": "Reserva",
@@ -816,6 +821,79 @@
     "bookNow": "Reservar",
     "km": "km",
     "seats": "assentos"
+  },
+  "filter": {
+    "minimum": "Mínimo",
+    "maximum": "Máximo"
+  },
+  "compare": {
+    "title": "Comparar Veículos",
+    "clear": "Limpar",
+    "clearComparison": "Limpar Comparação",
+    "addVehicle": "Adicionar veículo",
+    "addMore": "+ Adicionar Mais",
+    "selectAtLeast": "Selecione pelo menos 2 veículos",
+    "selectAtLeast2": "Selecione pelo menos 2 veículos",
+    "removedFromCompare": "Removido da comparação",
+    "maxVehicles": "Máximo de 3 veículos para comparar",
+    "addedToCompare": "Adicionado para comparar",
+    "removeFromCompare": "Remover da comparação",
+    "addToCompare": "Adicionar para comparar",
+    "comparing": "Comparando",
+    "compare": "Comparar",
+    "compareCount": "Comparar {count} veículos",
+    "noVehicles": "Nenhum veículo para comparar",
+    "noVehiclesDescription": "Adicione veículos à lista de comparação para ver as diferenças lado a lado.",
+    "viewVehicles": "Ver Veículos",
+    "comparingCount": "Comparando {count} veículo(s)",
+    "book": "Reservar",
+    "best": "Melhor",
+    "bestPrice": "Melhor preço",
+    "bestValueDescription": "Melhor valor entre os comparados",
+    "perDay": "/dia",
+    "specs": {
+      "brand": "Marca",
+      "model": "Modelo",
+      "year": "Ano",
+      "type": "Tipo",
+      "transmission": "Transmissão",
+      "fuel": "Combustível",
+      "seats": "Assentos",
+      "doors": "Portas",
+      "bags": "Bagagens",
+      "mileage": "Quilometragem",
+      "rating": "Avaliação",
+      "pricePerDay": "Preço/dia"
+    }
+  },
+  "search": {
+    "placeholder": "Buscar por marca, modelo...",
+    "recentSearches": "Buscas recentes",
+    "clear": "Limpar",
+    "noResults": "Nenhum veículo encontrado",
+    "noVehiclesFound": "Nenhum veículo encontrado",
+    "trySearching": "Tente buscar por marca, modelo ou tipo",
+    "viewAllResults": "Ver todos os resultados",
+    "perDay": "/dia"
+  },
+  "timeline": {
+    "currentStatus": "Status atual",
+    "booked": "Reservado",
+    "pending": "Pendente",
+    "confirmed": "Confirmado",
+    "in_progress": "Em Uso",
+    "completed": "Concluído",
+    "cancelled": "Cancelado"
+  },
+  "dealer": {
+    "title": "Lista de Revendedores",
+    "subtitle": "Profissionais de aluguel de carros",
+    "ourFleet": "Nossa Frota de Veículos",
+    "becomeRenter": "Torne-se um locatário",
+    "vehicles": "Veículos",
+    "ourMission": "Nossa Missão",
+    "missionText": "Venda seu carro a um preço justo. Comece conosco hoje.",
+    "getStarted": "Comece Agora"
   },
   "carDetails": {
     "breadcrumb": {

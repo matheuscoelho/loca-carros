@@ -2,6 +2,7 @@
 
 import { useCompare } from '@/context/CompareContext'
 import { toastSuccess, toastWarning } from '@/components/ui/Toast'
+import { useTranslations } from 'next-intl'
 
 interface CompareButtonProps {
   car: {
@@ -37,6 +38,7 @@ export default function CompareButton({
   showLabel = false,
   className = ''
 }: CompareButtonProps) {
+  const t = useTranslations('compare')
   const { addToCompare, removeFromCompare, isInCompare, canAddMore } = useCompare()
 
   const inCompare = isInCompare(car._id)
@@ -47,15 +49,15 @@ export default function CompareButton({
 
     if (inCompare) {
       removeFromCompare(car._id)
-      toastSuccess('Removido da comparação')
+      toastSuccess(t('removedFromCompare'))
     } else {
       if (!canAddMore) {
-        toastWarning('Máximo de 3 veículos para comparar')
+        toastWarning(t('maxVehicles'))
         return
       }
       const added = addToCompare(car)
       if (added) {
-        toastSuccess('Adicionado para comparar')
+        toastSuccess(t('addedToCompare'))
       }
     }
   }
@@ -76,7 +78,7 @@ export default function CompareButton({
     <button
       onClick={handleClick}
       className={`btn ${inCompare ? 'btn-primary' : 'btn-outline-secondary'} ${sizeClasses[size]} ${className}`}
-      title={inCompare ? 'Remover da comparação' : 'Adicionar para comparar'}
+      title={inCompare ? t('removeFromCompare') : t('addToCompare')}
       style={{
         borderRadius: showLabel ? '8px' : '50%',
         padding: showLabel ? undefined : '8px',
@@ -102,7 +104,7 @@ export default function CompareButton({
         <path d="M3 14h7v7H3z" />
         <path d="M14 14h7v7h-7z" />
       </svg>
-      {showLabel && <span>{inCompare ? 'Comparando' : 'Comparar'}</span>}
+      {showLabel && <span>{inCompare ? t('comparing') : t('compare')}</span>}
     </button>
   )
 }

@@ -34,7 +34,7 @@ export default function SearchAutocomplete({
 	onSelect,
 	variant = 'light'
 }: SearchAutocompleteProps) {
-	const t = useTranslations('vehicles')
+	const t = useTranslations('search')
 	const router = useRouter()
 	const [query, setQuery] = useState('')
 	const [results, setResults] = useState<Vehicle[]>([])
@@ -207,7 +207,7 @@ export default function SearchAutocomplete({
 					onChange={handleInputChange}
 					onFocus={() => setIsOpen(true)}
 					onKeyDown={handleKeyDown}
-					placeholder={placeholder || t('searchPlaceholder')}
+					placeholder={placeholder || t('placeholder')}
 					className="form-control"
 					style={{
 						paddingLeft: '44px',
@@ -281,13 +281,13 @@ export default function SearchAutocomplete({
 					{query.length < 2 && recentSearches.length > 0 && (
 						<div className="p-3">
 							<div className="d-flex justify-content-between align-items-center mb-2">
-								<span className="text-muted small fw-medium">Buscas recentes</span>
+								<span className="text-muted small fw-medium">{t('recentSearches')}</span>
 								<button
 									onClick={clearRecentSearches}
 									className="btn btn-link btn-sm p-0 text-muted"
 									style={{ fontSize: '12px' }}
 								>
-									Limpar
+									{t('clear')}
 								</button>
 							</div>
 							{recentSearches.map((search, index) => (
@@ -373,7 +373,7 @@ export default function SearchAutocomplete({
 												setIsOpen(false)
 											}}
 										>
-											<span>Ver todos os resultados</span>
+											<span>{t('viewAllResults')}</span>
 											<svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
 												<path d="M5 12h14M12 5l7 7-7 7" />
 											</svg>
@@ -386,8 +386,8 @@ export default function SearchAutocomplete({
 										<circle cx="11" cy="11" r="8" />
 										<line x1="21" y1="21" x2="16.65" y2="16.65" />
 									</svg>
-									<p className="text-muted mb-2">Nenhum veículo encontrado</p>
-									<p className="text-muted small mb-0">Tente buscar por marca, modelo ou tipo</p>
+									<p className="text-muted mb-2">{t('noResults')}</p>
+									<p className="text-muted small mb-0">{t('trySearching')}</p>
 								</div>
 							) : null}
 						</>
