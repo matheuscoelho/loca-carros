@@ -77,7 +77,8 @@ export default function DashboardSidebar() {
 	const pathname = usePathname()
 
 	const handleLogout = async () => {
-		await signOut({ redirect: true, callbackUrl: '/' })
+		const currentOrigin = typeof window !== 'undefined' ? window.location.origin : '/'
+		await signOut({ redirect: true, callbackUrl: currentOrigin })
 	}
 
 	const isActive = (path: string) => pathname === path
