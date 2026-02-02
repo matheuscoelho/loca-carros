@@ -1,11 +1,14 @@
 'use client'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
+import { useSession } from 'next-auth/react'
 import { useBranding } from '@/contexts/BrandingContext'
 
 export default function Offcanvas({ isOffcanvas, handleOffcanvas }: any) {
 	const t = useTranslations('offcanvas')
+	const ta = useTranslations('auth')
 	const { branding, general } = useBranding()
+	const { data: session } = useSession()
 
 	return (
 		<>
@@ -51,7 +54,7 @@ export default function Offcanvas({ isOffcanvas, handleOffcanvas }: any) {
 										<Link href="/contact" className="text-md-bold neutral-1000 d-flex align-items-center gap-2">
 											<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
 												<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-											</svg>
+										</svg>
 											{t('contact')}
 										</Link>
 									</li>
@@ -74,6 +77,25 @@ export default function Offcanvas({ isOffcanvas, handleOffcanvas }: any) {
 								<p className="hour-work-2 text-md-medium neutral-1000">{t('hours')}</p>
 								<p className="email-2 text-md-medium neutral-1000">{general.contactEmail}</p>
 							</div>
+						</div>
+						<div className="mt-4 pt-4 border-top">
+							{session ? (
+								<Link href="/dashboard" className="btn btn-primary w-100">
+									<svg className="me-2" xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 16 16" fill="none">
+										<path d="M3 14C3 14 2 14 2 13C2 12 3 9 8 9C13 9 14 12 14 13C14 14 13 14 13 14H3ZM8 8C8.79565 8 9.55871 7.68393 10.1213 7.12132C10.6839 6.55871 11 5.79565 11 5C11 4.20435 10.6839 3.44129 10.1213 2.87868C9.55871 2.31607 8.79565 2 8 2C7.20435 2 6.44129 2.31607 5.87868 2.87868C5.31607 3.44129 5 4.20435 5 5C5 5.79565 5.31607 6.55871 5.87868 7.12132C6.44129 7.68393 7.20435 8 8 8Z" fill="currentColor" />
+									</svg>
+									{session.user?.name?.split(' ')[0] || 'Dashboard'}
+								</Link>
+							) : (
+								<>
+									<Link href="/login" className="btn btn-primary w-100 mb-2">
+										{ta('signIn')}
+									</Link>
+									<Link href="/register" className="btn btn-outline-primary w-100">
+										{ta('signUp')}
+									</Link>
+								</>
+							)}
 						</div>
 					</div>
 				</div>
