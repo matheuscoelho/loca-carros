@@ -173,6 +173,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 	}
 
 	const locationText = `${car.location?.city || ''}, ${car.location?.country || ''}`
+	const hasMultipleImages = (car.images?.length || 0) > 1
 
 	return (
 		<>
@@ -206,17 +207,27 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 						<div className="container">
 							<div className="container-banner-activities">
 								<div className="box-banner-activities">
-									<Slider
-										{...settingsMain}
-										asNavFor={nav2 as any}
-										ref={(slider) => setSlider1(slider as any)}
-										className="banner-activities-detail">
-										{car.images?.map((img, idx) => (
-											<div key={idx} className="banner-slide-activity">
-												<img src={img.url} alt={car.name} />
-											</div>
-										))}
-									</Slider>
+									{hasMultipleImages ? (
+										<Slider
+											{...settingsMain}
+											asNavFor={nav2 as any}
+											ref={(slider) => setSlider1(slider as any)}
+											className="banner-activities-detail">
+											{car.images.map((img, idx) => (
+												<div key={idx} className="banner-slide-activity">
+													<img src={img.url} alt={car.name} style={{ width: '100%', height: 'auto', borderRadius: '12px' }} />
+												</div>
+											))}
+										</Slider>
+									) : (
+										<div className="banner-slide-activity">
+											<img
+												src={car.images?.[0]?.url || '/assets/imgs/template/placeholder-car.jpg'}
+												alt={car.name}
+												style={{ width: '100%', height: 'auto', borderRadius: '12px' }}
+											/>
+										</div>
+									)}
 									<div className="box-button-abs">
 										<Link className="btn btn-primary rounded-pill" href="#">
 											<svg width={22} height={22} viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -230,19 +241,21 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 										<a className="btn btn-white-md popup-youtube" onClick={() => setOpen(true)}> <img src="/assets/imgs/page/activities/video.svg" alt="Navegar Sistemas" />{t('videoClips')}</a>
 									</div>
 								</div>
-								<div className="slider-thumnail-activities">
-									<Slider
-										{...settingsThumbs}
-										asNavFor={nav1 as any}
-										ref={(slider) => setSlider2(slider as any)}
-										className="slider-nav-thumbnails-activities-detail">
-										{(car.thumbnails || car.images)?.map((thumb, idx) => (
-											<div key={idx} className="banner-slide">
-												<img src={typeof thumb === 'string' ? thumb : thumb.url} alt={car.name} />
-											</div>
-										))}
-									</Slider>
-								</div>
+								{hasMultipleImages && (
+									<div className="slider-thumnail-activities">
+										<Slider
+											{...settingsThumbs}
+											asNavFor={nav1 as any}
+											ref={(slider) => setSlider2(slider as any)}
+											className="slider-nav-thumbnails-activities-detail">
+											{(car.thumbnails || car.images)?.map((thumb, idx) => (
+												<div key={idx} className="banner-slide">
+													<img src={typeof thumb === 'string' ? thumb : thumb.url} alt={car.name} style={{ width: '100%', height: 'auto' }} />
+												</div>
+											))}
+										</Slider>
+									</div>
+								)}
 							</div>
 						</div>
 					</section>
@@ -669,7 +682,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 																</ul>
 															</div>
 															<div className="include-price">
-																<p className="text-md-bold neutral-1000">${extra.price?.toFixed(2)}</p>
+																<p className="text-md-bold neutral-1000">R$ {extra.price?.toFixed(2)}</p>
 															</div>
 														</div>
 													))}
