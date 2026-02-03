@@ -895,6 +895,172 @@
     "missionText": "Venda seu carro a um preço justo. Comece conosco hoje.",
     "getStarted": "Comece Agora"
   },
+  "services": {
+    "title": "Nossos Serviços",
+    "subtitle": "Atendendo Você com Qualidade, Conforto e Conveniência",
+    "viewMore": "Ver Mais",
+    "pageSubtitle": "Serviço perfeito, especialistas de primeira",
+    "home": "Início",
+    "breadcrumb": "Serviços",
+    "listTitle": "Serviços Completos de",
+    "listTitleHighlight": "Aluguel de Carros",
+    "listTitleEnd": "para Atender Todas as Suas Necessidades",
+    "listDescription": "De aluguéis diários a soluções de longo prazo, oferecemos uma ampla gama de veículos e serviços para atender a cada necessidade e orçamento.",
+    "viewDetails": "Ver Detalhes",
+    "dailyWeekly": "Aluguel Diário e Semanal",
+    "dailyWeeklyDesc": "Opções flexíveis de aluguel disponíveis para necessidades de curto prazo e semanais, ideais para férias ou viagens de negócios.",
+    "longTerm": "Aluguel de Longo Prazo",
+    "longTermDesc": "Soluções convenientes e econômicas para quem precisa de um veículo por um período prolongado, com tarifas com desconto.",
+    "luxury": "Aluguel de Carros de Luxo",
+    "luxuryDesc": "Dirija com estilo com nossa seleção de veículos de alto padrão, perfeitos para ocasiões especiais ou viagens executivas.",
+    "vipTransfer": "Serviços de Transfer VIP",
+    "vipTransferDesc": "Opções flexíveis de aluguel disponíveis para necessidades de curto prazo e semanais, ideais para férias ou viagens de negócios.",
+    "chauffeur": "Serviços de Motorista",
+    "chauffeurDesc": "Opções flexíveis de aluguel disponíveis para necessidades de curto prazo e semanais, ideais para férias ou viagens de negócios.",
+    "airportMeet": "Recepção no Aeroporto",
+    "airportMeetDesc": "Opções flexíveis de aluguel disponíveis para necessidades de curto prazo e semanais, ideais para férias ou viagens de negócios.",
+    "concierge": "Serviços de Concierge",
+    "conciergeDesc": "Opções flexíveis de aluguel disponíveis para necessidades de curto prazo e semanais, ideais para férias ou viagens de negócios.",
+    "roadside": "Assistência na Estrada",
+    "roadsideDesc": "Opções flexíveis de aluguel disponíveis para necessidades de curto prazo e semanais, ideais para férias ou viagens de negócios.",
+    "customizable": "Pacotes de Aluguel Personalizáveis",
+    "customizableDesc": "Opções flexíveis de aluguel disponíveis para necessidades de curto prazo e semanais, ideais para férias ou viagens de negócios.",
+    "banner": {
+      "title": "Melhores Ofertas de Aluguel",
+      "subtitle": "Economize 15% ou mais ao reservar e viajar",
+      "subtitleEnd": "antes de 1 de Abril de 2025",
+      "button": "Encontre Ofertas Antecipadas 2025"
+    },
+    "testimonials": {
+      "label": "Depoimentos",
+      "title": "O que dizem sobre nós?",
+      "noHiddenFees": "Sem Taxas Ocultas",
+      "noHiddenFeesDesc": "A atenção aos detalhes no processo de reserva tornou nossa viagem tranquila, permitindo-nos focar em criar memórias duradouras juntos.",
+      "mobileFriendly": "Rápido e Otimizado para Celular!",
+      "mobileFriendlyDesc": "Embarcar nas férias dos nossos sonhos foi muito fácil graças à coordenação perfeita de itens e hotéis usando esta plataforma excepcional de reservas.",
+      "excellentService": "Excelente Atendimento ao Cliente",
+      "excellentServiceDesc": "O processo geral foi não apenas eficiente, mas também enriquecedor, pois o design intuitivo e a interface amigável da plataforma tornaram cada etapa agradável.",
+      "highlyFlexible": "Altamente Flexível e Personalizável",
+      "highlyFlexibleDesc": "A atenção aos detalhes no processo de reserva tornou nossa viagem tranquila, permitindo-nos focar em criar memórias duradouras juntos."
+    },
+    "ctaSection": {
+      "title": "Planeje Sua Viagem Conosco",
+      "description": "Deixe-nos ajudá-lo a tornar sua próxima jornada tranquila e agradável — comece hoje.",
+      "feature1": "Descrições detalhadas e imagens dos veículos",
+      "feature2": "Opções de filtro por tipo, tamanho e recursos do veículo",
+      "feature3": "Informações de disponibilidade em tempo real",
+      "button": "Começar Agora"
+    },
+    "stats": {
+      "globalBranches": "Filiais",
+      "globalBranchesLine2": "Globais",
+      "destinations": "Destinos",
+      "destinationsLine2": "em Colaboração",
+      "years": "Anos de",
+      "yearsLine2": "Experiência",
+      "happy": "Clientes",
+      "happyLine2": "Satisfeitos",
+      "user": "Contas de",
+      "userLine2": "Usuários"
+    },
+    "blog": {
+      "title": "Próximos Carros e Eventos",
+      "subtitle": "Fique por dentro dos últimos lançamentos de carros e próximos eventos",
+      "news": "Notícias",
+      "trend": "Tendência",
+      "discovery": "Descoberta",
+      "keepReading": "Continue Lendo",
+      "comments": "comentários",
+      "mins": "min"
+    },
+    "slider": {
+      "venice": "Veneza",
+      "newYork": "Nova Iorque",
+      "amsterdam": "Amsterdã",
+      "budapest": "Budapeste",
+      "properties": "Propriedades"
+    }
+  },
+  "terms": {
+    "title": "Termos de Serviço",
+    "lastUpdate": "Última atualização: 25 de Agosto de 2024",
+    "tableOfContent": "Índice",
+    "acceptance": {
+      "title": "Aceitação dos Termos",
+      "heading": "Aceitação dos Termos",
+      "paragraph": "Ao acessar e usar nosso site e serviços, você reconhece que leu, entendeu e concorda em ficar vinculado a estes Termos de Serviço. Se você não concordar com qualquer parte destes termos, não deve usar nosso site ou serviços. Seu uso continuado de nosso site e serviços constitui sua aceitação de quaisquer alterações ou atualizações destes termos."
+    },
+    "servicesProvided": {
+      "title": "Serviços Oferecidos",
+      "heading": "Serviços Oferecidos",
+      "paragraph": "Oferecemos uma variedade de serviços, incluindo aluguel de carros, venda de veículos e opções de financiamento. Descrições detalhadas de cada serviço são fornecidas em nosso site. Reservamo-nos o direito de modificar, suspender ou descontinuar qualquer serviço a nosso critério e sem aviso prévio. Não somos responsáveis por quaisquer consequências resultantes de tais alterações."
+    },
+    "userResponsibilities": {
+      "title": "Responsabilidades do Usuário",
+      "heading": "Responsabilidades do Usuário",
+      "accuracyLabel": "Precisão das Informações:",
+      "accuracyText": "Você é responsável por fornecer informações precisas, atuais e completas ao usar nossos serviços. Quaisquer discrepâncias ou imprecisões nas informações fornecidas podem afetar o serviço prestado.",
+      "lawfulUseLabel": "Uso Legal:",
+      "lawfulUseText": "Você concorda em usar nosso site e serviços em conformidade com todas as leis e regulamentos aplicáveis. Você não deve usar nossos serviços para qualquer finalidade ilegal ou não autorizada."
+    },
+    "accountSecurity": {
+      "title": "Segurança da Conta",
+      "heading": "Segurança da Conta",
+      "confidentialityLabel": "Confidencialidade:",
+      "confidentialityText": "Você é responsável por manter a confidencialidade das credenciais de sua conta, incluindo seu nome de usuário e senha. Você concorda em nos notificar imediatamente sobre qualquer acesso não autorizado à sua conta.",
+      "unauthorizedUseLabel": "Uso Não Autorizado:",
+      "unauthorizedUseText": "Se você suspeitar que sua conta foi comprometida ou usada sem autorização, entre em contato conosco imediatamente para tomar medidas corretivas."
+    },
+    "paymentAndFees": {
+      "title": "Pagamento e Taxas",
+      "heading": "Pagamento e Taxas",
+      "paymentTermsLabel": "Termos de Pagamento:",
+      "paymentTermsText": "Todos os pagamentos por serviços devem ser feitos de acordo com as informações de preços e termos de pagamento descritos em nosso site. O pagamento deve ser concluído antes da prestação dos serviços.",
+      "feeChangesLabel": "Alterações de Taxas:",
+      "feeChangesText": "Reservamo-nos o direito de alterar nossas taxas e encargos a qualquer momento. Quaisquer alterações serão refletidas em nosso site, e você é responsável por revisar e entender as taxas atualizadas."
+    },
+    "cancellationAndRefunds": {
+      "title": "Cancelamento e Reembolsos",
+      "heading": "Cancelamento e Reembolsos",
+      "cancellationPolicyLabel": "Política de Cancelamento:",
+      "cancellationPolicyText": "Políticas de cancelamento específicas se aplicam a diferentes serviços. Consulte nosso site ou entre em contato com nossa equipe de atendimento ao cliente para informações detalhadas sobre procedimentos de cancelamento.",
+      "refundPolicyLabel": "Política de Reembolso:",
+      "refundPolicyText": "Reembolsos estão sujeitos aos termos descritos para cada serviço. Em geral, os reembolsos serão processados de acordo com os termos especificados no momento da compra ou aluguel."
+    },
+    "intellectualProperty": {
+      "title": "Propriedade Intelectual"
+    },
+    "limitationOfLiability": {
+      "title": "Limitação de Responsabilidade",
+      "heading": "Limitação de Responsabilidade",
+      "generalLimitationLabel": "Limitação Geral:",
+      "generalLimitationText": "Nossa empresa não é responsável por quaisquer danos indiretos, incidentais, especiais ou consequenciais decorrentes de ou relacionados ao uso de nosso site ou serviços. Isso inclui, mas não se limita a, perda de lucros, dados ou outras perdas intangíveis.",
+      "directDamagesLabel": "Danos Diretos:",
+      "directDamagesText": "No caso de qualquer reclamação decorrente de nossos serviços, nossa responsabilidade é limitada ao valor que você pagou pelo serviço específico em questão. Não somos responsáveis por quaisquer danos indiretos ou consequenciais."
+    },
+    "privacyPolicy": {
+      "title": "Política de Privacidade",
+      "heading": "Política de Privacidade",
+      "commitmentLabel": "Compromisso:",
+      "commitmentText": "Estamos comprometidos em proteger suas informações pessoais. Nossa Política de Privacidade descreve como coletamos, usamos e protegemos seus dados.",
+      "consentLabel": "Consentimento:",
+      "consentText": "Ao usar nossos serviços, você consente com as práticas descritas em nossa Política de Privacidade, que é parte integrante destes Termos de Serviço."
+    },
+    "changesToTerms": {
+      "title": "Alterações nos Termos",
+      "heading": "Alterações nos Termos",
+      "updatesLabel": "Atualizações:",
+      "updatesText": "Podemos atualizar estes Termos de Serviço periodicamente. As alterações serão publicadas em nosso site, e os termos revisados entrarão em vigor imediatamente após a publicação.",
+      "notificationLabel": "Notificação:",
+      "notificationText": "Notificaremos você sobre alterações significativas por email ou através de nosso site. O uso continuado de nossos serviços após quaisquer alterações constitui sua aceitação dos termos revisados."
+    },
+    "governingLaw": {
+      "title": "Lei Aplicável"
+    },
+    "contactUs": {
+      "title": "Fale Conosco"
+    }
+  },
   "carDetails": {
     "breadcrumb": {
       "home": "Início",

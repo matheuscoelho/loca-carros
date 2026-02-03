@@ -961,5 +961,171 @@
     "loading": "Loading...",
     "noLocations": "No locations available",
     "sameLocation": "Return to same location"
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Serving You with Quality, Comfort, and Convenience",
+    "viewMore": "View More",
+    "pageSubtitle": "Perfect service, top experts",
+    "home": "Home",
+    "breadcrumb": "Services",
+    "listTitle": "Comprehensive",
+    "listTitleHighlight": "Car Rental",
+    "listTitleEnd": "Services to Meet All Your Needs",
+    "listDescription": "From daily rentals to long-term solutions, we offer a comprehensive range of vehicles and services to suit every need and budget.",
+    "viewDetails": "View Details",
+    "dailyWeekly": "Daily and Weekly Car Rentals",
+    "dailyWeeklyDesc": "Flexible rental options available for both short-term and weekly needs, ideal for vacations or business trips.",
+    "longTerm": "Long-Term Rentals",
+    "longTermDesc": "Convenient and cost-effective solutions for those needing a vehicle for an extended period, with discounted rates.",
+    "luxury": "Luxury Car Rentals",
+    "luxuryDesc": "Drive in style with our selection of high-end vehicles, perfect for special occasions or executive travel.",
+    "vipTransfer": "VIP Transfer Services",
+    "vipTransferDesc": "Flexible rental options available for both short-term and weekly needs, ideal for vacations or business trips.",
+    "chauffeur": "Chauffeur Services",
+    "chauffeurDesc": "Flexible rental options available for both short-term and weekly needs, ideal for vacations or business trips.",
+    "airportMeet": "Airport Meet and Greet",
+    "airportMeetDesc": "Flexible rental options available for both short-term and weekly needs, ideal for vacations or business trips.",
+    "concierge": "Concierge Services",
+    "conciergeDesc": "Flexible rental options available for both short-term and weekly needs, ideal for vacations or business trips.",
+    "roadside": "Roadside Assistance",
+    "roadsideDesc": "Flexible rental options available for both short-term and weekly needs, ideal for vacations or business trips.",
+    "customizable": "Customizable Rental Packages",
+    "customizableDesc": "Flexible rental options available for both short-term and weekly needs, ideal for vacations or business trips.",
+    "banner": {
+      "title": "Best Car Rent Deals",
+      "subtitle": "Save 15% or more when you book and ride",
+      "subtitleEnd": "before 1 April 2025",
+      "button": "Find Early 2025 Deals"
+    },
+    "testimonials": {
+      "label": "Testimonials",
+      "title": "What they say about us?",
+      "noHiddenFees": "No Hidden Fees",
+      "noHiddenFeesDesc": "The attention to detail in the booking process made our trip stress-free, allowing us to focus on creating lasting memories together.",
+      "mobileFriendly": "Mobile-Friendly and Fast!",
+      "mobileFriendlyDesc": "Embarking on our dream vacation was made a breeze through the seamless coordination of items and hotels using this exceptional booking platform.",
+      "excellentService": "Excellent Customer Service",
+      "excellentServiceDesc": "The overall process was not just efficient but also enriching, as the platform's intuitive design and user-friendly interface made every step enjoyable.",
+      "highlyFlexible": "Highly Flexible and Customizable",
+      "highlyFlexibleDesc": "The attention to detail in the booking process made our trip stress-free, allowing us to focus on creating lasting memories together."
+    },
+    "ctaSection": {
+      "title": "Plan Your Trip with Us",
+      "description": "Let us help you make your next journey smooth and enjoyable—get started today.",
+      "feature1": "Detailed vehicle descriptions and images",
+      "feature2": "Filter options by vehicle type, size, and features",
+      "feature3": "Availability information in real-time",
+      "button": "Get Started Now"
+    },
+    "stats": {
+      "globalBranches": "Global",
+      "globalBranchesLine2": "Branches",
+      "destinations": "Destinations",
+      "destinationsLine2": "Collaboration",
+      "years": "Years",
+      "yearsLine2": "Experience",
+      "happy": "Happy",
+      "happyLine2": "Customers",
+      "user": "User",
+      "userLine2": "Account"
+    },
+    "blog": {
+      "title": "Upcoming Cars & Events",
+      "subtitle": "Stay ahead with the latest car releases and upcoming events",
+      "news": "News",
+      "trend": "Trend",
+      "discovery": "Discovery",
+      "keepReading": "Keep Reading",
+      "comments": "comments",
+      "mins": "mins"
+    },
+    "slider": {
+      "venice": "Venice",
+      "newYork": "New York",
+      "amsterdam": "Amsterdam",
+      "budapest": "Budapest",
+      "properties": "Properties"
+    }
+  },
+  "terms": {
+    "title": "Terms Of Service",
+    "lastUpdate": "Last update: 25 August, 2024",
+    "tableOfContent": "Table of content",
+    "acceptance": {
+      "title": "Acceptance of Terms",
+      "heading": "Acceptance of Terms",
+      "paragraph": "By accessing and using our website and services, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service. If you do not agree with any part of these terms, you must not use our website or services. Your continued use of our website and services constitutes your acceptance of any changes or updates to these terms."
+    },
+    "servicesProvided": {
+      "title": "Services Provided",
+      "heading": "Services Provided",
+      "paragraph": "We offer a range of services, including car rentals, vehicle sales, and loan options. Detailed descriptions of each service are provided on our website. We reserve the right to modify, suspend, or discontinue any service at our discretion and without prior notice. We are not liable for any consequences resulting from such changes."
+    },
+    "userResponsibilities": {
+      "title": "User Responsibilities",
+      "heading": "User Responsibilities",
+      "accuracyLabel": "Accuracy of Information:",
+      "accuracyText": "You are responsible for providing accurate, current, and complete information when using our services. Any discrepancies or inaccuracies in the information provided may affect the service delivered.",
+      "lawfulUseLabel": "Lawful Use:",
+      "lawfulUseText": "You agree to use our website and services in compliance with all applicable laws and regulations. You must not use our services for any unlawful or unauthorized purpose."
+    },
+    "accountSecurity": {
+      "title": "Account Security",
+      "heading": "Account Security",
+      "confidentialityLabel": "Confidentiality:",
+      "confidentialityText": "You are responsible for maintaining the confidentiality of your account credentials, including your username and password. You agree to notify us immediately of any unauthorized access to your account.",
+      "unauthorizedUseLabel": "Unauthorized Use:",
+      "unauthorizedUseText": "If you suspect that your account has been compromised or used without authorization, you must contact us immediately to take corrective action."
+    },
+    "paymentAndFees": {
+      "title": "Payment and Fees",
+      "heading": "Payment and Fees",
+      "paymentTermsLabel": "Payment Terms:",
+      "paymentTermsText": "All payments for services must be made in accordance with the pricing information and payment terms outlined on our website. Payment must be completed before the provision of services.",
+      "feeChangesLabel": "Fee Changes:",
+      "feeChangesText": "We reserve the right to alter our fees and charges at any time. Any changes will be reflected on our website, and you are responsible for reviewing and understanding the updated fees."
+    },
+    "cancellationAndRefunds": {
+      "title": "Cancellation and Refunds",
+      "heading": "Cancellation and Refunds",
+      "cancellationPolicyLabel": "Cancellation Policy:",
+      "cancellationPolicyText": "Specific cancellation policies apply to different services. Please refer to our website or contact our customer service team for detailed information on cancellation procedures.",
+      "refundPolicyLabel": "Refund Policy:",
+      "refundPolicyText": "Refunds are subject to the terms outlined for each service. In general, refunds will be processed according to the terms specified at the time of purchase or rental."
+    },
+    "intellectualProperty": {
+      "title": "Intellectual Property"
+    },
+    "limitationOfLiability": {
+      "title": "Limitation of Liability",
+      "heading": "Limitation of Liability",
+      "generalLimitationLabel": "General Limitation:",
+      "generalLimitationText": "Our company is not liable for any indirect, incidental, special, or consequential damages arising out of or related to your use of our website or services. This includes, but is not limited to, loss of profits, data, or other intangible losses.",
+      "directDamagesLabel": "Direct Damages:",
+      "directDamagesText": "In the event of any claim arising from our services, our liability is limited to the amount you paid for the specific service in question. We are not responsible for any indirect or consequential damages."
+    },
+    "privacyPolicy": {
+      "title": "Privacy Policy",
+      "heading": "Privacy Policy",
+      "commitmentLabel": "Commitment:",
+      "commitmentText": "We are committed to protecting your personal information. Our Privacy Policy outlines how we collect, use, and safeguard your data.",
+      "consentLabel": "Consent:",
+      "consentText": "By using our services, you consent to the practices described in our Privacy Policy, which is an integral part of these Terms of Service."
+    },
+    "changesToTerms": {
+      "title": "Changes to Terms",
+      "heading": "Changes to Terms",
+      "updatesLabel": "Updates:",
+      "updatesText": "We may update these Terms of Service periodically. Changes will be posted on our website, and the revised terms will take effect immediately upon publication.",
+      "notificationLabel": "Notification:",
+      "notificationText": "We will notify you of significant changes via email or through our website. Continued use of our services after any changes constitutes your acceptance of the revised terms."
+    },
+    "governingLaw": {
+      "title": "Governing Law"
+    },
+    "contactUs": {
+      "title": "Contact Us"
+    }
   }
 }

@@ -3,8 +3,10 @@ import CounterUp from '@/components/elements/CounterUp'
 import Layout from "@/components/layout/Layout"
 import { swiperGroup1, swiperGroup3, swiperGroupAnimate } from '@/util/swiperOptions'
 import Link from "next/link"
+import { useTranslations } from 'next-intl'
 import { Swiper, SwiperSlide } from "swiper/react"
 export default function Services() {
+	const t = useTranslations('services')
 
 	return (
 		<>
@@ -17,15 +19,15 @@ export default function Services() {
 								<img className="w-100 h-100 img-banner" src="/assets/imgs/page-header/banner1.png" alt="Iuri" />
 							</div>
 							<div className="container position-absolute z-1 top-50 start-50 translate-middle">
-								<h2 className="text-white">Our Services</h2>
-								<span className="text-white text-xl-medium">Perfect service, top experts</span>
+								<h2 className="text-white">{t('title')}</h2>
+								<span className="text-white text-xl-medium">{t('pageSubtitle')}</span>
 							</div>
 							<div className="background-body position-absolute z-1 top-100 start-50 translate-middle px-3 py-2 rounded-12 border d-flex gap-3 @@navigation-page">
-								<Link href="/" className="neutral-700 text-md-medium">Home</Link>
+								<Link href="/" className="neutral-700 text-md-medium">{t('home')}</Link>
 								<span>
 									<img src="/assets/imgs/template/icons/arrow-right.svg" alt="Iuri" />
 								</span>
-								<Link href="#" className="neutral-1000 text-md-bold">Services</Link>
+								<Link href="#" className="neutral-1000 text-md-bold">{t('breadcrumb')}</Link>
 							</div>
 						</div>
 					</div>
@@ -34,10 +36,10 @@ export default function Services() {
 						<div className="container">
 							<div className="row align-items-end">
 								<div className="col-lg-7">
-									<h3 className="neutral-1000">Comprehensive <span className="text-primary">Car Rental</span> Services to Meet All Your Needs</h3>
+									<h3 className="neutral-1000">{t('listTitle')} <span className="text-primary">{t('listTitleHighlight')}</span> {t('listTitleEnd')}</h3>
 								</div>
 								<div className="col-lg-5">
-									<p className="text-lg-medium neutral-500">From daily rentals to long-term solutions, we offer a comprehensive range of vehicles and services to suit every need and budget.</p>
+									<p className="text-lg-medium neutral-500">{t('listDescription')}</p>
 								</div>
 							</div>
 							<div className="row mt-50">
@@ -48,12 +50,12 @@ export default function Services() {
 										</div>
 										<div className="card-info">
 											<div className="card-title mb-3">
-												<Link className="text-xl-bold neutral-1000" href="/blog-details">Daily and Weekly Car Rentals</Link>
-												<p className="text-md-medium neutral-500 mt-2">Flexible rental options available for both short-term and weekly needs, ideal for vacations or business trips.</p>
+												<Link className="text-xl-bold neutral-1000" href="/blog-details">{t('dailyWeekly')}</Link>
+												<p className="text-md-medium neutral-500 mt-2">{t('dailyWeeklyDesc')}</p>
 											</div>
 											<div className="card-program">
 												<div className="endtime">
-													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">View Details</Link></div>
+													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">{t('viewDetails')}</Link></div>
 												</div>
 											</div>
 										</div>
@@ -66,12 +68,12 @@ export default function Services() {
 										</div>
 										<div className="card-info">
 											<div className="card-title mb-3">
-												<Link className="text-xl-bold neutral-1000" href="/blog-details">Long-Term Rentals</Link>
-												<p className="text-md-medium neutral-500 mt-2">Convenient and cost-effective solutions for those needing a vehicle for an extended period, with discounted rates.</p>
+												<Link className="text-xl-bold neutral-1000" href="/blog-details">{t('longTerm')}</Link>
+												<p className="text-md-medium neutral-500 mt-2">{t('longTermDesc')}</p>
 											</div>
 											<div className="card-program">
 												<div className="endtime">
-													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">View Details</Link></div>
+													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">{t('viewDetails')}</Link></div>
 												</div>
 											</div>
 										</div>
@@ -84,12 +86,12 @@ export default function Services() {
 										</div>
 										<div className="card-info">
 											<div className="card-title mb-3">
-												<Link className="text-xl-bold neutral-1000" href="/blog-details">Luxury Car Rentals</Link>
-												<p className="text-md-medium neutral-500 mt-2">Drive in style with our selection of high-end vehicles, perfect for special occasions or executive travel.</p>
+												<Link className="text-xl-bold neutral-1000" href="/blog-details">{t('luxury')}</Link>
+												<p className="text-md-medium neutral-500 mt-2">{t('luxuryDesc')}</p>
 											</div>
 											<div className="card-program">
 												<div className="endtime">
-													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">View Details</Link></div>
+													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">{t('viewDetails')}</Link></div>
 												</div>
 											</div>
 										</div>
@@ -102,12 +104,12 @@ export default function Services() {
 										</div>
 										<div className="card-info">
 											<div className="card-title mb-3">
-												<Link className="text-xl-bold neutral-1000" href="/blog-details">VIP Transfer Services</Link>
-												<p className="text-md-medium neutral-500 mt-2">Flexible rental options available for both short-term and weekly needs, ideal for vacations or business trips.</p>
+												<Link className="text-xl-bold neutral-1000" href="/blog-details">{t('vipTransfer')}</Link>
+												<p className="text-md-medium neutral-500 mt-2">{t('vipTransferDesc')}</p>
 											</div>
 											<div className="card-program">
 												<div className="endtime">
-													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">View Details</Link></div>
+													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">{t('viewDetails')}</Link></div>
 												</div>
 											</div>
 										</div>
@@ -120,12 +122,12 @@ export default function Services() {
 										</div>
 										<div className="card-info">
 											<div className="card-title mb-3">
-												<Link className="text-xl-bold neutral-1000" href="/blog-details">Chauffeur Services</Link>
-												<p className="text-md-medium neutral-500 mt-2">Flexible rental options available for both short-term and weekly needs, ideal for vacations or business trips.</p>
+												<Link className="text-xl-bold neutral-1000" href="/blog-details">{t('chauffeur')}</Link>
+												<p className="text-md-medium neutral-500 mt-2">{t('chauffeurDesc')}</p>
 											</div>
 											<div className="card-program">
 												<div className="endtime">
-													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">View Details</Link></div>
+													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">{t('viewDetails')}</Link></div>
 												</div>
 											</div>
 										</div>
@@ -138,12 +140,12 @@ export default function Services() {
 										</div>
 										<div className="card-info">
 											<div className="card-title mb-3">
-												<Link className="text-xl-bold neutral-1000" href="/blog-details">Airport Meet and Greet</Link>
-												<p className="text-md-medium neutral-500 mt-2">Flexible rental options available for both short-term and weekly needs, ideal for vacations or business trips.</p>
+												<Link className="text-xl-bold neutral-1000" href="/blog-details">{t('airportMeet')}</Link>
+												<p className="text-md-medium neutral-500 mt-2">{t('airportMeetDesc')}</p>
 											</div>
 											<div className="card-program">
 												<div className="endtime">
-													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">View Details</Link></div>
+													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">{t('viewDetails')}</Link></div>
 												</div>
 											</div>
 										</div>
@@ -156,12 +158,12 @@ export default function Services() {
 										</div>
 										<div className="card-info">
 											<div className="card-title mb-3">
-												<Link className="text-xl-bold neutral-1000" href="/blog-details">Concierge Services</Link>
-												<p className="text-md-medium neutral-500 mt-2">Flexible rental options available for both short-term and weekly needs, ideal for vacations or business trips.</p>
+												<Link className="text-xl-bold neutral-1000" href="/blog-details">{t('concierge')}</Link>
+												<p className="text-md-medium neutral-500 mt-2">{t('conciergeDesc')}</p>
 											</div>
 											<div className="card-program">
 												<div className="endtime">
-													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">View Details</Link></div>
+													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">{t('viewDetails')}</Link></div>
 												</div>
 											</div>
 										</div>
@@ -174,12 +176,12 @@ export default function Services() {
 										</div>
 										<div className="card-info">
 											<div className="card-title mb-3">
-												<Link className="text-xl-bold neutral-1000" href="/blog-details">Roadside Assistance</Link>
-												<p className="text-md-medium neutral-500 mt-2">Flexible rental options available for both short-term and weekly needs, ideal for vacations or business trips.</p>
+												<Link className="text-xl-bold neutral-1000" href="/blog-details">{t('roadside')}</Link>
+												<p className="text-md-medium neutral-500 mt-2">{t('roadsideDesc')}</p>
 											</div>
 											<div className="card-program">
 												<div className="endtime">
-													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">View Details</Link></div>
+													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">{t('viewDetails')}</Link></div>
 												</div>
 											</div>
 										</div>
@@ -192,12 +194,12 @@ export default function Services() {
 										</div>
 										<div className="card-info">
 											<div className="card-title mb-3">
-												<Link className="text-xl-bold neutral-1000" href="/blog-details">Customizable Rental Packages</Link>
-												<p className="text-md-medium neutral-500 mt-2">Flexible rental options available for both short-term and weekly needs, ideal for vacations or business trips.</p>
+												<Link className="text-xl-bold neutral-1000" href="/blog-details">{t('customizable')}</Link>
+												<p className="text-md-medium neutral-500 mt-2">{t('customizableDesc')}</p>
 											</div>
 											<div className="card-program">
 												<div className="endtime">
-													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">View Details</Link></div>
+													<div className="card-button"><Link className="btn btn-primary2" href="/blog-details">{t('viewDetails')}</Link></div>
 												</div>
 											</div>
 										</div>
@@ -211,13 +213,13 @@ export default function Services() {
 						<div className="container pt-110 pb-110 position-relative z-1">
 							<div className="row justify-content-center">
 								<div className="col-auto text-center wow fadeInUp justify-content-center d-flex flex-column align-items-center">
-									<h2 className="text-white">Best Car Rent Deals</h2>
+									<h2 className="text-white">{t('banner.title')}</h2>
 									<h6 className="text-white">
-										Save 15% or more when you book and ride <br />
-										before 1 April 2025
+										{t('banner.subtitle')} <br />
+										{t('banner.subtitleEnd')}
 									</h6>
 									<Link className="btn btn-primary rounded-pill btn-lg mt-20" href="#">
-										Find Early 2025 Deals
+										{t('banner.button')}
 										<svg xmlns="http://www.w3.org/2000/svg" width={25} height={24} viewBox="0 0 25 24" fill="none">
 											<path d="M12.5 19L19.5 12L12.5 5M19.5 12L5.5 12" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 										</svg>
@@ -235,9 +237,9 @@ export default function Services() {
 										<img src="/assets/imgs/page/homepage1/testimonial.png" alt="Iuri" />
 										<img src="/assets/imgs/page/homepage1/testimonial2.png" alt="Iuri" />
 										<img src="/assets/imgs/page/homepage1/testimonial3.png" alt="Iuri" />
-										Testimonials
+										{t('testimonials.label')}
 									</div>
-									<h3 className="mt-8 mb-15 neutral-1000">What they say about us?</h3>
+									<h3 className="mt-8 mb-15 neutral-1000">{t('testimonials.title')}</h3>
 								</div>
 							</div>
 						</div>
@@ -250,8 +252,8 @@ export default function Services() {
 												<SwiperSlide className="swiper-slide">
 													<div className="card-testimonial background-card">
 														<div className="card-info">
-															<p className="text-xl-bold card-title neutral-1000">No Hidden Fees</p>
-															<p className="text-md-regular neutral-500">The attention to detail in the booking process made our trip stress-free, allowing us to focus on creating lasting memories together.</p>
+															<p className="text-xl-bold card-title neutral-1000">{t('testimonials.noHiddenFees')}</p>
+															<p className="text-md-regular neutral-500">{t('testimonials.noHiddenFeesDesc')}</p>
 														</div>
 														<div className="card-top pt-40 border-0 mb-0">
 															<div className="card-author">
@@ -268,8 +270,8 @@ export default function Services() {
 												<SwiperSlide className="swiper-slide">
 													<div className="card-testimonial background-card">
 														<div className="card-info">
-															<p className="text-xl-bold card-title neutral-1000">Mobile-Friendly and Fast!</p>
-															<p className="text-md-regular neutral-500">Embarking on our dream vacation was made a breeze through the seamless coordination of items and hotels using this exceptional booking platform.</p>
+															<p className="text-xl-bold card-title neutral-1000">{t('testimonials.mobileFriendly')}</p>
+															<p className="text-md-regular neutral-500">{t('testimonials.mobileFriendlyDesc')}</p>
 														</div>
 														<div className="card-top pt-40 border-0 mb-0">
 															<div className="card-author">
@@ -286,8 +288,8 @@ export default function Services() {
 												<SwiperSlide className="swiper-slide">
 													<div className="card-testimonial background-card">
 														<div className="card-info">
-															<p className="text-xl-bold card-title neutral-1000">Excellent Customer Service</p>
-															<p className="text-md-regular neutral-500">The overall process was not just efficient but also enriching, as the platform's intuitive design and user-friendly interface made every step enjoyable.</p>
+															<p className="text-xl-bold card-title neutral-1000">{t('testimonials.excellentService')}</p>
+															<p className="text-md-regular neutral-500">{t('testimonials.excellentServiceDesc')}</p>
 														</div>
 														<div className="card-top pt-40 border-0 mb-0">
 															<div className="card-author">
@@ -304,8 +306,8 @@ export default function Services() {
 												<SwiperSlide className="swiper-slide">
 													<div className="card-testimonial background-card">
 														<div className="card-info">
-															<p className="text-xl-bold card-title neutral-1000">Highly Flexible and Customizable</p>
-															<p className="text-md-regular neutral-500">The attention to detail in the booking process made our trip stress-free, allowing us to focus on creating lasting memories together.</p>
+															<p className="text-xl-bold card-title neutral-1000">{t('testimonials.highlyFlexible')}</p>
+															<p className="text-md-regular neutral-500">{t('testimonials.highlyFlexibleDesc')}</p>
 														</div>
 														<div className="card-top pt-40 border-0 mb-0">
 															<div className="card-author">
@@ -360,19 +362,19 @@ export default function Services() {
 										</div>
 									</div>
 									<div className="col-lg-6 ps-lg-5 mt-lg-0 mt-4">
-										<h4 className="mb-4 neutral-1000">Plan Your Trip with Us</h4>
-										<p className="text-lg-medium neutral-500 mb-4">Let us help you make your next journey smooth and enjoyable—get started today.</p>
+										<h4 className="mb-4 neutral-1000">{t('ctaSection.title')}</h4>
+										<p className="text-lg-medium neutral-500 mb-4">{t('ctaSection.description')}</p>
 										<div className="row">
 											<div className="col">
 												<ul className="list-ticks-green list-ticks-green-2">
-													<li className="neutral-1000 pe-0">Detailed vehicle descriptions and images</li>
-													<li className="neutral-1000 pe-0">Filter options by vehicle type, size, and features</li>
-													<li className="neutral-1000 pe-0">Availability information in real-time</li>
+													<li className="neutral-1000 pe-0">{t('ctaSection.feature1')}</li>
+													<li className="neutral-1000 pe-0">{t('ctaSection.feature2')}</li>
+													<li className="neutral-1000 pe-0">{t('ctaSection.feature3')}</li>
 												</ul>
 											</div>
 										</div>
 										<Link className="btn btn-primary mt-2" href="#">
-											Get Started Now
+											{t('ctaSection.button')}
 											<svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<path d="M8 15L15 8L8 1M15 8L1 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 											</svg>
@@ -396,8 +398,8 @@ export default function Services() {
 													<h3 className="neutral-1000">+</h3>
 												</div>
 												<div className="text-md-start text-center">
-													<p className="text-lg-bold neutral-1000">Global</p>
-													<p className="text-lg-bold neutral-1000">Branches</p>
+													<p className="text-lg-bold neutral-1000">{t('stats.globalBranches')}</p>
+													<p className="text-lg-bold neutral-1000">{t('stats.globalBranchesLine2')}</p>
 												</div>
 											</div>
 											<div className="mb-4 mb-lg-0 d-block px-lg-5 px-3">
@@ -406,8 +408,8 @@ export default function Services() {
 													<h3 className="neutral-1000">K</h3>
 												</div>
 												<div className="text-md-start text-center">
-													<p className="text-lg-bold neutral-1000">Destinations</p>
-													<p className="text-lg-bold neutral-1000">Collaboration</p>
+													<p className="text-lg-bold neutral-1000">{t('stats.destinations')}</p>
+													<p className="text-lg-bold neutral-1000">{t('stats.destinationsLine2')}</p>
 												</div>
 											</div>
 											<div className="mb-4 mb-lg-0 d-block px-lg-5 px-3">
@@ -416,8 +418,8 @@ export default function Services() {
 													<h3 className="neutral-1000">+</h3>
 												</div>
 												<div className="text-md-start text-center">
-													<p className="text-lg-bold neutral-1000">Years</p>
-													<p className="text-lg-bold neutral-1000">Experience</p>
+													<p className="text-lg-bold neutral-1000">{t('stats.years')}</p>
+													<p className="text-lg-bold neutral-1000">{t('stats.yearsLine2')}</p>
 												</div>
 											</div>
 											<div className="mb-4 mb-lg-0 d-block px-lg-5 px-3">
@@ -426,8 +428,8 @@ export default function Services() {
 													<h3 className="neutral-1000">K</h3>
 												</div>
 												<div className="text-md-start text-center">
-													<p className="text-lg-bold neutral-1000">Happy</p>
-													<p className="text-lg-bold neutral-1000">Customers</p>
+													<p className="text-lg-bold neutral-1000">{t('stats.happy')}</p>
+													<p className="text-lg-bold neutral-1000">{t('stats.happyLine2')}</p>
 												</div>
 											</div>
 											<div className="mb-4 mb-lg-0 d-block px-lg-5 px-3">
@@ -436,8 +438,8 @@ export default function Services() {
 													<h3 className="neutral-1000">M</h3>
 												</div>
 												<div className="text-md-start text-center">
-													<p className="text-lg-bold neutral-1000">User</p>
-													<p className="text-lg-bold neutral-1000">Account</p>
+													<p className="text-lg-bold neutral-1000">{t('stats.user')}</p>
+													<p className="text-lg-bold neutral-1000">{t('stats.userLine2')}</p>
 												</div>
 											</div>
 										</div>
@@ -451,8 +453,8 @@ export default function Services() {
 						<div className="container">
 							<div className="row align-items-end">
 								<div className="col-md-9 mb-30 wow fadeInUp">
-									<h3 className="title-svg neutral-1000 mb-15">Upcoming Cars &amp; Events</h3>
-									<p className="text-lg-medium text-bold neutral-500">Stay ahead with the latest car releases and upcoming events</p>
+									<h3 className="title-svg neutral-1000 mb-15">{t('blog.title')}</h3>
+									<p className="text-lg-medium text-bold neutral-500">{t('blog.subtitle')}</p>
 								</div>
 								<div className="col-md-3 position-relative mb-30 wow fadeInUp">
 									<div className="box-button-slider box-button-slider-team justify-content-end">
@@ -481,7 +483,7 @@ export default function Services() {
 														</Link>
 													</div>
 													<div className="card-info">
-														<Link className="bg-2 rounded-12 position-absolute top-0 end-0 translate-middle-y px-3 py-2 me-4 text-sm-bold" href="/blog-grid">News</Link>
+														<Link className="bg-2 rounded-12 position-absolute top-0 end-0 translate-middle-y px-3 py-2 me-4 text-sm-bold" href="/blog-grid">{t('blog.news')}</Link>
 														<div className="card-meta"><span className="post-date neutral-1000">18 Sep 2024</span><span className="post-time neutral-1000">6 mins</span><span className="post-comment neutral-1000">38 comments</span></div>
 														<div className="card-title"><Link className="text-xl-bold neutral-1000" href="/blog-details">2025 Cadillac Escalade costs more money </Link></div>
 														<div className="card-program">
@@ -490,7 +492,7 @@ export default function Services() {
 																	<img src="/assets/imgs/blog/blog-1/avatar-1.png" alt="Iuri" />
 																	<p className="text-sm-bold neutral-1000">Jimmy Dave</p>
 																</div>
-																<div className="card-button"><Link className="btn btn-gray" href="/blog-details">Keep Reading</Link></div>
+																<div className="card-button"><Link className="btn btn-gray" href="/blog-details">{t('blog.keepReading')}</Link></div>
 															</div>
 														</div>
 													</div>
@@ -504,7 +506,7 @@ export default function Services() {
 														</Link>
 													</div>
 													<div className="card-info">
-														<Link className="bg-2 rounded-12 position-absolute top-0 end-0 translate-middle-y px-3 py-2 me-4 text-sm-bold" href="/blog-grid">Trend</Link>
+														<Link className="bg-2 rounded-12 position-absolute top-0 end-0 translate-middle-y px-3 py-2 me-4 text-sm-bold" href="/blog-grid">{t('blog.trend')}</Link>
 														<div className="card-meta"><span className="post-date neutral-1000">18 Sep 2024</span><span className="post-time neutral-1000">6 mins</span><span className="post-comment neutral-1000">38 comments</span></div>
 														<div className="card-title"><Link className="text-xl-bold neutral-1000" href="/blog-details">2025 BMW 5 Series Review: A balanced luxury sedan</Link></div>
 														<div className="card-program">
@@ -513,7 +515,7 @@ export default function Services() {
 																	<img src="/assets/imgs/blog/blog-1/avatar-2.png" alt="Iuri" />
 																	<p className="text-sm-bold neutral-1000">Steven Job</p>
 																</div>
-																<div className="card-button"><Link className="btn btn-gray" href="/blog-details">Keep Reading</Link></div>
+																<div className="card-button"><Link className="btn btn-gray" href="/blog-details">{t('blog.keepReading')}</Link></div>
 															</div>
 														</div>
 													</div>
@@ -527,7 +529,7 @@ export default function Services() {
 														</Link>
 													</div>
 													<div className="card-info">
-														<Link className="bg-2 rounded-12 position-absolute top-0 end-0 translate-middle-y px-3 py-2 me-4 text-sm-bold" href="/blog-grid">Discovery</Link>
+														<Link className="bg-2 rounded-12 position-absolute top-0 end-0 translate-middle-y px-3 py-2 me-4 text-sm-bold" href="/blog-grid">{t('blog.discovery')}</Link>
 														<div className="card-meta"><span className="post-date neutral-1000">18 Sep 2024</span><span className="post-time neutral-1000">6 mins</span><span className="post-comment neutral-1000">38 comments</span></div>
 														<div className="card-title"><Link className="text-xl-bold neutral-1000" href="/blog-details">2025 Ruf Rodeo is ready to wrangle some rough roads</Link></div>
 														<div className="card-program">
@@ -536,7 +538,7 @@ export default function Services() {
 																	<img src="/assets/imgs/blog/blog-1/avatar-3.png" alt="Iuri" />
 																	<p className="text-sm-bold neutral-1000">David Jame</p>
 																</div>
-																<div className="card-button"><Link className="btn btn-gray" href="/blog-details">Keep Reading</Link></div>
+																<div className="card-button"><Link className="btn btn-gray" href="/blog-details">{t('blog.keepReading')}</Link></div>
 															</div>
 														</div>
 													</div>
@@ -550,7 +552,7 @@ export default function Services() {
 														</Link>
 													</div>
 													<div className="card-info">
-														<Link className="bg-2 rounded-12 position-absolute top-0 end-0 translate-middle-y px-3 py-2 me-4 text-sm-bold" href="/blog-grid">News</Link>
+														<Link className="bg-2 rounded-12 position-absolute top-0 end-0 translate-middle-y px-3 py-2 me-4 text-sm-bold" href="/blog-grid">{t('blog.news')}</Link>
 														<div className="card-meta"><span className="post-date neutral-1000">18 Sep 2024</span><span className="post-time neutral-1000">6 mins</span><span className="post-comment neutral-1000">38 comments</span></div>
 														<div className="card-title"><Link className="text-xl-bold neutral-1000" href="/blog-details">2025 Cadillac Escalade costs more money </Link></div>
 														<div className="card-program">
@@ -559,7 +561,7 @@ export default function Services() {
 																	<img src="/assets/imgs/blog/blog-1/avatar-1.png" alt="Iuri" />
 																	<p className="text-sm-bold neutral-1000">Jimmy Dave</p>
 																</div>
-																<div className="card-button"><Link className="btn btn-gray" href="/blog-details">Keep Reading</Link></div>
+																<div className="card-button"><Link className="btn btn-gray" href="/blog-details">{t('blog.keepReading')}</Link></div>
 															</div>
 														</div>
 													</div>
@@ -573,7 +575,7 @@ export default function Services() {
 														</Link>
 													</div>
 													<div className="card-info">
-														<Link className="bg-2 rounded-12 position-absolute top-0 end-0 translate-middle-y px-3 py-2 me-4 text-sm-bold" href="/blog-grid">Trend</Link>
+														<Link className="bg-2 rounded-12 position-absolute top-0 end-0 translate-middle-y px-3 py-2 me-4 text-sm-bold" href="/blog-grid">{t('blog.trend')}</Link>
 														<div className="card-meta"><span className="post-date neutral-1000">18 Sep 2024</span><span className="post-time neutral-1000">6 mins</span><span className="post-comment neutral-1000">38 comments</span></div>
 														<div className="card-title"><Link className="text-xl-bold neutral-1000" href="/blog-details">2025 BMW 5 Series Review: A balanced luxury sedan</Link></div>
 														<div className="card-program">
@@ -582,7 +584,7 @@ export default function Services() {
 																	<img src="/assets/imgs/blog/blog-1/avatar-2.png" alt="Iuri" />
 																	<p className="text-sm-bold neutral-1000">Steven Job</p>
 																</div>
-																<div className="card-button"><Link className="btn btn-gray" href="/blog-details">Keep Reading</Link></div>
+																<div className="card-button"><Link className="btn btn-gray" href="/blog-details">{t('blog.keepReading')}</Link></div>
 															</div>
 														</div>
 													</div>
@@ -596,7 +598,7 @@ export default function Services() {
 														</Link>
 													</div>
 													<div className="card-info">
-														<Link className="bg-2 rounded-12 position-absolute top-0 end-0 translate-middle-y px-3 py-2 me-4 text-sm-bold" href="/blog-grid">Discovery</Link>
+														<Link className="bg-2 rounded-12 position-absolute top-0 end-0 translate-middle-y px-3 py-2 me-4 text-sm-bold" href="/blog-grid">{t('blog.discovery')}</Link>
 														<div className="card-meta"><span className="post-date neutral-1000">18 Sep 2024</span><span className="post-time neutral-1000">6 mins</span><span className="post-comment neutral-1000">38 comments</span></div>
 														<div className="card-title"><Link className="text-xl-bold neutral-1000" href="/blog-details">2025 Ruf Rodeo is ready to wrangle some rough roads</Link></div>
 														<div className="card-program">
@@ -605,7 +607,7 @@ export default function Services() {
 																	<img src="/assets/imgs/blog/blog-1/avatar-3.png" alt="Iuri" />
 																	<p className="text-sm-bold neutral-1000">David Jame</p>
 																</div>
-																<div className="card-button"><Link className="btn btn-gray" href="/blog-details">Keep Reading</Link></div>
+																<div className="card-button"><Link className="btn btn-gray" href="/blog-details">{t('blog.keepReading')}</Link></div>
 															</div>
 														</div>
 													</div>

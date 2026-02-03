@@ -1,9 +1,11 @@
 'use client'
 import { swiperGroup4 } from '@/util/swiperOptions'
 import Link from "next/link"
+import { useTranslations } from 'next-intl'
 import { Swiper, SwiperSlide } from "swiper/react"
 
 export default function Services1() {
+	const t = useTranslations('services')
 	return (
 		<>
 
@@ -11,13 +13,13 @@ export default function Services1() {
 				<div className="container">
 					<div className="row align-items-end mb-40">
 						<div className="col-md-8">
-							<h3 className="neutral-1000">Our Services</h3>
-							<p className="text-lg-medium neutral-500">Serving You with Quality, Comfort, and Convenience</p>
+							<h3 className="neutral-1000">{t('title')}</h3>
+							<p className="text-lg-medium neutral-500">{t('subtitle')}</p>
 						</div>
 						<div className="col-md-4 mt-md-0 mt-4">
 							<div className="d-flex justify-content-md-end justify-content-center">
 								<Link className="btn btn-primary" href="/cars-list-1">
-									View More
+									{t('viewMore')}
 									<svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M8 15L15 8L8 1M15 8L1 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 									</svg>
@@ -36,9 +38,9 @@ export default function Services1() {
 											</div>
 											<div className="card-info background-card">
 												<div className="card-left">
-													<div className="card-title"><Link className="text-lg-bold neutral-1000" href="/services">Venice</Link></div>
+													<div className="card-title"><Link className="text-lg-bold neutral-1000" href="/services">{t('slider.venice')}</Link></div>
 													<div className="card-desc"><Link className="text-sm neutral-500" href="#">356
-														Properties</Link></div>
+														{t('slider.properties')}</Link></div>
 												</div>
 												<div className="card-right">
 													<div className="card-button">
@@ -59,9 +61,9 @@ export default function Services1() {
 											</div>
 											<div className="card-info background-card">
 												<div className="card-left">
-													<div className="card-title"><Link className="text-lg-bold neutral-1000" href="/services">New York</Link></div>
+													<div className="card-title"><Link className="text-lg-bold neutral-1000" href="/services">{t('slider.newYork')}</Link></div>
 													<div className="card-desc"><Link className="text-sm neutral-500" href="#">356
-														Properties</Link></div>
+														{t('slider.properties')}</Link></div>
 												</div>
 												<div className="card-right">
 													<div className="card-button">
@@ -82,9 +84,9 @@ export default function Services1() {
 											</div>
 											<div className="card-info background-card">
 												<div className="card-left">
-													<div className="card-title"><Link className="text-lg-bold neutral-1000" href="/services">Amsterdam</Link></div>
+													<div className="card-title"><Link className="text-lg-bold neutral-1000" href="/services">{t('slider.amsterdam')}</Link></div>
 													<div className="card-desc"><Link className="text-sm neutral-500" href="#">356
-														Properties</Link></div>
+														{t('slider.properties')}</Link></div>
 												</div>
 												<div className="card-right">
 													<div className="card-button">
@@ -105,9 +107,9 @@ export default function Services1() {
 											</div>
 											<div className="card-info background-card">
 												<div className="card-left">
-													<div className="card-title"><Link className="text-lg-bold neutral-1000" href="/services">Budapest</Link></div>
+													<div className="card-title"><Link className="text-lg-bold neutral-1000" href="/services">{t('slider.budapest')}</Link></div>
 													<div className="card-desc"><Link className="text-sm neutral-500" href="#">356
-														Properties</Link></div>
+														{t('slider.properties')}</Link></div>
 												</div>
 												<div className="card-right">
 													<div className="card-button">
@@ -128,9 +130,9 @@ export default function Services1() {
 											</div>
 											<div className="card-info background-card">
 												<div className="card-left">
-													<div className="card-title"><Link className="text-lg-bold neutral-1000" href="/services">New York</Link></div>
+													<div className="card-title"><Link className="text-lg-bold neutral-1000" href="/services">{t('slider.newYork')}</Link></div>
 													<div className="card-desc"><Link className="text-sm neutral-500" href="#">356
-														Properties</Link></div>
+														{t('slider.properties')}</Link></div>
 												</div>
 												<div className="card-right">
 													<div className="card-button">
@@ -151,9 +153,9 @@ export default function Services1() {
 											</div>
 											<div className="card-info background-card">
 												<div className="card-left">
-													<div className="card-title"><Link className="text-lg-bold neutral-1000" href="/services">Amsterdam</Link></div>
+													<div className="card-title"><Link className="text-lg-bold neutral-1000" href="/services">{t('slider.amsterdam')}</Link></div>
 													<div className="card-desc"><Link className="text-sm neutral-500" href="#">356
-														Properties</Link></div>
+														{t('slider.properties')}</Link></div>
 												</div>
 												<div className="card-right">
 													<div className="card-button">
