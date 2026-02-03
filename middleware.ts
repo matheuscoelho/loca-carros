@@ -219,8 +219,7 @@ export default withAuth(
           pathname.startsWith('/api/cars') ||
           pathname.startsWith('/api/tenant/validate') ||
           pathname.startsWith('/api/seed') ||
-          pathname.startsWith('/api/config/demo-banner') ||
-          pathname.startsWith('/api/debug-forgot')
+          pathname.startsWith('/api/config/demo-banner')
         ) {
           return true
         }
