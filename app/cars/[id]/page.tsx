@@ -120,6 +120,7 @@ export default function CarDetails({ params }: { params: { id: string } }) {
 		slidesToScroll: 1,
 		arrows: true,
 		fade: false,
+		adaptiveHeight: true,
 		prevArrow: <SlickArrowLeft />,
 		nextArrow: <SlickArrowRight />,
 	}
