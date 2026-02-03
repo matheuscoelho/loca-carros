@@ -400,9 +400,31 @@ export async function POST(request: NextRequest) {
 	try {
 		const db = await getDatabase()
 
-		// 1. Garantir tenant default existe
-		const tenantId = await ensureDefaultTenant(db)
-		const tenantObjectId = tenantId instanceof ObjectId ? tenantId : new ObjectId(tenantId)
+		// 1. Resolver tenant pelo hostname da requisição, senão usar default
+		const hostname = request.headers.get('host')?.split(':')[0].toLowerCase() || 'localhost'
+		const baseDomain = process.env.BASE_DOMAIN || 'localhost'
+
+		let tenantSlug: string | null = null
+		if (hostname.endsWith(`.${baseDomain}`)) {
+			tenantSlug = hostname.replace(`.${baseDomain}`, '')
+		}
+
+		const existingTenant = await db.collection('tenants').findOne({
+			$or: [
+				{ 'domains.primary': hostname },
+				{ 'domains.custom': hostname },
+				...(tenantSlug ? [{ slug: tenantSlug }] : []),
+			],
+			status: 'active',
+		})
+
+		let tenantObjectId: ObjectId
+		if (existingTenant) {
+			tenantObjectId = existingTenant._id instanceof ObjectId ? existingTenant._id : new ObjectId(existingTenant._id)
+		} else {
+			const tenantId = await ensureDefaultTenant(db)
+			tenantObjectId = tenantId instanceof ObjectId ? tenantId : new ObjectId(tenantId)
+		}
 
 		// 2. Garantir super_admin existe (sem tenant)
 		await ensureSuperAdmin(db)
