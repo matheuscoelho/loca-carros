@@ -9,12 +9,14 @@ export interface Migration {
 import { migration_001_create_root_tenant } from './001_create_root_tenant'
 import { migration_002_seed_cars_all_tenants } from './002_seed_cars_all_tenants'
 import { migration_003_fix_car_images } from './003_fix_car_images'
+import { migration_004_add_multiple_car_images } from './004_add_multiple_car_images'
 
 // Lista de migrations em ordem
 const migrations: Migration[] = [
   migration_001_create_root_tenant,
   migration_002_seed_cars_all_tenants,
   migration_003_fix_car_images,
+  migration_004_add_multiple_car_images,
 ]
 
 /**
