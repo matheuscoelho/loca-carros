@@ -68,8 +68,7 @@ export async function sendEmail({ to, subject, text, html }: SendEmailOptions) {
 	return info
 }
 
-export async function sendPasswordResetEmail(email: string, token: string) {
-	const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3050'
+export async function sendPasswordResetEmail(email: string, token: string, baseUrl: string) {
 	const resetUrl = `${baseUrl}/reset-password/${token}`
 	const companyName = 'Navegar Sistemas'
 	const supportEmail = process.env.SMTP_FROM || 'no-reply@navegarsistemas.com.br'

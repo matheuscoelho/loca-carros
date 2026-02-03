@@ -213,11 +213,13 @@ export default withAuth(
           return true
         }
 
-        // API pública de settings, carros e validação de tenant
+        // API pública de settings, carros, validação de tenant e seed
         if (
           pathname.startsWith('/api/settings/public') ||
           pathname.startsWith('/api/cars') ||
-          pathname.startsWith('/api/tenant/validate')
+          pathname.startsWith('/api/tenant/validate') ||
+          pathname.startsWith('/api/seed') ||
+          pathname.startsWith('/api/config/demo-banner')
         ) {
           return true
         }

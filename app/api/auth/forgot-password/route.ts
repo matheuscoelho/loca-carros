@@ -43,10 +43,15 @@ export async function POST(request: NextRequest) {
 			}
 		)
 
+		// Extrair o domínio do tenant da requisição
+		const host = request.headers.get('host')!
+		const protocol = request.headers.get('x-forwarded-proto') || 'https'
+		const baseUrl = `${protocol}://${host}`
+
 		// Send email
-		console.log('[forgot-password] Enviando email para:', email)
+		console.log('[forgot-password] Enviando email para:', email, 'com baseUrl:', baseUrl)
 		try {
-			await sendPasswordResetEmail(email, resetToken)
+			await sendPasswordResetEmail(email, resetToken, baseUrl)
 			console.log('[forgot-password] Email enviado com sucesso')
 		} catch (emailError) {
 			console.log('[forgot-password] ERRO ao enviar email:', emailError)
