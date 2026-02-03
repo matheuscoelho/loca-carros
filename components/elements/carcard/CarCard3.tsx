@@ -26,6 +26,8 @@ export default function CarCard3({ car }: CarCard3Props) {
 
 	// Preço
 	const price = car.pricing?.dailyRate || car.price || 0
+	const currency = car.pricing?.currency || 'BRL'
+	const currencySymbol = currency === 'BRL' ? 'R$' : '$'
 
 	// Specs
 	const mileage = car.specs?.mileage || 0
@@ -93,7 +95,7 @@ export default function CarCard3({ car }: CarCard3Props) {
 						<div className="endtime">
 							<div className="card-price">
 								<p className="text-md-medium neutral-500 mr-5">From</p>
-								<h6 className="heading-6 neutral-1000">${price.toFixed(2)}</h6>
+								<h6 className="heading-6 neutral-1000">{currencySymbol} {price.toFixed(2)}</h6>
 								<p className="text-md-medium neutral-500">/ day</p>
 							</div>
 							<div className="card-button">
